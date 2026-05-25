@@ -211,7 +211,7 @@ senior = 2
 1. Что такое Ordinal Encoding и чем он принципиально отличается от Label Encoding?
 2. Для признака `education = school / bachelor / master / phd` задайте правильный порядок кодирования числами от 0 до 3.
 3. Почему Ordinal Encoding нельзя применять к признаку `city = Berlin / Hamburg / Munich`?
-4. Из урока 38 мы знаем, что Label Encoding создаёт ложный порядок для неупорядоченных категорий. В каком случае Ordinal Encoding — это правильный способ сделать то же самое?
+4. В каком случае Ordinal Encoding — это правильный способ сделать то же самое?
 5. Признак `satisfaction = low / medium / high`. Вы закодировали: low=1, medium=2, high=3. Можно ли утверждать, что «разница между low и medium» равна «разнице между medium и high»? Что это говорит об ограничениях Ordinal Encoding?
 
 ## Краткий итог
