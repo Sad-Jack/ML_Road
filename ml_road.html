@@ -2144,9 +2144,13 @@
     }
 
     /* ─── EASTER EGG ─────────────────────────────────── */
-    .prog-joke { cursor: default }
+    .prog-joke { position: relative; cursor: default }
     .prog-joke::after {
       content: ' в твоей голове';
+      position: absolute;
+      left: 100%;
+      top: 0;
+      white-space: nowrap;
       opacity: 0;
       color: #ffc857;
       font-style: italic;
@@ -12721,7 +12725,7 @@ Feynman Technique: [ваша тема]`
       </div>
       <div class="hdesc">
         <p>Офлайн-курс по Machine Learning от базовых понятий до работы с реальными данными. Всё в одном файле — без интернета, без регистрации.</p>
-        <p>Открывай уроки по порядку, читай материалы в правой панели и возвращайся в любой момент — <span class="prog-joke">прогресс сохраняется</span>.</p>
+        <p>Открывай уроки по порядку, читай материалы в правой панели и возвращайся в любой момент — <span class="prog-joke">прогресс сохраняется.</span></p>
         <button class="hstart-btn" onclick="nav('l01')">▶ Начать обучение</button>
       </div>
       <div class="commblock" style="margin-top:16px; padding-bottom:10px">
