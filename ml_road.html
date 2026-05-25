@@ -13098,7 +13098,7 @@ Feynman Technique: [ваша тема]`
       { id: 'drone',     label: 'DRONE·ZN', url: 'https://ice1.somafm.com/dronezone-128-mp3',  title: 'SomaFM Drone Zone — dark ambient' },
       { id: 'groovesal', label: 'GROOVE·SL',url: 'https://ice1.somafm.com/groovesalad-128-mp3',title: 'SomaFM Groove Salad — chill lofi' },
     ];
-    let _mAudio = null, _mPlaying = false, _mReconnTimer = null, _mStreamIdx = 0;
+    let _mAudio = null, _mPlaying = false, _mReconnTimer = null, _mStreamIdx = 0, _mGen = 0;
 
     function _mbSync() {
       const bar  = document.getElementById('music-bar');
@@ -13149,30 +13149,32 @@ Feynman Technique: [ваша тема]`
 
     function switchChannel(idx) {
       if (idx === _mStreamIdx && !_mPlaying) return;
+      clearTimeout(_mReconnTimer); // всегда очищаем, не только при playing
       _mStreamIdx = idx;
       _mbBuildChannels();
-      if (_mPlaying) { clearTimeout(_mReconnTimer); _mStartStream(); }
+      if (_mPlaying) { _mStartStream(); }
     }
 
     /* Пересоздаёт Audio и запускает поток заново — fix для stalled/ended */
     function _mStartStream() {
-      if (_mAudio) { _mAudio.pause(); _mAudio.src = ''; _mAudio.load(); }
+      clearTimeout(_mReconnTimer);
+      const gen = ++_mGen; // поколение: старые _reconnect с другим gen игнорируются
+      if (_mAudio) { _mAudio.pause(); _mAudio.src = ''; _mAudio.load(); _mAudio = null; }
       const sl = document.getElementById('mb-vol');
       const url = MB_STREAMS[_mStreamIdx].url + '?_=' + Date.now();
       _mAudio = new Audio(url);
       _mAudio.volume = (sl ? sl.value : 60) / 100;
 
       const _reconnect = () => {
-        if (!_mPlaying || !navigator.onLine) return;
+        if (!_mPlaying || !navigator.onLine || gen !== _mGen) return; // устаревший — пропускаем
         const sts = document.getElementById('mb-status');
         if (sts) { sts.className = 'mb-status'; sts.textContent = 'RECONNECT...'; }
-        clearTimeout(_mReconnTimer);
         _mReconnTimer = setTimeout(_mStartStream, 1500);
       };
 
-      _mAudio.addEventListener('ended',  _reconnect);
+      _mAudio.addEventListener('ended',   _reconnect);
       _mAudio.addEventListener('stalled', _reconnect);
-      _mAudio.addEventListener('error',  _reconnect);
+      _mAudio.addEventListener('error',   _reconnect);
       _mAudio.play().catch(() => {});
     }
 
