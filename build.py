@@ -19,6 +19,8 @@ import glob
 HTML_FILE = os.path.join(os.path.dirname(__file__), 'ml_road.html')
 CONTENT_DIR = os.path.join(os.path.dirname(__file__), 'content')
 
+# Поиск ведётся рекурсивно внутри content/ml/ и content/python/
+
 
 def find_md_file(lesson_id: str) -> str | None:
     """Найти .md файл для урока по его id (например 'l05', 'pd01')."""
