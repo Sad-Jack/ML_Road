@@ -13083,7 +13083,7 @@ Feynman Technique: [ваша тема]`
 
     /* ─── MUSIC BAR ─────────────────────────────────── */
     const LOFI_STREAM = 'https://ice1.somafm.com/groovesalad-128-mp3';
-    let _mAudio = null, _mPlaying = false;
+    let _mAudio = null, _mPlaying = false, _mReconnTimer = null;
 
     function _mbSync() {
       const bar  = document.getElementById('music-bar');
@@ -13123,29 +13123,42 @@ Feynman Technique: [ваша тема]`
       sl.style.background = `linear-gradient(to right, ${fill} ${pct}%, #0c1e30 ${pct}%)`;
     }
 
+    /* Пересоздаёт Audio и запускает поток заново — fix для stalled/ended */
+    function _mStartStream() {
+      if (_mAudio) { _mAudio.pause(); _mAudio.src = ''; _mAudio.load(); }
+      const sl = document.getElementById('mb-vol');
+      _mAudio = new Audio(LOFI_STREAM + '?_=' + Date.now());
+      _mAudio.volume = (sl ? sl.value : 60) / 100;
+
+      const _reconnect = () => {
+        if (!_mPlaying || !navigator.onLine) return;
+        const sts = document.getElementById('mb-status');
+        if (sts) { sts.className = 'mb-status'; sts.textContent = 'RECONNECT...'; }
+        clearTimeout(_mReconnTimer);
+        _mReconnTimer = setTimeout(_mStartStream, 1500);
+      };
+
+      _mAudio.addEventListener('ended',  _reconnect);
+      _mAudio.addEventListener('stalled', _reconnect);
+      _mAudio.addEventListener('error',  _reconnect);
+      _mAudio.play().catch(() => {});
+    }
+
     function toggleMusic() {
       if (!navigator.onLine) return;
       const btn = document.getElementById('mb-play');
       const sl  = document.getElementById('mb-vol');
-      if (!_mAudio) {
-        _mAudio = new Audio(LOFI_STREAM);
-        _mAudio.volume = (sl ? sl.value : 60) / 100;
-        _mAudio.addEventListener('error', () => {
-          _mPlaying = false;
-          btn.classList.remove('playing'); btn.textContent = '▶ PLAY';
-          sl && sl.classList.remove('active'); _mbSliderColor(sl, false);
-          _mbSync();
-        });
-      }
       if (_mPlaying) {
-        _mAudio.pause(); _mPlaying = false;
+        clearTimeout(_mReconnTimer);
+        if (_mAudio) { _mAudio.pause(); _mAudio.src = ''; _mAudio.load(); _mAudio = null; }
+        _mPlaying = false;
         btn.classList.remove('playing'); btn.textContent = '▶ PLAY';
         sl && sl.classList.remove('active'); _mbSliderColor(sl, false);
       } else {
-        _mAudio.play().catch(() => {});
         _mPlaying = true;
         btn.classList.add('playing'); btn.textContent = '▐▐ PAUSE';
         sl && sl.classList.add('active'); _mbSliderColor(sl, true);
+        _mStartStream();
       }
       _mbSync();
     }
