@@ -57,7 +57,7 @@ print(accuracy_score(y_val, model.predict(X_val)))
 1. В чём ключевое различие между тем, как Random Forest и Gradient Boosting строят деревья?
 2. Что произойдёт с моделью, если поставить `n_estimators=5000` и `learning_rate=0.5` без early stopping?
 3. Почему деревья в бустинге обычно мелкие (`max_depth=3–6`), тогда как в Random Forest деревья глубокие?
-4. Из урока 16 мы знаем, что overfitting — это большой разрыв между train и val. Почему Gradient Boosting без ограничений особенно склонен к overfitting по сравнению с Random Forest?
+4. Почему Gradient Boosting без ограничений особенно склонен к overfitting по сравнению с Random Forest?
 5. Вы настраиваете `GradientBoostingClassifier`. При `learning_rate=0.1` и `n_estimators=200` val-метрика хорошая. Если снизить `learning_rate` до 0.01, что нужно изменить в `n_estimators`, чтобы сохранить качество?
 
 ## Краткий итог
