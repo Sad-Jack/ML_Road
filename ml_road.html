@@ -2143,6 +2143,102 @@
       .rp-toggle span.rp-toggle-lbl { display: none }
     }
 
+    /* ─── MUSIC BAR ─────────────────────────────────── */
+    #music-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 32px;
+      padding: 0 24px;
+      background: #060f1e;
+      border-bottom: 1px solid #0c1e32;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #2a5070;
+      user-select: none;
+      flex-shrink: 0;
+      transition: opacity .3s;
+    }
+    .mb-label {
+      color: #1e4a65;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .mb-dot {
+      font-size: 9px;
+      line-height: 1;
+      transition: color .3s, text-shadow .3s;
+    }
+    .mb-dot.live   { color: #00e5ff; text-shadow: 0 0 8px #00e5ff; animation: mb-pulse 1.4s ease-in-out infinite }
+    .mb-dot.paused { color: #ffc857 }
+    .mb-status { font-size: 10px; letter-spacing: .5px; color: #1e3a50 }
+    .mb-status.live   { color: #00e5ff }
+    .mb-status.paused { color: #ffc857 }
+    .mb-play {
+      background: transparent;
+      border: 1px solid #142d42;
+      color: #1e4a65;
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 0 10px;
+      cursor: pointer;
+      letter-spacing: .5px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      transition: border-color .2s, color .2s, box-shadow .2s;
+    }
+    .mb-play:hover:not(:disabled) {
+      border-color: #00e5ff50;
+      color: #00e5ff;
+      box-shadow: 0 0 8px #00e5ff18;
+    }
+    .mb-play.playing {
+      border-color: #00e5ff60;
+      color: #00e5ff;
+      box-shadow: 0 0 6px #00e5ff30;
+    }
+    .mb-play:disabled { opacity: .22; cursor: not-allowed }
+    .mb-vol-wrap { display: flex; align-items: center; gap: 8px }
+    .mb-vol-lbl  { color: #1a3245; font-size: 10px; letter-spacing: .5px }
+    .mb-vol-val  { color: #2a5070; width: 30px; text-align: right; font-size: 10px }
+    .mb-vol-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 88px;
+      height: 3px;
+      outline: none;
+      cursor: pointer;
+      border-radius: 0;
+      background: linear-gradient(to right, #2a5070 60%, #0c1e30 60%);
+      transition: background .1s;
+    }
+    .mb-vol-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 9px;
+      height: 9px;
+      background: #2a5070;
+      cursor: pointer;
+      border-radius: 0;
+      transition: background .2s, box-shadow .2s;
+    }
+    .mb-vol-slider.active::-webkit-slider-thumb {
+      background: #00e5ff;
+      box-shadow: 0 0 5px #00e5ff80;
+    }
+    .mb-src {
+      margin-left: auto;
+      color: #142a3e;
+      font-size: 10px;
+      letter-spacing: .3px;
+      white-space: nowrap;
+    }
+    #music-bar.is-offline { opacity: .3 }
+    @keyframes mb-pulse { 0%,100%{opacity:1} 50%{opacity:.15} }
+
   </style>
 </head>
 
@@ -2154,6 +2250,19 @@
     </div>
     <button class="rp-toggle" id="rp-btn" onclick="toggleRp()">▸ <span class="rp-toggle-lbl">Показать материалы</span></button>
     <button class="mbtn" onclick="toggleSb()">☰</button>
+  </div>
+  <div id="music-bar" class="is-offline">
+    <span class="mb-label">// LOFI.RADIO</span>
+    <span class="mb-dot" id="mb-dot">◉</span>
+    <span class="mb-status" id="mb-status">OFFLINE</span>
+    <button class="mb-play" id="mb-play" onclick="toggleMusic()" disabled>▶ PLAY</button>
+    <div class="mb-vol-wrap">
+      <span class="mb-vol-lbl">VOL</span>
+      <input type="range" class="mb-vol-slider" id="mb-vol" min="0" max="100" value="60"
+             oninput="setMusicVolume(this.value)">
+      <span class="mb-vol-val" id="mb-vol-val">60%</span>
+    </div>
+    <span class="mb-src">SomaFM · Groove Salad</span>
   </div>
   <div class="lay">
     <div id="sb">
@@ -12832,6 +12941,7 @@ Feynman Technique: [ваша тема]`
       });
       buildSb(); setupSearch();
       document.getElementById('st-p').textContent = `${COURSE.sections.length} МОДУЛЕЙ // ${ALL.length} УРОКОВ`;
+      _mbSync(); setMusicVolume(60);
       document.addEventListener('click', async (e) => {
         const btn = e.target.closest('.cb-copy');
         if (!btn) return;
@@ -12970,6 +13080,86 @@ Feynman Technique: [ваша тема]`
       }
       updateRpBtn();
     }
+
+    /* ─── MUSIC BAR ─────────────────────────────────── */
+    const LOFI_STREAM = 'https://ice1.somafm.com/groovesalad-128-mp3';
+    let _mAudio = null, _mPlaying = false;
+
+    function _mbSync() {
+      const bar  = document.getElementById('music-bar');
+      const dot  = document.getElementById('mb-dot');
+      const sts  = document.getElementById('mb-status');
+      const btn  = document.getElementById('mb-play');
+      const sl   = document.getElementById('mb-vol');
+      const online = navigator.onLine;
+      if (!online) {
+        bar.classList.add('is-offline');
+        btn.disabled = true;
+        dot.className = 'mb-dot';       dot.textContent = '◉';
+        sts.className = 'mb-status';    sts.textContent = 'OFFLINE';
+        if (_mPlaying && _mAudio) {
+          _mAudio.pause(); _mPlaying = false;
+          btn.classList.remove('playing'); btn.textContent = '▶ PLAY';
+          sl && sl.classList.remove('active');
+          _mbSliderColor(sl, false);
+        }
+        return;
+      }
+      bar.classList.remove('is-offline');
+      btn.disabled = false;
+      if (_mPlaying) {
+        dot.className = 'mb-dot live';  dot.textContent = '◉';
+        sts.className = 'mb-status live'; sts.textContent = 'LIVE';
+      } else {
+        dot.className = 'mb-dot paused'; dot.textContent = '○';
+        sts.className = 'mb-status';    sts.textContent = 'READY';
+      }
+    }
+
+    function _mbSliderColor(sl, active) {
+      if (!sl) return;
+      const pct = (sl.value / sl.max) * 100;
+      const fill = active ? '#00e5ff' : '#2a5070';
+      sl.style.background = `linear-gradient(to right, ${fill} ${pct}%, #0c1e30 ${pct}%)`;
+    }
+
+    function toggleMusic() {
+      if (!navigator.onLine) return;
+      const btn = document.getElementById('mb-play');
+      const sl  = document.getElementById('mb-vol');
+      if (!_mAudio) {
+        _mAudio = new Audio(LOFI_STREAM);
+        _mAudio.volume = (sl ? sl.value : 60) / 100;
+        _mAudio.addEventListener('error', () => {
+          _mPlaying = false;
+          btn.classList.remove('playing'); btn.textContent = '▶ PLAY';
+          sl && sl.classList.remove('active'); _mbSliderColor(sl, false);
+          _mbSync();
+        });
+      }
+      if (_mPlaying) {
+        _mAudio.pause(); _mPlaying = false;
+        btn.classList.remove('playing'); btn.textContent = '▶ PLAY';
+        sl && sl.classList.remove('active'); _mbSliderColor(sl, false);
+      } else {
+        _mAudio.play().catch(() => {});
+        _mPlaying = true;
+        btn.classList.add('playing'); btn.textContent = '▐▐ PAUSE';
+        sl && sl.classList.add('active'); _mbSliderColor(sl, true);
+      }
+      _mbSync();
+    }
+
+    function setMusicVolume(val) {
+      if (_mAudio) _mAudio.volume = val / 100;
+      const valEl = document.getElementById('mb-vol-val');
+      const sl    = document.getElementById('mb-vol');
+      if (valEl) valEl.textContent = val + '%';
+      _mbSliderColor(sl, _mPlaying);
+    }
+
+    window.addEventListener('online',  _mbSync);
+    window.addEventListener('offline', _mbSync);
 
   </script>
 </body>
