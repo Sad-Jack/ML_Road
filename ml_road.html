@@ -2157,7 +2157,10 @@
       color: #2a5070;
       user-select: none;
       flex-shrink: 0;
-      transition: opacity .3s;
+      overflow: hidden;
+      max-height: 32px;
+      opacity: 1;
+      transition: max-height .4s ease, opacity .3s ease, padding .4s ease, border-width .4s ease;
     }
     .mb-label {
       color: #1e4a65;
@@ -2245,7 +2248,14 @@
     }
     .mb-ch:hover { border-color: #00e5ff30; color: #00e5ff70 }
     .mb-ch.act   { border-color: #00e5ff55; color: #00e5ff; background: #00e5ff0a }
-    #music-bar.is-offline { opacity: .3 }
+    #music-bar.is-offline {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      border-bottom-width: 0;
+      pointer-events: none;
+    }
     @keyframes mb-pulse { 0%,100%{opacity:1} 50%{opacity:.15} }
 
   </style>
