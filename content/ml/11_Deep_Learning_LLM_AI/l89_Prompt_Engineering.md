@@ -1,3 +1,10 @@
+---
+id: l89
+order: 89
+num: "89"
+title: "89. Prompt Engineering"
+short: "Prompt Engineering"
+---
 # 89. Prompt Engineering
 
 ## Зачем это нужно

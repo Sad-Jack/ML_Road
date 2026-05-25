@@ -1,3 +1,10 @@
+---
+id: l43
+order: 43
+num: "43"
+title: "43. Data Leakage: опасная ошибка в ML"
+short: "Data Leakage"
+---
 # 43. Data Leakage: опасная ошибка в ML
 
 ## Зачем это нужно

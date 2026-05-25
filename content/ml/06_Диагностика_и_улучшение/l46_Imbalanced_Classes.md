@@ -1,3 +1,10 @@
+---
+id: l46
+order: 46
+num: "46"
+title: "46. Imbalanced Classes"
+short: "Imbalanced Classes"
+---
 # 46. Imbalanced Classes
 
 ## Зачем это нужно

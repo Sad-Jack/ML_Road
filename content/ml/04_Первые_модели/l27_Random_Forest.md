@@ -1,3 +1,10 @@
+---
+id: l27
+order: 27
+num: "27"
+title: "27. Random Forest"
+short: "Random Forest"
+---
 # 27. Random Forest
 
 ## Зачем это нужно

@@ -1,3 +1,10 @@
+---
+id: l69
+order: 69
+num: "69"
+title: "69. Training vs Inference"
+short: "Training vs Inference"
+---
 # 69. Training vs Inference
 
 ## Зачем это нужно

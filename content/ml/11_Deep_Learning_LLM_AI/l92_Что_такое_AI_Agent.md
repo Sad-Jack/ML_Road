@@ -1,3 +1,10 @@
+---
+id: l92
+order: 92
+num: "92"
+title: "92. Что такое AI Agent"
+short: "Что такое AI Agent"
+---
 # 92. Что такое AI Agent
 
 ## Зачем это нужно

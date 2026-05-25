@@ -1,3 +1,10 @@
+---
+id: l40
+order: 40
+num: "40"
+title: "40. Ordinal Encoding простыми словами"
+short: "Ordinal Encoding"
+---
 # 40. Ordinal Encoding простыми словами
 
 ## Зачем это нужно

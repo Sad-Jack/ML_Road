@@ -1,3 +1,10 @@
+---
+id: l22
+order: 22
+num: "22"
+title: "22. Overfitting и Underfitting"
+short: "Overfitting и Underfitting"
+---
 # 22. Overfitting и Underfitting
 
 ## Зачем это нужно

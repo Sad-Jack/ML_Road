@@ -1,3 +1,10 @@
+---
+id: l52
+order: 52
+num: "52"
+title: "52. K-Means"
+short: "K-Means"
+---
 # 52. K-Means
 
 ## Зачем это нужно

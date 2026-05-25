@@ -1,3 +1,10 @@
+---
+id: l50
+order: 50
+num: "50"
+title: "50. Error Analysis"
+short: "Error Analysis"
+---
 # 50. Error Analysis
 
 ## Зачем это нужно

@@ -1,3 +1,10 @@
+---
+id: l38
+order: 38
+num: "38"
+title: "38. One-Hot Encoding простыми словами"
+short: "One-Hot Encoding"
+---
 # 38. One-Hot Encoding простыми словами
 
 ## Зачем это нужно

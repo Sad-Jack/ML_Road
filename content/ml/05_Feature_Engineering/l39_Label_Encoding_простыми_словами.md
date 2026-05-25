@@ -1,3 +1,10 @@
+---
+id: l39
+order: 39
+num: "39"
+title: "39. Label Encoding простыми словами"
+short: "Label Encoding"
+---
 # 39. Label Encoding простыми словами
 
 ## Зачем это нужно

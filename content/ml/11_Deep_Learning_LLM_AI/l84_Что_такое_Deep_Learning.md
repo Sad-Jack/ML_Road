@@ -1,3 +1,10 @@
+---
+id: l84
+order: 84
+num: "84"
+title: "84. Что такое Deep Learning"
+short: "Что такое Deep Learning"
+---
 # 84. Что такое Deep Learning
 
 ## Зачем это нужно

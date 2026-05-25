@@ -1,3 +1,10 @@
+---
+id: l56
+order: 56
+num: "56"
+title: "56. t-SNE и UMAP"
+short: "t-SNE и UMAP"
+---
 # 56. t-SNE и UMAP
 
 ## Зачем это нужно

@@ -1,3 +1,10 @@
+---
+id: l29
+order: 29
+num: "29"
+title: "29. XGBoost, LightGBM и CatBoost"
+short: "XGBoost, LightGBM и CatBoost"
+---
 # 29. XGBoost, LightGBM и CatBoost
 
 ## Зачем это нужно

@@ -1,3 +1,10 @@
+---
+id: l25
+order: 25
+num: "25"
+title: "25. Support Vector Machine простыми словами"
+short: "SVM"
+---
 # 25. Support Vector Machine простыми словами
 
 ## Зачем это нужно

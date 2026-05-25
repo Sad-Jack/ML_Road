@@ -1,3 +1,10 @@
+---
+id: l53
+order: 53
+num: "53"
+title: "53. DBSCAN"
+short: "DBSCAN"
+---
 # 53. DBSCAN
 
 ## Зачем это нужно

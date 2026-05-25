@@ -1,3 +1,10 @@
+---
+id: l45
+order: 45
+num: "45"
+title: "45. Bias и Variance"
+short: "Bias и Variance"
+---
 # 45. Bias и Variance
 
 ## Зачем это нужно

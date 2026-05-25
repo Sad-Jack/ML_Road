@@ -1,3 +1,10 @@
+---
+id: l61
+order: 61
+num: "61"
+title: "61. Explicit vs Implicit Feedback"
+short: "Explicit vs Implicit"
+---
 # 61. Explicit vs Implicit Feedback
 
 ## Зачем это нужно

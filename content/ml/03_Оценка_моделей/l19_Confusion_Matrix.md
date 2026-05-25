@@ -1,3 +1,10 @@
+---
+id: l19
+order: 19
+num: "19"
+title: "19. Confusion Matrix"
+short: "Confusion Matrix"
+---
 # 19. Confusion Matrix
 
 ## Зачем это нужно
