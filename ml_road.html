@@ -471,141 +471,44 @@
       border: 1px solid
     }
 
-    /* section accent colours */
-    .sgn-c1 {
-      color: #00e5ff;
-      background: #00e5ff14;
-      border-color: #00e5ff40
+    /* section accent colours — unified cyan for module numbers */
+    .sgn-c1, .sgn-c2, .sgn-c3, .sgn-c4, .sgn-c5, .sgn-c6,
+    .sgn-c7, .sgn-c8, .sgn-c9, .sgn-c10, .sgn-c11 {
+      color: #69E2FC;
+      background: rgba(105, 226, 252, 0.06);
+      border-color: rgba(105, 226, 252, 0.35)
     }
 
-    .sgn-c2 {
-      color: #00cfb4;
-      background: #00cfb414;
-      border-color: #00cfb440
-    }
+    /* Per-section accent colors: section name — two alternating tones */
+    .sg.sec-c1 .sgname,
+    .sg.sec-c3 .sgname,
+    .sg.sec-c5 .sgname,
+    .sg.sec-c7 .sgname,
+    .sg.sec-c9 .sgname,
+    .sg.sec-c11 .sgname { color: #8FA9B8 }
 
-    .sgn-c3 {
-      color: #00ff9d;
-      background: #00ff9d14;
-      border-color: #00ff9d40
-    }
+    .sg.sec-c2 .sgname,
+    .sg.sec-c4 .sgname,
+    .sg.sec-c6 .sgname,
+    .sg.sec-c8 .sgname,
+    .sg.sec-c10 .sgname { color: #9B7BC6 }
 
-    .sgn-c4 {
-      color: #ff9f43;
-      background: #ff9f4314;
-      border-color: #ff9f4340
-    }
-
-    .sgn-c5 {
-      color: #ff4655;
-      background: #ff465514;
-      border-color: #ff465540
-    }
-
-    .sgn-c6 {
-      color: #9b4dff;
-      background: #9b4dff14;
-      border-color: #9b4dff40
-    }
-
-    .sgn-c7 {
-      color: #e0a0ff;
-      background: #e0a0ff14;
-      border-color: #e0a0ff40
-    }
-
-    .sgn-c8 {
-      color: #7eb8ff;
-      background: #7eb8ff14;
-      border-color: #7eb8ff40
-    }
-
-    .sgn-c9 {
-      color: #ffc857;
-      background: #ffc85714;
-      border-color: #ffc85740
-    }
-
-    .sgn-c10 {
-      color: #e879f9;
-      background: #e879f914;
-      border-color: #e879f940
-    }
-
-    .sgn-c11 {
-      color: #34d399;
-      background: #34d39914;
-      border-color: #34d39940
-    }
-
-    /* Per-section accent colors: section name */
-    .sg.sec-c1 .sgname { color: #00e5ff }
-    .sg.sec-c2 .sgname { color: #00cfb4 }
-    .sg.sec-c3 .sgname { color: #00ff9d }
-    .sg.sec-c4 .sgname { color: #ff9f43 }
-    .sg.sec-c5 .sgname { color: #ff4655 }
-    .sg.sec-c6 .sgname { color: #9b4dff }
-    .sg.sec-c7 .sgname { color: #e0a0ff }
-    .sg.sec-c8 .sgname { color: #7eb8ff }
-    .sg.sec-c9 .sgname { color: #ffc857 }
     .sg.sec-locked .sgname { color: #2a6070 !important }
 
-    /* Per-section accent colors: active lesson */
-    .sg.sec-c1 .li.act { background: #00e5ff08; border-left-color: #00e5ff }
-    .sg.sec-c1 .li.act .li-n { color: #00e5ff }
-    .sg.sec-c1 .li.act .li-t { color: var(--text) }
-    .sg.sec-c1 .li.act::after { background: #00e5ff; box-shadow: 0 0 8px #00e5ff }
+    /* Active module header: highlight with cyan */
+    .sg.sg-act .sgname {
+      color: #69E2FC;
+      text-shadow: 0 0 8px rgba(105, 226, 252, 0.35)
+    }
 
-    .sg.sec-c2 .li.act { background: #00cfb408; border-left-color: #00cfb4 }
-    .sg.sec-c2 .li.act .li-n { color: #00cfb4 }
-    .sg.sec-c2 .li.act .li-t { color: var(--text) }
-    .sg.sec-c2 .li.act::after { background: #00cfb4; box-shadow: 0 0 8px #00cfb4 }
+    /* Hover on module header: subtle brightening */
+    .sgh:hover .sgname { color: #D6F7FF }
 
-    .sg.sec-c3 .li.act { background: #00ff9d08; border-left-color: #00ff9d }
-    .sg.sec-c3 .li.act .li-n { color: #00ff9d }
-    .sg.sec-c3 .li.act .li-t { color: var(--text) }
-    .sg.sec-c3 .li.act::after { background: #00ff9d; box-shadow: 0 0 8px #00ff9d }
-
-    .sg.sec-c4 .li.act { background: #ff9f4308; border-left-color: #ff9f43 }
-    .sg.sec-c4 .li.act .li-n { color: #ff9f43 }
-    .sg.sec-c4 .li.act .li-t { color: var(--text) }
-    .sg.sec-c4 .li.act::after { background: #ff9f43; box-shadow: 0 0 8px #ff9f43 }
-
-    .sg.sec-c5 .li.act { background: #ff465508; border-left-color: #ff4655 }
-    .sg.sec-c5 .li.act .li-n { color: #ff4655 }
-    .sg.sec-c5 .li.act .li-t { color: var(--text) }
-    .sg.sec-c5 .li.act::after { background: #ff4655; box-shadow: 0 0 8px #ff4655 }
-
-    .sg.sec-c6 .li.act { background: #9b4dff08; border-left-color: #9b4dff }
-    .sg.sec-c6 .li.act .li-n { color: #9b4dff }
-    .sg.sec-c6 .li.act .li-t { color: var(--text) }
-    .sg.sec-c6 .li.act::after { background: #9b4dff; box-shadow: 0 0 8px #9b4dff }
-
-    .sg.sec-c7 .li.act { background: #e0a0ff08; border-left-color: #e0a0ff }
-    .sg.sec-c7 .li.act .li-n { color: #e0a0ff }
-    .sg.sec-c7 .li.act .li-t { color: var(--text) }
-    .sg.sec-c7 .li.act::after { background: #e0a0ff; box-shadow: 0 0 8px #e0a0ff }
-
-    .sg.sec-c8 .li.act { background: #7eb8ff08; border-left-color: #7eb8ff }
-    .sg.sec-c8 .li.act .li-n { color: #7eb8ff }
-    .sg.sec-c8 .li.act .li-t { color: var(--text) }
-    .sg.sec-c8 .li.act::after { background: #7eb8ff; box-shadow: 0 0 8px #7eb8ff }
-    .sg.sec-c9 .li.act { background: #ffc85708; border-left-color: #ffc857 }
-    .sg.sec-c9 .li.act .li-n { color: #ffc857 }
-    .sg.sec-c9 .li.act .li-t { color: var(--text) }
-    .sg.sec-c9 .li.act::after { background: #ffc857; box-shadow: 0 0 8px #ffc857 }
-
-    .sg.sec-c10 .sgname { color: #e879f9 }
-    .sg.sec-c10 .li.act { background: #e879f908; border-left-color: #e879f9 }
-    .sg.sec-c10 .li.act .li-n { color: #e879f9 }
-    .sg.sec-c10 .li.act .li-t { color: var(--text) }
-    .sg.sec-c10 .li.act::after { background: #e879f9; box-shadow: 0 0 8px #e879f9 }
-
-    .sg.sec-c11 .sgname { color: #34d399 }
-    .sg.sec-c11 .li.act { background: #34d39908; border-left-color: #34d399 }
-    .sg.sec-c11 .li.act .li-n { color: #34d399 }
-    .sg.sec-c11 .li.act .li-t { color: var(--text) }
-    .sg.sec-c11 .li.act::after { background: #34d399; box-shadow: 0 0 8px #34d399 }
+    /* Per-section active lesson — unified cyan for all sections */
+    .sg[class*="sec-c"] .li.act { background: rgba(105,226,252,0.03); border-left-color: #69E2FC }
+    .sg[class*="sec-c"] .li.act .li-n { color: #69E2FC }
+    .sg[class*="sec-c"] .li.act .li-t { color: var(--text) }
+    .sg[class*="sec-c"] .li.act::after { background: #69E2FC; box-shadow: 0 0 8px rgba(105,226,252,0.4) }
 
     .sgname {
       font-family: var(--mono);
@@ -659,8 +562,8 @@
     }
 
     .li.act {
-      background: #00e5ff08;
-      border-left-color: var(--cyan)
+      background: rgba(105, 226, 252, 0.03);
+      border-left-color: #69E2FC
     }
 
     .li.act::after {
@@ -671,8 +574,8 @@
       transform: translateY(-50%);
       width: 2px;
       height: 14px;
-      background: var(--cyan);
-      box-shadow: 0 0 8px var(--cyan);
+      background: #69E2FC;
+      box-shadow: 0 0 8px rgba(105, 226, 252, 0.4);
       border-radius: 0
     }
 
@@ -685,7 +588,7 @@
     }
 
     .li.act .li-n {
-      color: var(--cyan)
+      color: #69E2FC
     }
 
     .li-t {
@@ -13168,11 +13071,12 @@ Feynman Technique: [ваша тема]`
 
     function updateSb(id) {
       document.querySelectorAll('.li,.hi').forEach(el => el.classList.remove('act'));
+      document.querySelectorAll('.sg.sg-act').forEach(el => el.classList.remove('sg-act'));
       const t = document.getElementById(id === 'home' ? 'hi-home' : 'li-' + id);
       if (t) {
         t.classList.add('act');
         const group = t.closest('.sg');
-        if (group) group.classList.add('open');
+        if (group) { group.classList.add('open'); group.classList.add('sg-act'); }
         t.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       }
     }
