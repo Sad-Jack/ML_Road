@@ -2187,7 +2187,7 @@
   <div class="stbar">
     <span class="stitem"><span class="stdot"></span><span class="stitem-ok">SYS:OK</span></span>
     <span class="stitem stitem-hi" id="st-l">ML ROAD v3</span>
-    <span class="stitem" style="margin-left:auto" id="st-p">9 МОДУЛЕЙ // 80 УРОКОВ</span>
+    <span class="stitem" style="margin-left:auto" id="st-p">11 МОДУЛЕЙ // 94 УРОКА</span>
   </div>
 
   <!-- ═══════ LESSON DATA (unlocked lessons only) ═══════ -->
@@ -12598,7 +12598,7 @@ Feynman Technique: [ваша тема]`
       </div>
     </div>`;
       document.getElementById('st-l').textContent = 'ML ROAD v3';
-      document.getElementById('st-p').textContent = `9 МОДУЛЕЙ // ${ALL.length} УРОКОВ // ${UNLOCKED} ДОСТУПНО`;
+      document.getElementById('st-p').textContent = `${COURSE.sections.length} МОДУЛЕЙ // ${ALL.length} УРОКОВ // ${UNLOCKED} ДОСТУПНО`;
     }
 
     /* ─── LESSON ─── */
@@ -12831,6 +12831,7 @@ Feynman Technique: [ваша тема]`
         b.classList.toggle('act', b.dataset.tab === CUR_TAB);
       });
       buildSb(); setupSearch();
+      document.getElementById('st-p').textContent = `${COURSE.sections.length} МОДУЛЕЙ // ${ALL.length} УРОКОВ`;
       document.addEventListener('click', async (e) => {
         const btn = e.target.closest('.cb-copy');
         if (!btn) return;
