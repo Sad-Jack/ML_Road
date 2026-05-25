@@ -2229,13 +2229,22 @@
       background: #00e5ff;
       box-shadow: 0 0 5px #00e5ff80;
     }
-    .mb-src {
-      margin-left: auto;
-      color: #142a3e;
+    .mb-channels { display: flex; align-items: center; gap: 4px; margin-left: auto }
+    .mb-ch {
+      background: transparent;
+      border: 1px solid #0e2536;
+      color: #1a3a52;
+      font-family: var(--mono);
       font-size: 10px;
-      letter-spacing: .3px;
+      padding: 0 7px;
+      height: 20px;
+      cursor: pointer;
+      letter-spacing: .4px;
       white-space: nowrap;
+      transition: border-color .2s, color .2s, background .2s;
     }
+    .mb-ch:hover { border-color: #00e5ff30; color: #00e5ff70 }
+    .mb-ch.act   { border-color: #00e5ff55; color: #00e5ff; background: #00e5ff0a }
     #music-bar.is-offline { opacity: .3 }
     @keyframes mb-pulse { 0%,100%{opacity:1} 50%{opacity:.15} }
 
@@ -2262,7 +2271,7 @@
              oninput="setMusicVolume(this.value)">
       <span class="mb-vol-val" id="mb-vol-val">60%</span>
     </div>
-    <span class="mb-src">SomaFM · Groove Salad</span>
+    <div class="mb-channels" id="mb-channels"></div>
   </div>
   <div class="lay">
     <div id="sb">
@@ -12941,7 +12950,7 @@ Feynman Technique: [ваша тема]`
       });
       buildSb(); setupSearch();
       document.getElementById('st-p').textContent = `${COURSE.sections.length} МОДУЛЕЙ // ${ALL.length} УРОКОВ`;
-      _mbSync(); setMusicVolume(60);
+      _mbBuildChannels(); _mbSync(); setMusicVolume(60);
       document.addEventListener('click', async (e) => {
         const btn = e.target.closest('.cb-copy');
         if (!btn) return;
@@ -13082,8 +13091,14 @@ Feynman Technique: [ваша тема]`
     }
 
     /* ─── MUSIC BAR ─────────────────────────────────── */
-    const LOFI_STREAM = 'https://ice1.somafm.com/groovesalad-128-mp3';
-    let _mAudio = null, _mPlaying = false, _mReconnTimer = null;
+    const MB_STREAMS = [
+      { id: 'defcon',    label: 'DEF·CON',  url: 'https://ice1.somafm.com/defcon-128-mp3',     title: 'SomaFM DEF CON — хакерская конференция' },
+      { id: 'nightwave', label: 'NWPLAZA',  url: 'https://radio.plaza.one/mp3',                 title: 'Nightwave Plaza — synthwave / vaporwave' },
+      { id: 'digitalis', label: 'DGTLS',    url: 'https://ice1.somafm.com/digitalis-128-mp3',  title: 'SomaFM Digitalis — IDM / electro' },
+      { id: 'drone',     label: 'DRONE·ZN', url: 'https://ice1.somafm.com/dronezone-128-mp3',  title: 'SomaFM Drone Zone — dark ambient' },
+      { id: 'groovesal', label: 'GROOVE·SL',url: 'https://ice1.somafm.com/groovesalad-128-mp3',title: 'SomaFM Groove Salad — chill lofi' },
+    ];
+    let _mAudio = null, _mPlaying = false, _mReconnTimer = null, _mStreamIdx = 0;
 
     function _mbSync() {
       const bar  = document.getElementById('music-bar');
@@ -13123,11 +13138,28 @@ Feynman Technique: [ваша тема]`
       sl.style.background = `linear-gradient(to right, ${fill} ${pct}%, #0c1e30 ${pct}%)`;
     }
 
+    function _mbBuildChannels() {
+      const wrap = document.getElementById('mb-channels');
+      if (!wrap) return;
+      wrap.innerHTML = MB_STREAMS.map((s, i) =>
+        `<button class="mb-ch${i === _mStreamIdx ? ' act' : ''}" title="${s.title}"
+           onclick="switchChannel(${i})">${s.label}</button>`
+      ).join('');
+    }
+
+    function switchChannel(idx) {
+      if (idx === _mStreamIdx && !_mPlaying) return;
+      _mStreamIdx = idx;
+      _mbBuildChannels();
+      if (_mPlaying) { clearTimeout(_mReconnTimer); _mStartStream(); }
+    }
+
     /* Пересоздаёт Audio и запускает поток заново — fix для stalled/ended */
     function _mStartStream() {
       if (_mAudio) { _mAudio.pause(); _mAudio.src = ''; _mAudio.load(); }
       const sl = document.getElementById('mb-vol');
-      _mAudio = new Audio(LOFI_STREAM + '?_=' + Date.now());
+      const url = MB_STREAMS[_mStreamIdx].url + '?_=' + Date.now();
+      _mAudio = new Audio(url);
       _mAudio.volume = (sl ? sl.value : 60) / 100;
 
       const _reconnect = () => {
