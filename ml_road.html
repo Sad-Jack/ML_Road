@@ -2143,6 +2143,17 @@
       .rp-toggle span.rp-toggle-lbl { display: none }
     }
 
+    /* ─── EASTER EGG ─────────────────────────────────── */
+    .prog-joke { cursor: default }
+    .prog-joke::after {
+      content: ' в твоей голове';
+      opacity: 0;
+      color: #ffc857;
+      font-style: italic;
+      transition: opacity .4s ease;
+    }
+    .prog-joke:hover::after { opacity: 1 }
+
     /* ─── MUSIC BAR ─────────────────────────────────── */
     #music-bar {
       display: flex;
@@ -12710,7 +12721,7 @@ Feynman Technique: [ваша тема]`
       </div>
       <div class="hdesc">
         <p>Офлайн-курс по Machine Learning от базовых понятий до работы с реальными данными. Всё в одном файле — без интернета, без регистрации.</p>
-        <p>Открывай уроки по порядку, читай материалы в правой панели и возвращайся в любой момент — прогресс сохраняется.</p>
+        <p>Открывай уроки по порядку, читай материалы в правой панели и возвращайся в любой момент — <span class="prog-joke">прогресс сохраняется</span>.</p>
         <button class="hstart-btn" onclick="nav('l01')">▶ Начать обучение</button>
       </div>
       <div class="commblock" style="margin-top:16px; padding-bottom:10px">
