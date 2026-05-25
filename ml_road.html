@@ -983,6 +983,22 @@
       opacity: .7
     }
 
+    .hquote-tx {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .3px;
+      color: var(--text2);
+      padding: 9px 24px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity .7s ease;
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hquote-tx.vis { opacity: .65 }
+
     .hdesc {
       font-size: 14px;
       color: #7ab8cc;
@@ -2141,6 +2157,43 @@
 
     @media(max-width:768px) {
       .rp-toggle span.rp-toggle-lbl { display: none }
+    }
+
+    /* ─── QUOTES ────────────────────────────────────── */
+    const QUOTES = [
+      'Делай каждое дело так, будто оно последнее в твоей жизни.',
+      'Образование — самое мощное оружие, с помощью которого можно изменить мир.',
+      'Мы выбираем идти на Луну не потому, что это легко, а потому что это трудно.',
+      'Твоё время ограничено. Не трать его, живя чужой жизнью.',
+      'Оставайся голодным. Оставайся безрассудным.',
+      'Бой выигрывается или проигрывается далеко от свидетелей — за кулисами, в зале, на дороге.',
+      'Один ребёнок, один учитель, одна книга и одна ручка могут изменить мир.',
+      'Тот, у кого есть зачем жить, выдержит почти любое как.',
+    ];
+    let _qIdx = 0, _qTimer = null;
+
+    function _qShow() {
+      const el = document.getElementById('hquote');
+      if (!el) return;
+      el.textContent = '// ' + QUOTES[_qIdx];
+      el.classList.add('vis');
+      _qTimer = setTimeout(_qFadeOut, 5000);
+    }
+
+    function _qFadeOut() {
+      const el = document.getElementById('hquote');
+      if (!el) return;
+      el.classList.remove('vis');
+      _qTimer = setTimeout(() => {
+        _qIdx = (_qIdx + 1) % QUOTES.length;
+        _qShow();
+      }, 700);
+    }
+
+    function startQuotes() {
+      clearTimeout(_qTimer);
+      _qIdx = 0;
+      _qShow();
     }
 
     /* ─── EASTER EGG ─────────────────────────────────── */
@@ -12719,9 +12772,7 @@ Feynman Technique: [ваша тема]`
         </div>
       </div>
       <div class="hmarq">
-        <div class="hmarq-tr">
-          <div class="hmarq-tx">GPT • CLAUDE • GEMINI • QWEN • DEEPSEEK • LLAMA • MISTRAL • GROK • COMMAND-R • GPT • CLAUDE • GEMINI • QWEN • DEEPSEEK • LLAMA • MISTRAL • GROK • COMMAND-R •</div>
-        </div>
+        <div id="hquote" class="hquote-tx"></div>
       </div>
       <div class="hdesc">
         <p>Офлайн-курс по Machine Learning от базовых понятий до работы с реальными данными. Всё в одном файле — без интернета, без регистрации.</p>
@@ -12742,6 +12793,7 @@ Feynman Technique: [ваша тема]`
     </div>`;
       document.getElementById('st-l').textContent = 'ML ROAD v3';
       document.getElementById('st-p').textContent = `${COURSE.sections.length} МОДУЛЕЙ // ${ALL.length} УРОКОВ // ${UNLOCKED} ДОСТУПНО`;
+      startQuotes();
     }
 
     /* ─── LESSON ─── */
