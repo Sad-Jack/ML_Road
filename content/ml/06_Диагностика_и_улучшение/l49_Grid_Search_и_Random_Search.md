@@ -1,3 +1,10 @@
+---
+id: l49
+order: 49
+num: "49"
+title: "49. Grid Search и Random Search"
+short: "Grid Search и Random Search"
+---
 # 49. Grid Search и Random Search
 
 ## Зачем это нужно

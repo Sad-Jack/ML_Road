@@ -1,3 +1,10 @@
+---
+id: pd01
+order: 1
+num: "01"
+title: "01. DataFrame в Python для ML"
+short: "DataFrame в Python для ML"
+---
 # 01. DataFrame в Python для ML
 
 ## Зачем это нужно

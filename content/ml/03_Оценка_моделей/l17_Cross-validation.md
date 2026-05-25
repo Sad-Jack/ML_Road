@@ -1,3 +1,10 @@
+---
+id: l17
+order: 17
+num: "17"
+title: "17. Cross-validation"
+short: "Cross-validation"
+---
 # 17. Cross-validation
 
 ## Зачем это нужно

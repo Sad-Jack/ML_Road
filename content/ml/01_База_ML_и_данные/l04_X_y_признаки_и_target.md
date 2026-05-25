@@ -1,3 +1,10 @@
+---
+id: l04
+order: 4
+num: "04"
+title: "04. X, y, признаки и target"
+short: "X, y, признаки и target"
+---
 # 04. X, y, признаки и target
 
 ## Зачем это нужно

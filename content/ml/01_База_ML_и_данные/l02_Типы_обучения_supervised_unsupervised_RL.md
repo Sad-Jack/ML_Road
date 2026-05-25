@@ -1,3 +1,10 @@
+---
+id: l02
+order: 2
+num: "02"
+title: "02. Типы обучения: supervised, unsupervised, RL"
+short: "Типы обучения"
+---
 # 02. Типы обучения: supervised, unsupervised, RL
 
 ## Зачем это нужно

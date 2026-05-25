@@ -1,3 +1,10 @@
+---
+id: l90
+order: 90
+num: "90"
+title: "90. Fine-tuning моделей"
+short: "Fine-tuning"
+---
 # 90. Fine-tuning моделей
 
 ## Зачем это нужно

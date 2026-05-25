@@ -1,3 +1,10 @@
+---
+id: l58
+order: 58
+num: "58"
+title: "58. Isolation Forest"
+short: "Isolation Forest"
+---
 # 58. Isolation Forest
 
 ## Зачем это нужно

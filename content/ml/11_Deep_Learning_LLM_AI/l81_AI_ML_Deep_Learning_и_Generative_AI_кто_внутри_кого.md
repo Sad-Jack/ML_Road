@@ -1,3 +1,10 @@
+---
+id: l81
+order: 81
+num: "81"
+title: "81. AI, ML, Deep Learning и Generative AI: кто внутри кого"
+short: "AI, ML, DL и GenAI"
+---
 # 81. AI, ML, Deep Learning и Generative AI: кто внутри кого
 
 ## Зачем это нужно

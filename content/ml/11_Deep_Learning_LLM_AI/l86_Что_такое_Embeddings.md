@@ -1,3 +1,10 @@
+---
+id: l86
+order: 86
+num: "86"
+title: "86. Что такое Embeddings"
+short: "Что такое Embeddings"
+---
 # 86. Что такое Embeddings
 
 ## Зачем это нужно

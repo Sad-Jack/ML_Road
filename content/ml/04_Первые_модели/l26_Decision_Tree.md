@@ -1,3 +1,10 @@
+---
+id: l26
+order: 26
+num: "26"
+title: "26. Decision Tree"
+short: "Decision Tree"
+---
 # 26. Decision Tree
 
 ## Зачем это нужно

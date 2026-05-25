@@ -1,3 +1,10 @@
+---
+id: l87
+order: 87
+num: "87"
+title: "87. Что такое Transformer"
+short: "Что такое Transformer"
+---
 # 87. Что такое Transformer
 
 ## Зачем это нужно

@@ -1,3 +1,10 @@
+---
+id: l28
+order: 28
+num: "28"
+title: "28. Gradient Boosting"
+short: "Gradient Boosting"
+---
 # 28. Gradient Boosting
 
 ## Зачем это нужно

@@ -1,3 +1,10 @@
+---
+id: l16
+order: 16
+num: "16"
+title: "16. Train / Validation / Test"
+short: "Train / Validation / Test"
+---
 # 16. Train / Validation / Test
 
 ## Зачем это нужно

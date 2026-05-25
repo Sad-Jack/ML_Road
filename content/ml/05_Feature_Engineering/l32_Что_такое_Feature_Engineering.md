@@ -1,3 +1,10 @@
+---
+id: l32
+order: 32
+num: "32"
+title: "32. Что такое Feature Engineering"
+short: "Что такое Feature Engineering"
+---
 # 32. Что такое Feature Engineering
 
 ## Зачем это нужно

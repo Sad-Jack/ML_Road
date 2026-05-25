@@ -1,3 +1,10 @@
+---
+id: l03
+order: 3
+num: "03"
+title: "03. Модель: input → output"
+short: "Модель: input → output"
+---
 # 03. Модель: input → output
 
 ## Зачем это нужно

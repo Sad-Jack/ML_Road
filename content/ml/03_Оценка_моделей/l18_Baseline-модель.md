@@ -1,3 +1,10 @@
+---
+id: l18
+order: 18
+num: "18"
+title: "18. Baseline-модель"
+short: "Baseline-модель"
+---
 # 18. Baseline-модель
 
 ## Зачем это нужно
