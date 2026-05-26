@@ -61,6 +61,8 @@ def parse_frontmatter(text: str) -> tuple[dict, str]:
             val = []
             if raw_items:
                 val = [item.strip().strip('"').strip("'") for item in raw_items.split(',') if item.strip()]
+        elif re.match(r'^\d+\.\d+$', val):
+            val = float(val)
         elif re.match(r'^\d+$', val):
             val = int(val)
         meta[key] = val
