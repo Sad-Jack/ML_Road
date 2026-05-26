@@ -28,20 +28,14 @@ Cross-validation (перекрёстная проверка) — метод оц
 ## Как это работает
 
 ```python
-from sklearn.model_selection import cross_val_score, StratifiedKFold
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score
 
-model = RandomForestClassifier()
-
-# Базовый k-fold (k=5)
+# model и данные X, y — уже подготовлены
 scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
-print(scores)          # оценки по каждому фолду
-print(scores.mean())   # итоговая средняя оценка
-print(scores.std())    # разброс оценок
+# → [0.82, 0.84, 0.86, 0.83, 0.85]
 
-# Stratified k-fold для классификации
-cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-scores = cross_val_score(model, X, y, cv=cv, scoring='f1')
+print(scores.mean())  # 0.84 — итоговая оценка
+print(scores.std())   # 0.015 — разброс: чем меньше, тем стабильнее
 ```
 
 Большой `scores.std()` говорит о нестабильности модели или о том, что данных слишком мало.
