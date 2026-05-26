@@ -99,10 +99,11 @@ def scan_lessons(folder_path: str) -> list[dict]:
 
         if not meta.get('id'):
             # Попробовать вывести id из имени файла
-            m = re.match(r'^(l\d+|pd\d+)_', filename)
+            m = re.match(r'^([A-Za-z]+\d+)_', filename)
             if m:
                 meta['id'] = m.group(1)
             else:
+                print(f'  ⚠️  Пропущен урок без id: {md_path}')
                 continue  # непонятный файл — пропустить
 
         lessons.append({
@@ -209,6 +210,10 @@ def scan_right_panel(panel_dir: str) -> list[dict]:
         meta, body = parse_frontmatter(content)
         if not meta.get('id'):
             continue
+
+        # Миграционная защита: старые статьи могли приехать из JS-template literal
+        # уже с экранированием \` и \${}. В source markdown это не нужно.
+        body = body.replace('\\`', '`').replace('\\${', '${')
 
         items.append({
             'id': str(meta.get('id')),
@@ -346,6 +351,25 @@ def find_lesson_by_id(ml_sections: list, py_sections: list, lesson_id: str) -> d
     return None
 
 
+def build_full_html(template_html: str, ml_sections: list[dict], py_sections: list[dict], right_panel_items: list[dict]) -> str:
+    """Собрать итоговый HTML в памяти."""
+    html = template_html
+
+    course_js = build_sections_js(ml_sections)
+    html = replace_sections(html, 'COURSE', course_js)
+
+    python_js = build_sections_js(py_sections)
+    html = replace_sections(html, 'PYTHON_COURSE', python_js)
+
+    right_panel_js = build_right_panel_js(right_panel_items)
+    html = replace_const_array(html, 'RIGHT_PANEL_DATA', right_panel_js)
+
+    cdata_str = build_cdata_blocks(ml_sections, py_sections)
+    html = inject_cdata(html, cdata_str)
+
+    return html
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # main
 # ─────────────────────────────────────────────────────────────────────────────
@@ -417,47 +441,28 @@ def main():
     # ── Полная пересборка ────────────────────────────────────────────────────
     if check_only:
         print('🔍 Режим проверки: сравниваем content/ с ml_road.html')
-        # В check-режиме просто проверяем наличие всех id в html
+        with open(TEMPLATE_FILE, 'r', encoding='utf-8') as f:
+            template_html = f.read()
         with open(HTML_FILE, 'r', encoding='utf-8') as f:
-            html = f.read()
-        missing = []
-        for s in ml_sections + py_sections:
-            for l in s['lessons']:
-                if f'id="cdata-{l["id"]}"' not in html:
-                    missing.append(l['id'])
-        missing_panel = [item['id'] for item in right_panel_items if f'id: "{item["id"]}"' not in html]
-        if missing:
-            print(f'⚠️  Отсутствуют cdata-блоки: {", ".join(missing)}')
-        if missing_panel:
-            print(f'⚠️  Отсутствуют статьи правой панели: {", ".join(missing_panel)}')
-        if not missing and not missing_panel:
-            print('✅ Все cdata-блоки и статьи правой панели присутствуют.')
+            current_html = f.read()
+
+        expected_html = build_full_html(template_html, ml_sections, py_sections, right_panel_items)
+        if current_html == expected_html:
+            print('✅ ml_road.html полностью совпадает с template + content/.')
+        else:
+            print('⚠️  ml_road.html не совпадает с текущими template/content. Нужна пересборка.')
         return
 
     print(f'🔨 Полная пересборка: {os.path.basename(TEMPLATE_FILE)} → {os.path.basename(HTML_FILE)}')
     print()
 
     with open(TEMPLATE_FILE, 'r', encoding='utf-8') as f:
-        html = f.read()
+        template_html = f.read()
 
-    # 1. Вставить COURSE.sections
-    course_js = build_sections_js(ml_sections)
-    html = replace_sections(html, 'COURSE', course_js)
+    html = build_full_html(template_html, ml_sections, py_sections, right_panel_items)
     print(f'  ✓ COURSE.sections: {len(ml_sections)} секций')
-
-    # 2. Вставить PYTHON_COURSE.sections
-    python_js = build_sections_js(py_sections)
-    html = replace_sections(html, 'PYTHON_COURSE', python_js)
     print(f'  ✓ PYTHON_COURSE.sections: {len(py_sections)} секций')
-
-    # 3. Вставить статьи правой панели
-    right_panel_js = build_right_panel_js(right_panel_items)
-    html = replace_const_array(html, 'RIGHT_PANEL_DATA', right_panel_js)
     print(f'  ✓ RIGHT_PANEL_DATA: {len(right_panel_items)} статей')
-
-    # 4. Вставить cdata-блоки
-    cdata_str = build_cdata_blocks(ml_sections, py_sections)
-    html = inject_cdata(html, cdata_str)
     print(f'  ✓ cdata-блоки: {ml_lessons_total + py_lessons_total} уроков')
 
     # 5. Записать результат

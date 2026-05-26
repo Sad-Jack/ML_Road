@@ -1715,7 +1715,6 @@
 
     .rpi-cat-mlcore { color: var(--cyan); border-color: #00e5ff40; background: #00e5ff08 }
     .rpi-cat-learning { color: #00cfb4; border-color: #00cfb440; background: #00cfb408 }
-    .rpi-cat-engineering { color: var(--green); border-color: #00ff9d40; background: #00ff9d08 }
     .rpi-cat-prompt { color: var(--purple); border-color: #9b4dff40; background: #9b4dff08 }
     .rpi-cat-other { color: var(--text2); border-color: var(--border) }
 
@@ -2118,6 +2117,15 @@
       if (savedTab === 'python' || savedTab === 'mlbase') CUR_TAB = savedTab;
     } catch (e) { }
 
+    function findLessonEntry(id) {
+      return ALL.find(l => l.id === id) || PYTHON_ALL.find(l => l.id === id) || null;
+    }
+
+    function resolveNavId(id) {
+      if (id === 'home') return 'home';
+      return findLessonEntry(id) ? id : 'home';
+    }
+
     function switchTab(tab) {
       if (tab !== 'mlbase' && tab !== 'python') return;
       CUR_TAB = tab;
@@ -2131,6 +2139,7 @@
 
     /* ─── NAV ─── */
     function nav(id) {
+      id = resolveNavId(id);
       CUR = id;
       try { localStorage.setItem('mlroad-cur', id); } catch (e) { }
       document.querySelectorAll('.rpi.act').forEach(el => el.classList.remove('act'));
@@ -2172,17 +2181,17 @@
         return;
       }
       const html = mdToHtml(item.content);
-      const tagsHtml = (item.tags || []).map(t => `<span class="kb-tag">${t}</span>`).join('');
+      const tagsHtml = (item.tags || []).map(t => `<span class="kb-tag">${esc(t)}</span>`).join('');
       document.getElementById('ca').innerHTML = `
     <div>
       <button class="kb-back" onclick="nav('home')">◂ На главную</button>
       <div class="kb-hdr">
         <div class="kb-meta">
-          <span class="kb-cat-badge">${item.category}</span>
-          <span class="kb-type-badge">${item.type || 'reference'}</span>
+          <span class="kb-cat-badge">${esc(item.category)}</span>
+          <span class="kb-type-badge">${esc(item.type || 'reference')}</span>
         </div>
-        <div class="kb-title">${item.title}</div>
-        ${item.summary ? `<div class="kb-summary">${item.summary}</div>` : ''}
+        <div class="kb-title">${esc(item.title)}</div>
+        ${item.summary ? `<div class="kb-summary">${esc(item.summary)}</div>` : ''}
         ${tagsHtml ? `<div class="kb-tags">${tagsHtml}</div>` : ''}
       </div>
       <div class="lc">${html}</div>
@@ -2245,11 +2254,13 @@
     function renderLesson(id) {
       let lesson = ALL.find(l => l.id === id);
       let lessonList = ALL;
+      let inPython = false;
       if (!lesson) {
         lesson = PYTHON_ALL.find(l => l.id === id);
-        lessonList = PYTHON_ALL;
+        inPython = !!lesson;
       }
       if (!lesson) { document.getElementById('ca').innerHTML = '<p style="color:var(--red);font-family:var(--mono);padding:32px">// ERROR: lesson not found</p>'; return; }
+      if (inPython) lessonList = lesson.section.lessons;
 
       const el = document.getElementById('cdata-' + id);
       if (!el) { document.getElementById('ca').innerHTML = '<p style="color:var(--red);font-family:var(--mono);padding:32px">// ERROR: lesson content not found</p>'; return; }
@@ -2262,13 +2273,13 @@
 
       document.getElementById('ca').innerHTML = `
     <div class="lhdr">
-      <div class="lmeta">${lesson.section.title} // УРОК ${lesson.order} из ${lessonList.length}</div>
-      <div class="ltitle">${lesson.title}</div>
+      <div class="lmeta">${esc(lesson.section.title)} // УРОК ${lesson.order} из ${lessonList.length}</div>
+      <div class="ltitle">${esc(lesson.title)}</div>
     </div>
     <div class="lc">${html}</div>
     <div class="lnav">
-      ${prev ? `<button class="nb pr" onclick="nav('${prev.id}')"><span>←</span><div><span class="nb-lbl">ПРЕДЫДУЩИЙ</span><span class="nb-t">${prev.title}</span></div></button>` : '<div></div>'}
-      ${next ? `<button class="nb nx" onclick="nav('${next.id}')"><div style="text-align:right"><span class="nb-lbl">СЛЕДУЮЩИЙ</span><span class="nb-t">${next.title}</span></div><span>→</span></button>` : ''}
+      ${prev ? `<button class="nb pr" onclick="nav('${prev.id}')"><span>←</span><div><span class="nb-lbl">ПРЕДЫДУЩИЙ</span><span class="nb-t">${esc(prev.title)}</span></div></button>` : '<div></div>'}
+      ${next ? `<button class="nb nx" onclick="nav('${next.id}')"><div style="text-align:right"><span class="nb-lbl">СЛЕДУЮЩИЙ</span><span class="nb-t">${esc(next.title)}</span></div><span>→</span></button>` : ''}
     </div>`;
       document.getElementById('st-l').textContent = `УРОК ${lesson.order}/${lessonList.length} — ${lesson.short}`;
     }
@@ -2327,8 +2338,9 @@
         ).slice(0, 8);
         res.innerHTML = hits.length
           ? hits.map(l => {
-            const t = l.title.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), m => `<span class="srh">${m}</span>`);
-            return `<div class="sri" onclick="nav('${l.id}')"><div class="sri-t">${t}</div><div class="sri-s">${l.section.title}</div></div>`;
+            const safeTitle = esc(l.title);
+            const t = safeTitle.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), m => `<span class="srh">${m}</span>`);
+            return `<div class="sri" onclick="nav('${l.id}')"><div class="sri-t">${t}</div><div class="sri-s">${esc(l.section.title)}</div></div>`;
           }).join('')
           : '<div class="sr0">// нет результатов</div>';
         res.classList.add('vis');
@@ -2394,18 +2406,33 @@
       });
       return html;
     }
+
     function inl(text) {
       if (!text) return '';
-      const ics = [];
+      const ics = [], links = [];
       text = text.replace(/`([^`]+)`/g, (_, c) => { ics.push(c); return '\x02IC' + (ics.length - 1) + '\x02'; });
+      text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
+        links.push({ label, href });
+        return '\x02LK' + (links.length - 1) + '\x02';
+      });
+      text = esc(text);
       text = text.replace(/\*\*\*([^*]+)\*\*\*/g, '<strong><em>$1</em></strong>');
       text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
       text = text.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
-      text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="nl" target="_blank">$1</a>');
+      text = text.replace(/\x02LK(\d+)\x02/g, (_, n) => {
+        const { label, href } = links[+n];
+        return `<a href="${safeHref(href)}" class="nl" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`;
+      });
       text = text.replace(/\x02IC(\d+)\x02/g, (_, n) => `<code class="ic">${esc(ics[+n])}</code>`);
       return text;
     }
-    function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    function escAttr(s) { return esc(s).replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+    function safeHref(href) {
+      const raw = String(href || '').trim();
+      if (/^(https?:|mailto:)/i.test(raw)) return escAttr(raw);
+      return '#';
+    }
 
     /* ─── INIT ─── */
     document.addEventListener('DOMContentLoaded', () => {
@@ -2449,6 +2476,7 @@
       });
       let saved = 'home';
       try { saved = localStorage.getItem('mlroad-cur') || 'home'; } catch (e) { }
+      saved = resolveNavId(saved);
       initRp();
       nav(saved);
     });
@@ -2459,14 +2487,12 @@
     const CAT_CLASSES = {
       'ML Core': 'rpi-cat-mlcore',
       'Learning Resources': 'rpi-cat-learning',
-      'Engineering Tools': 'rpi-cat-engineering',
       'Prompt Library': 'rpi-cat-prompt'
     };
 
     const CAT_LABELS = {
       'ML Core': 'ML Core',
       'Learning Resources': 'Learning',
-      'Engineering Tools': 'Tools',
       'Prompt Library': 'Prompts'
     };
 
