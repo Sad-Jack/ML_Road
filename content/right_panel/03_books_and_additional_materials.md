@@ -8,7 +8,7 @@ summary: "Большая агрегированная подборка книг,
 priority: 2
 tags: ["books", "courses", "learning"]
 ---
-# Подборка книг и дополнительных материалов [CLOSE]
+# Подборка книг и дополнительных материалов
 
 [Теорема Маркова и L-движения](https://dfgm.math.msu.su/files/knottheory/knot_theory_Lecture8_rus.pdf)
 
@@ -86,12 +86,12 @@ tags: ["books", "courses", "learning"]
 - *Орельен Жерон* **Прикладное машинное обучение с помощью Scikit-Learn и TensorFlow. Концепции, инструменты и техники для создания интеллектуальных систем** [источник](https://www.ozon.ru/context/detail/id/144106127/), [оглавление](https://ozon-st.cdn.ngenix.net/multimedia/1021976147.pdf), [отрывки из глав](https://ozon-st.cdn.ngenix.net/multimedia/1021976149.pdf)
 - *П.Е. Овчинников* **Применение искусственных нейронных сетей для обработки сигналов. Учебно-методическое пособие.** 2012г [источник](http://window.edu.ru/resource/846/77846/files/Ovch_ANN.pdf)
 - *Франсуа Шолле* **Глубокое обучение на R** [источник](https://www.ozon.ru/context/detail/id/146089453/), [оглавление](https://ozon-st.cdn.ngenix.net/multimedia/1023471543.pdf), [отрывки из глав](https://ozon-st.cdn.ngenix.net/multimedia/1023471544.pdf)
-- *О\`Нил, Шатт* **Data Science. Инсайдерская информация для новичков. Включая язык R** [источник](https://www.labirint.ru/books/667268/)
+- *О`Нил, Шатт* **Data Science. Инсайдерская информация для новичков. Включая язык R** [источник](https://www.labirint.ru/books/667268/)
 - *Шай Шалев-Шварц, Шай Бен-Давид* **Идеи машинного обучения** [источник](https://dmkpress.com/catalog/computer/data/978-5-97060-673-5/), [оглавление и отрывки из глав](https://dmkpress.com/files/PDF/978-5-97060-673-5.pdf)
 - *Франсуа Шолле* **Глубокое обучение на Python** [источник](https://www.ozon.ru/context/detail/id/145615583/)
 - *Пратик Джоши* **Искусственный интеллект с примерами на Python** [источник](http://www.williamspublishing.com/Books/978-5-907114-41-8.html)
 - *Бенгфорт Б., Билбро Р., Охеда Т.* **Прикладной анализ текстовых данных на Python. Машинное обучение и создание приложений обработки естественного языка** [источник](https://www.piter.com/collection/new/product/prikladnoy-analiz-tekstovyh-dannyh-na-python-mashinnoe-obuchenie-i-sozdanie-prilozheniy-obrabotki-estestvennogo-yazyka)
-- *Келлехер Дж., Мак-Нейми Б., д\`Арси А.* **Основы машинного обучения для аналитического прогнозирования: алгоритмы, рабочие примеры и тематические исследования** [источник](https://www.chitai-gorod.ru/catalog/book/1172490/)
+- *Келлехер Дж., Мак-Нейми Б., д`Арси А.* **Основы машинного обучения для аналитического прогнозирования: алгоритмы, рабочие примеры и тематические исследования** [источник](https://www.chitai-gorod.ru/catalog/book/1172490/)
 - *Равичандиран С.* **Глубокое обучение с подкреплением на Python. OpenAI Gym и TensorFlow для профи** [источник](https://www.piter.com/collection/bestsellery-packt/product/glubokoe-obuchenie-s-podkrepleniem-na-python-openai-gym-i-tensorflow-dlya-profi)
 
 # **Видео на русском языке**

@@ -63,6 +63,15 @@ y = df["salary"]
 4. Чем отличается `df["salary"]` от `df[["salary"]]`?
 5. Ты открыл CSV-файл и видишь 10 000 строк и 12 колонок. Что ты проверишь первым перед обучением модели?
 
+## Полезные ссылки
+
+Если хочешь быстро добрать практику по `pandas`, начни с этих материалов:
+
+- [Pandas User Guide](https://pandas.pydata.org/docs/user_guide/index.html)
+- [10 minutes to pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
+- [IO tools: CSV, Excel, Parquet, SQL](https://pandas.pydata.org/docs/user_guide/io.html)
+- [API reference](https://pandas.pydata.org/docs/reference/index.html)
+
 ## Краткий итог
 
 - Умение читать и преобразовывать DataFrame — основа всего: без этого нельзя дойти до обучения модели.
