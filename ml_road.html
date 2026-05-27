@@ -2469,6 +2469,102 @@
     /* 21 ── Lesson header: breathing room at top */
     .lhdr { padding-top: 14px; }
 
+    /* 22 ── Matrix glitch — logo icon + text */
+    .logo-icon { animation: logo-glitch 7s steps(1) infinite; }
+    .logo-text  { animation: logo-txt-glitch 7s steps(1) infinite; }
+    .logo:hover .logo-icon,
+    .logo:hover .logo-text  { animation-duration: 2.5s; }
+
+    @keyframes logo-glitch {
+      /* Normal — most of the time */
+      0%, 85.2%, 91.5%, 100% {
+        transform: none; filter: none; opacity: 1;
+        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+      }
+      /* ── Main burst ── */
+      84% {  /* slice upper half + shift left + RGB split */
+        transform: translate(-4px, 0);
+        filter: drop-shadow(7px 0 0 rgba(255,20,80,.95))
+                drop-shadow(-1px 0 0 rgba(0,229,255,.6))
+                brightness(1.9);
+        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 52%, 6px 52%, 0 calc(52% - 6px));
+        opacity: 1;
+      }
+      84.3% {  /* slice lower half + shift right */
+        transform: translate(6px, 0) skewX(-4deg);
+        filter: drop-shadow(-6px 0 0 rgba(0,229,255,.9)) brightness(2.3);
+        clip-path: polygon(0 48%, calc(100% - 6px) 48%, 100% calc(48% + 6px), 100% 100%, 6px 100%, 0 calc(100% - 6px));
+        opacity: .65;
+      }
+      84.6% {  /* white flash, full shape */
+        transform: translate(-2px, 0);
+        filter: brightness(5) saturate(0);
+        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+        opacity: .45;
+      }
+      84.9% {  /* magenta offset */
+        transform: translate(4px, 0);
+        filter: drop-shadow(-4px 0 0 rgba(255,20,80,.85)) brightness(1.7);
+        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+        opacity: 1;
+      }
+      85.2% {  /* recovery glow */
+        transform: none;
+        filter: drop-shadow(0 0 16px rgba(0,229,255,1)) brightness(1.4);
+        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+        opacity: 1;
+      }
+      /* ── Aftershock ── */
+      90% {
+        transform: translate(3px, 0);
+        filter: drop-shadow(-3px 0 0 rgba(255,20,80,.5));
+        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+        opacity: 1;
+      }
+      90.4% {
+        transform: none; filter: none;
+        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+        opacity: 1;
+      }
+    }
+
+    @keyframes logo-txt-glitch {
+      0%, 85.2%, 91.5%, 100% {
+        transform: none; opacity: 1;
+        text-shadow: 0 0 18px var(--cyan-glow), 0 0 40px rgba(0,229,255,.3);
+      }
+      84% {
+        transform: translate(-3px, 0);
+        text-shadow: 5px 0 0 rgba(255,20,80,.8), -2px 0 0 rgba(0,229,255,.7);
+        opacity: .9;
+      }
+      84.3% {
+        transform: translate(4px, 0) skewX(-2deg);
+        text-shadow: -5px 0 0 rgba(0,229,255,.9), 3px 0 0 rgba(255,20,80,.6);
+        opacity: .75;
+      }
+      84.6% {
+        transform: translate(-1px, 0);
+        text-shadow: 0 0 30px rgba(255,255,255,.95);
+        opacity: .5;
+      }
+      84.9% {
+        transform: translate(2px, 0);
+        text-shadow: 0 0 28px var(--cyan), 0 0 55px rgba(0,229,255,.7);
+        opacity: 1;
+      }
+      90% {
+        transform: translate(1px, 0);
+        text-shadow: 2px 0 0 rgba(255,20,80,.35), 0 0 18px var(--cyan-glow);
+        opacity: 1;
+      }
+      90.4% {
+        transform: none;
+        text-shadow: 0 0 18px var(--cyan-glow), 0 0 40px rgba(0,229,255,.3);
+        opacity: 1;
+      }
+    }
+
   </style>
 </head>
 
