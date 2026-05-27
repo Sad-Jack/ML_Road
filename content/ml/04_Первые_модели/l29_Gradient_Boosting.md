@@ -5,11 +5,11 @@ num: "29"
 title: "29. Gradient Boosting"
 short: "Gradient Boosting"
 ---
-# 28. Gradient Boosting
+# 29. Gradient Boosting
 
 ## Зачем это нужно
 
-Random Forest строит деревья независимо и усредняет. Gradient Boosting делает иначе: деревья строятся последовательно, каждое новое **исправляет ошибки предыдущих**. Этот подход почти всегда даёт лучшее качество на табличных данных — и поэтому именно бустинг лежит в основе XGBoost, LightGBM, CatBoost (урок 29).
+Random Forest строит деревья независимо и усредняет. Gradient Boosting делает иначе: деревья строятся последовательно, каждое новое **исправляет ошибки предыдущих**. Этот подход почти всегда даёт лучшее качество на табличных данных — и поэтому именно бустинг лежит в основе XGBoost, LightGBM, CatBoost — библиотек из следующего урока.
 
 ## Простая интуиция
 
@@ -29,24 +29,9 @@ Random Forest строит деревья независимо и усредня
 
 ## Как это работает
 
-```python
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.metrics import accuracy_score
-
-model = GradientBoostingClassifier(
-    n_estimators=300,
-    learning_rate=0.05,
-    max_depth=3,
-    subsample=0.8,         # стохастический бустинг — против overfitting
-    random_state=42,
-)
-model.fit(X_train, y_train)
-print(accuracy_score(y_val, model.predict(X_val)))
-```
-
 Главное правило настройки: **`n_estimators` и `learning_rate` связаны**. Меньший lr → нужно больше деревьев, но качество стабильнее. Стандарт: `lr=0.05–0.1`, `n_estimators=200–1000`, `max_depth=3–6`.
 
-Если `n_estimators` слишком большое и нет early stopping — модель переобучится. Поэтому в проде используют XGBoost / LightGBM / CatBoost: у них есть `early_stopping_rounds` по val-метрике.
+Если `n_estimators` слишком большое и нет early stopping — модель переобучится. Поэтому в проде обязательно используют `early_stopping_rounds`: обучение останавливается автоматически, когда val-метрика перестаёт улучшаться.
 
 ## Простой пример
 
@@ -54,19 +39,19 @@ print(accuracy_score(y_val, model.predict(X_val)))
 
 ## Практика
 
-1. В чём ключевое различие между тем, как Random Forest и Gradient Boosting строят деревья?
-2. Что произойдёт с моделью, если поставить `n_estimators=5000` и `learning_rate=0.5` без early stopping?
-3. Почему деревья в бустинге обычно мелкие (`max_depth=3–6`), тогда как в Random Forest деревья глубокие?
-4. Почему Gradient Boosting без ограничений особенно склонен к overfitting по сравнению с Random Forest?
-5. Вы настраиваете `GradientBoostingClassifier`. При `learning_rate=0.1` и `n_estimators=200` val-метрика хорошая. Если снизить `learning_rate` до 0.01, что нужно изменить в `n_estimators`, чтобы сохранить качество?
+1. Вы смотрите на val-метрику GB-модели каждые 50 итераций: 0.78, 0.83, 0.87, 0.89, 0.90, 0.89, 0.88. На каком шаге нужно остановиться и почему? Как называется этот механизм?
+2. Коллега говорит: «Я всегда использую learning_rate=0.001 — так модель обучается аккуратнее». Что не так с этой логикой?
+3. Вы переключились с `max_depth=3` на `max_depth=10` в `GradientBoostingClassifier`. Val-метрика упала. Объясните, почему увеличение глубины дерева в бустинге ухудшает результат — хотя более глубокие деревья «умнее».
+4. В уроке «Random Forest» деревья строятся независимо и их ошибки компенсируют друг друга. Объясните, почему в Gradient Boosting такая компенсация невозможна — и почему это делает его более склонным к overfitting без ограничений.
+5. В уроке «Random Forest» мы видели, что увеличение `n_estimators` не вызывает overfitting. Почему то же правило не работает для Gradient Boosting — и что нужно изменить в `n_estimators`, если снизить `learning_rate` с 0.1 до 0.01?
 
 ## Краткий итог
 
-- Gradient Boosting: деревья строятся последовательно, каждое исправляет ошибки предыдущих.
+- Нужна максимальная точность на табличных данных — начните с Gradient Boosting: в большинстве задач он выигрывает у Random Forest.
 - Слабые модели (мелкие деревья) + маленький `learning_rate` + много итераций.
 - Чаще выигрывает у Random Forest на табличных данных.
 - Требует настройки и early stopping — иначе overfitting.
-- Основа XGBoost / LightGBM / CatBoost (следующий урок).
+- Основа промышленных бустинг-библиотек, рассматриваемых в следующем уроке.
 
 ## Ключевые термины урока
 
