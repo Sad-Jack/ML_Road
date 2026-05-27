@@ -18,6 +18,12 @@ import sys
 import json
 import glob
 
+try:
+    import yaml as _yaml
+    _HAS_YAML = True
+except ImportError:
+    _HAS_YAML = False
+
 BASE_DIR      = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_FILE = os.path.join(BASE_DIR, 'ml_road_template.html')
 HTML_FILE     = os.path.join(BASE_DIR, 'ml_road.html')
@@ -31,7 +37,10 @@ RIGHT_PANEL_DIR = os.path.join(BASE_DIR, 'content', 'right_panel')
 # ─────────────────────────────────────────────────────────────────────────────
 
 def parse_frontmatter(text: str) -> tuple[dict, str]:
-    """Вернуть (meta_dict, body_without_frontmatter)."""
+    """Вернуть (meta_dict, body_without_frontmatter).
+
+    Использует PyYAML если доступен; иначе падает обратно на ручной парсер.
+    """
     if not (text.startswith('---\n') or text.startswith('---\r\n')):
         return {}, text
 
@@ -44,6 +53,15 @@ def parse_frontmatter(text: str) -> tuple[dict, str]:
     fm_text = text[4:end]
     body    = text[end + 5:]  # пропустить \n---\n
 
+    # ── Путь 1: PyYAML ────────────────────────────────────────────────────────
+    if _HAS_YAML:
+        try:
+            meta = _yaml.safe_load(fm_text) or {}
+            return meta, body
+        except _yaml.YAMLError:
+            pass  # fallback к ручному парсеру
+
+    # ── Путь 2: ручной парсер (fallback без внешних зависимостей) ─────────────
     meta = {}
     for line in fm_text.splitlines():
         if ':' not in line:
@@ -51,7 +69,7 @@ def parse_frontmatter(text: str) -> tuple[dict, str]:
         key, _, val = line.partition(':')
         key = key.strip()
         raw_val = val.strip()
-        # Определить: значение в кавычках → оставить строкой, не конвертировать в число
+        # Значение в кавычках → оставить строкой, не конвертировать в число
         is_quoted = (
             (raw_val.startswith('"') and raw_val.endswith('"')) or
             (raw_val.startswith("'") and raw_val.endswith("'"))
@@ -177,11 +195,12 @@ def build_sections_js(sections: list[dict]) -> str:
     """Генерирует JS-массив sections для вставки в COURSE / PYTHON_COURSE."""
     lines = ['[']
     for s in sections:
-        lessons_js   = build_lessons_js(s['lessons'])
+        lessons_js = build_lessons_js(s['lessons'])
+        locked_js  = 'true' if s.get('locked') else 'false'
         lines.append(
             f"        {{\n"
             f"          id: '{s['id']}', num: '{s['num']}', title: '{_js_str(s['title'])}', "
-            f"color: '{s['color']}', lessons: {lessons_js}\n"
+            f"color: '{s['color']}', locked: {locked_js}, lessons: {lessons_js}\n"
             f"        }},"
         )
     lines.append('      ]')
@@ -287,13 +306,19 @@ def build_cdata_blocks(ml_sections: list[dict], py_sections: list[dict]) -> str:
 
 def replace_sections(html: str, const_name: str, new_sections_js: str) -> str:
     """Заменяет sections: [...] внутри const COURSE / PYTHON_COURSE."""
-    # Найти позицию 'sections: ['
-    start_marker = f'    const {const_name} = {{\n      sections: '
-    start_pos    = html.find(start_marker)
-    if start_pos == -1:
+    # Regex-поиск: не зависит от точных отступов/форматирования шаблона
+    header_match = re.search(
+        rf'\bconst\s+{re.escape(const_name)}\s*=\s*\{{',
+        html,
+    )
+    if not header_match:
         raise ValueError(f'Не найден маркер для {const_name}')
 
-    bracket_start = html.find('[', start_pos)
+    sections_pos = html.find('sections:', header_match.end())
+    if sections_pos == -1:
+        raise ValueError(f'Нет sections: для {const_name}')
+
+    bracket_start = html.find('[', sections_pos)
     if bracket_start == -1:
         raise ValueError(f'Нет [ для {const_name}')
 
@@ -351,14 +376,6 @@ def inject_patch(html: str, lesson_id: str, new_body: str) -> tuple[str, bool]:
     return new_html, True
 
 
-def find_lesson_by_id(ml_sections: list, py_sections: list, lesson_id: str) -> dict | None:
-    for s in ml_sections + py_sections:
-        for l in s['lessons']:
-            if l['id'] == lesson_id:
-                return l
-    return None
-
-
 def build_full_html(template_html: str, ml_sections: list[dict], py_sections: list[dict], right_panel_items: list[dict]) -> str:
     """Собрать итоговый HTML в памяти."""
     html = template_html
@@ -402,6 +419,14 @@ def main():
     print(f'   Right panel: {len(right_panel_items)} статей')
     print()
 
+    # O(1)-индекс уроков для патч-режима
+    lesson_index: dict[str, dict] = {
+        lesson['id']: lesson
+        for sections in (ml_sections, py_sections)
+        for section in sections
+        for lesson in section['lessons']
+    }
+
     # ── Патч-режим: только указанные уроки ──────────────────────────────────
     if args and not force_full:
         lesson_ids = args
@@ -422,7 +447,7 @@ def main():
         not_found  = []
 
         for lid in lesson_ids:
-            lesson = find_lesson_by_id(ml_sections, py_sections, lid)
+            lesson = lesson_index.get(lid)
             if not lesson:
                 not_found.append(lid)
                 continue

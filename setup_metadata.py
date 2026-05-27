@@ -1,17 +1,31 @@
 #!/usr/bin/env python3
 """
-setup_metadata.py — создаёт _module.json и frontmatter для модулей 01-05 ML.
+setup_metadata.py — создаёт _module.json и frontmatter при добавлении новых модулей.
 
-СТАТУС: Одноразовый скрипт инициализации. Уже выполнен.
-  - Все _module.json созданы.
-  - Все .md файлы уже имеют frontmatter.
+СТАТУС: Одноразовый скрипт инициализации. Выполнен в мае 2024.
+  - Все _module.json созданы. Источник истины — сами файлы _module.json.
+  - Все 97 .md файлов уже имеют frontmatter (id, order, num, title, short, locked).
   - Повторный запуск безопасен (идемпотентен): пропускает файлы с уже существующим
     frontmatter и _module.json.
 
-ВНИМАНИЕ: Словарь ML_LESSONS устарел и покрывает только l01–l43 (из 97).
-  Нумерация l23–l31 в словаре сдвинута на 1 относительно текущего курса:
-    dict['l23'] = 'Линейная регрессия', но реально l23 = 'Overfitting и Underfitting'.
-  Не использовать для обновления существующих frontmatter-заголовков.
+КАК ДОБАВИТЬ НОВЫЙ УРОК:
+  1. Создать .md файл в нужной папке с frontmatter вручную.
+  2. Запустить: python3 build.py l<id>   — для патч-обновления HTML.
+  Этот скрипт для этого НЕ нужен.
+
+КАК ДОБАВИТЬ НОВЫЙ МОДУЛЬ:
+  1. Добавить запись в ML_MODULES ниже.
+  2. Создать папку content/ml/XX_Название/.
+  3. Добавить _module.json в неё (или запустить этот скрипт).
+  4. Создать .md файлы с frontmatter вручную.
+
+ПОЧЕМУ ML_LESSONS УДАЛЁН:
+  Словарь покрывал только l01–l43 из 97 уроков, а нумерация l23–l97 в нём
+  была сдвинута на 1–3 позиции относительно реального курса (из-за добавления
+  уроков Временные ряды / SHAP / p-value). Оставлять неверный словарь в коде
+  опаснее, чем его отсутствие — при добавлении нового урока он выдал бы
+  неправильные title/num в frontmatter.
+  Frontmatter новых уроков писать вручную — это 5 строк.
 """
 
 import os
@@ -51,64 +65,13 @@ PYTHON_MODULES = [
     {"id": "py8", "num": "08", "title": "Hugging Face Transformers",    "color": "c8", "locked": True},
 ]
 
-# ─── Данные уроков (из COURSE в ml_road.html) ─────────────────────────────────
-
-ML_LESSONS = {
-    # Модуль 1
-    "l01": {"order": 1,  "num": "01", "title": "01. Что такое машинное обучение простыми словами", "short": "Что такое машинное обучение", "locked": False},
-    "l02": {"order": 2,  "num": "02", "title": "02. Типы обучения: supervised, unsupervised, RL",   "short": "Типы обучения",               "locked": False},
-    "l03": {"order": 3,  "num": "03", "title": "03. Модель: input → output",                        "short": "Модель: input → output",       "locked": False},
-    "l04": {"order": 4,  "num": "04", "title": "04. X, y, признаки и target",                       "short": "X, y, признаки и target",      "locked": False},
-    "l05": {"order": 5,  "num": "05", "title": "05. Как выглядят данные в ML",                      "short": "Как выглядят данные в ML",     "locked": False},
-    "l06": {"order": 6,  "num": "06", "title": "06. Что модель реально учит из данных",             "short": "Что модель реально учит из данных", "locked": False},
-    "l07": {"order": 7,  "num": "07", "title": "07. Статистика для ML: среднее, медиана, дисперсия","short": "Статистика для ML",             "locked": False},
-    "l08": {"order": 8,  "num": "08", "title": "08. Числовые и категориальные признаки",            "short": "Числовые и категориальные признаки", "locked": False},
-    # Модуль 2
-    "l09": {"order": 9,  "num": "09", "title": "09. Регрессия vs классификация",                   "short": "Регрессия vs классификация",   "locked": False},
-    "l10": {"order": 10, "num": "10", "title": "10. Вероятности в классификации",                   "short": "Вероятности в классификации",  "locked": False},
-    "l11": {"order": 11, "num": "11", "title": "11. Кластеризация как задача",                       "short": "Кластеризация",                "locked": False},
-    "l12": {"order": 12, "num": "12", "title": "12. Рекомендательные системы",                      "short": "Рекомендательные системы",     "locked": False},
-    "l13": {"order": 13, "num": "13", "title": "13. Детекция аномалий",                              "short": "Детекция аномалий",            "locked": False},
-    "l14": {"order": 14, "num": "14", "title": "14. Ранжирование в ML",                              "short": "Ранжирование",                 "locked": False},
-    "l15": {"order": 15, "num": "15", "title": "15. Карта задач ML",                                 "short": "Карта задач ML",               "locked": False},
-    # Модуль 3
-    "l16": {"order": 16, "num": "16", "title": "16. Train / Validation / Test",                     "short": "Train / Validation / Test",    "locked": False},
-    "l17": {"order": 17, "num": "17", "title": "17. Cross-validation",                              "short": "Cross-validation",             "locked": False},
-    "l18": {"order": 18, "num": "18", "title": "18. Baseline-модель",                               "short": "Baseline-модель",              "locked": False},
-    "l19": {"order": 19, "num": "19", "title": "19. Confusion Matrix",                              "short": "Confusion Matrix",             "locked": False},
-    "l20": {"order": 20, "num": "20", "title": "20. Метрики классификации",                         "short": "Метрики классификации",        "locked": False},
-    "l21": {"order": 21, "num": "21", "title": "21. Метрики регрессии: MAE, MSE, RMSE",             "short": "Метрики регрессии: MAE, MSE, RMSE", "locked": False},
-    "l22": {"order": 22, "num": "22", "title": "22. Overfitting и Underfitting",                    "short": "Overfitting и Underfitting",   "locked": False},
-    # Модуль 4
-    "l23": {"order": 23, "num": "23", "title": "23. Линейная регрессия",                             "short": "Линейная регрессия",           "locked": False},
-    "l24": {"order": 24, "num": "24", "title": "24. Логистическая регрессия",                        "short": "Логистическая регрессия",      "locked": False},
-    "l25": {"order": 25, "num": "25", "title": "25. Support Vector Machine простыми словами",        "short": "SVM",                          "locked": False},
-    "l26": {"order": 26, "num": "26", "title": "26. Decision Tree",                                  "short": "Decision Tree",                "locked": False},
-    "l27": {"order": 27, "num": "27", "title": "27. Random Forest",                                  "short": "Random Forest",                "locked": False},
-    "l28": {"order": 28, "num": "28", "title": "28. Gradient Boosting",                              "short": "Gradient Boosting",            "locked": False},
-    "l29": {"order": 29, "num": "29", "title": "29. XGBoost, LightGBM и CatBoost",                  "short": "XGBoost, LightGBM и CatBoost", "locked": False},
-    "l30": {"order": 30, "num": "30", "title": "30. Простой ML-пайплайн",                            "short": "Простой ML-пайплайн",          "locked": False},
-    "l31": {"order": 31, "num": "31", "title": "31. Как выбирать модель под задачу",                 "short": "Как выбирать модель под задачу","locked": False},
-    # Модуль 5
-    "l32": {"order": 32, "num": "32", "title": "32. Что такое Feature Engineering",                 "short": "Что такое Feature Engineering","locked": False},
-    "l33": {"order": 33, "num": "33", "title": "33. Масштабирование признаков",                     "short": "Масштабирование признаков",    "locked": False},
-    "l34": {"order": 34, "num": "34", "title": "34. Как выбирать признаки для X",                   "short": "Как выбирать признаки для X",  "locked": False},
-    "l35": {"order": 35, "num": "35", "title": "35. Пропуски в данных",                             "short": "Пропуски в данных",            "locked": False},
-    "l36": {"order": 36, "num": "36", "title": "36. Выбросы в данных",                              "short": "Выбросы в данных",             "locked": False},
-    "l37": {"order": 37, "num": "37", "title": "37. Кодирование категориальных признаков",          "short": "Кодирование категориальных признаков", "locked": False},
-    "l38": {"order": 38, "num": "38", "title": "38. One-Hot Encoding простыми словами",             "short": "One-Hot Encoding",             "locked": False},
-    "l39": {"order": 39, "num": "39", "title": "39. Label Encoding простыми словами",               "short": "Label Encoding",               "locked": False},
-    "l40": {"order": 40, "num": "40", "title": "40. Ordinal Encoding простыми словами",             "short": "Ordinal Encoding",             "locked": False},
-    "l41": {"order": 41, "num": "41", "title": "41. Создание новых признаков",                      "short": "Создание новых признаков",     "locked": False},
-    "l42": {"order": 42, "num": "42", "title": "42. Удаление лишних признаков",                     "short": "Удаление лишних признаков",    "locked": False},
-    "l43": {"order": 43, "num": "43", "title": "43. Data Leakage: опасная ошибка в ML",             "short": "Data Leakage",                 "locked": False},
-}
-
-PYTHON_LESSONS = {
-    "pd01": {"order": 1, "num": "01", "title": "01. DataFrame в Python для ML", "short": "DataFrame в Python для ML", "locked": False},
-    "pd02": {"order": 2, "num": "02", "title": "02. Pandas на практике",        "short": "Pandas на практике",        "locked": False},
-    "pd03": {"order": 3, "num": "03", "title": "03. Типы данных в Pandas",       "short": "Типы данных в Pandas",       "locked": False},
-}
+# ─── Данные уроков ────────────────────────────────────────────────────────────
+# ML_LESSONS и PYTHON_LESSONS удалены: они покрывали только l01–l43 из 97 уроков,
+# а нумерация l23+ была сдвинута на 1–3 позиции относительно реального курса.
+# Frontmatter новых уроков пишется вручную — это 6 строк (id/order/num/title/short/locked).
+# Источник истины по нумерации — frontmatter самих .md файлов.
+ML_LESSONS: dict = {}
+PYTHON_LESSONS: dict = {}
 
 
 def has_frontmatter(content: str) -> bool:
