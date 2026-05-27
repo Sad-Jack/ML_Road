@@ -2103,6 +2103,74 @@
       opacity: .7;
     }
 
+
+    /* ── FOCUS MODE ──────────────────────────────────────────────────── */
+    .focus-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: none;
+      border: 1px solid var(--border2);
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      cursor: pointer;
+      transition: all .2s;
+      opacity: .65;
+    }
+    .focus-btn:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      opacity: 1;
+      box-shadow: 0 0 8px var(--cyan-glow-faint);
+    }
+
+    #focus-exit {
+      display: none;
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      z-index: 9999;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    #focus-exit:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan-glow-faint);
+    }
+
+    body.focus-mode #hdr,
+    body.focus-mode #music-bar,
+    body.focus-mode #sb,
+    body.focus-mode .sov,
+    body.focus-mode #rp,
+    body.focus-mode .stbar { display: none !important; }
+
+    body.focus-mode .lay { display: block; }
+    body.focus-mode #main::before { left: 0; top: 0; }
+    body.focus-mode .ci {
+      max-width: 720px;
+      padding: 48px 32px 80px;
+    }
+    body.focus-mode #focus-exit { display: flex; }
+
   </style>
 </head>
 
@@ -2436,6 +2504,7 @@
     <div class="lhdr">
       <div class="lmeta">${esc(lesson.section.title)} // УРОК ${lesson.order} из ${lessonList.length}</div>
       <div class="ltitle">${esc(lesson.title)}</div>
+      <button class="focus-btn" data-action="toggle-focus" title="Фокус-режим — скрыть интерфейс (F)">⤢ focus</button>
     </div>
     <div class="lc">${html}</div>
     <div class="lnav">
@@ -2495,6 +2564,26 @@
     function toggleSec(id) { document.getElementById('sg-' + id)?.classList.toggle('open'); }
     function toggleSb() { document.getElementById('sb').classList.toggle('open'); document.getElementById('sov').classList.toggle('vis'); }
     function closeSb() { document.getElementById('sb').classList.remove('open'); document.getElementById('sov').classList.remove('vis'); }
+
+    /* ─── FOCUS MODE ─── */
+    function toggleFocusMode(on) {
+      const enable = on !== undefined ? on : !document.body.classList.contains('focus-mode');
+      document.body.classList.toggle('focus-mode', enable);
+      try { localStorage.setItem('mlroad-focus', enable ? '1' : '0'); } catch(e) {}
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'Escape' && document.body.classList.contains('focus-mode')) {
+        toggleFocusMode(false);
+        return;
+      }
+      if ((e.key === 'f' || e.key === 'F') && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        if (document.getElementById('ca')?.querySelector('.lhdr')) {
+          toggleFocusMode();
+        }
+      }
+    });
 
     /* ─── SEARCH ─── */
     function _buildSearchIndex() {
@@ -2659,6 +2748,7 @@
           case 'open-rp-item':   openRpItem(id); break;
           case 'switch-channel': switchChannel(+el.dataset.idx); break;
           case 'start-course':   nav('l01'); break;
+          case 'toggle-focus':   toggleFocusMode(); break;
           case 'mark-toggle':
             el.dataset.read === 'true' ? markUnread(id) : markRead(id);
             break;
@@ -2703,6 +2793,7 @@
       initRp();
       nav(saved);
       updateProgressBar();
+      try { if (localStorage.getItem('mlroad-focus') === '1') toggleFocusMode(true); } catch(e) {}
     });
 
 
@@ -2918,6 +3009,7 @@
     window.addEventListener('offline', _mbSync);
 
   </script>
+  <button id="focus-exit" data-action="toggle-focus" title="Выйти из фокус-режима (Esc)">✕ выйти из фокуса</button>
 </body>
 
 </html>
