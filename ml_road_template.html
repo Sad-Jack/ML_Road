@@ -2574,7 +2574,10 @@
       font-size: 11px;
     }
 
-    /* 19 ── Hero: natural height, no forced scroll */
+    /* 19 ── Hero: compact, no scroll */
+    .ci-home { padding-top: 14px !important; padding-bottom: 10px !important; }
+    .ci-home .hero { padding-top: 0; }
+    .ci-home .hboot { margin-bottom: 10px; }
     .commblock { margin-top: 0 !important; }
 
     /* 20 ── Focus button: more visible */
@@ -2952,7 +2955,9 @@
 
     /* ─── HOME ─── */
     function renderHome() {
-      document.getElementById('ca').innerHTML = `
+      const ca = document.getElementById('ca');
+      ca.classList.add('ci-home');
+      ca.innerHTML = `
     <div class="hero">
       <div class="hboot">
         <div class="hboot-bar">
@@ -3056,6 +3061,7 @@
     }
 
     function renderLesson(id) {
+      document.getElementById('ca').classList.remove('ci-home');
       const ctx = _getLessonCtx(id);
       if (!ctx) { document.getElementById('ca').innerHTML = '<p style="color:var(--red);font-family:var(--mono);padding:32px">// ERROR: lesson not found</p>'; return; }
       const { lesson, list: lessonList, prev, next } = ctx;
