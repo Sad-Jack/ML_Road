@@ -2068,6 +2068,15 @@
           <div id="sr"></div>
         </div>
       </div>
+      <div id="gp-block" style="padding:10px 14px;border-bottom:1px solid var(--border)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-family:var(--mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2)">Пройдено</span>
+          <span id="gp-val" style="font-family:var(--mono);font-size:11px;color:var(--cyan)">0 / 97</span>
+        </div>
+        <div style="height:2px;background:var(--dim)">
+          <div id="gp-fill" style="height:2px;background:var(--cyan);box-shadow:0 0 6px var(--cyan);width:0%;transition:width .4s"></div>
+        </div>
+      </div>
       <div class="sbnav" id="sbnav"></div>
     </div>
     <div class="sov" id="sov" onclick="closeSb()"></div>
@@ -2103,6 +2112,77 @@
 
     const ALL = COURSE.sections.flatMap(s => s.lessons.map(l => ({ ...l, section: s })));
     let CUR = null;
+    let SEARCH_INDEX = {};
+
+    let READ_LESSONS = new Set();
+    let READ_LESSONS_PY = new Set();
+    try {
+      const saved = JSON.parse(localStorage.getItem('mlroad-read') || '[]');
+      READ_LESSONS = new Set(saved);
+    } catch(e) {}
+    try {
+      const saved = JSON.parse(localStorage.getItem('mlroad-read-py') || '[]');
+      READ_LESSONS_PY = new Set(saved);
+    } catch(e) {}
+
+    function getReadSet(id) {
+      return PYTHON_ALL.find(l => l.id === id) ? READ_LESSONS_PY : READ_LESSONS;
+    }
+
+    function markRead(id) {
+      getReadSet(id).add(id);
+      try {
+        const isPy = !!PYTHON_ALL.find(l => l.id === id);
+        localStorage.setItem(isPy ? 'mlroad-read-py' : 'mlroad-read',
+          JSON.stringify([...(isPy ? READ_LESSONS_PY : READ_LESSONS)]));
+      } catch(e) {}
+      renderLesson(id);
+      updateSb(id);
+      updateProgressBar();
+    }
+
+    function markUnread(id) {
+      getReadSet(id).delete(id);
+      try {
+        const isPy = !!PYTHON_ALL.find(l => l.id === id);
+        localStorage.setItem(isPy ? 'mlroad-read-py' : 'mlroad-read',
+          JSON.stringify([...(isPy ? READ_LESSONS_PY : READ_LESSONS)]));
+      } catch(e) {}
+      renderLesson(id);
+      updateSb(id);
+      updateProgressBar();
+    }
+
+    function updateProgressBar() {
+      const isPy = CUR_TAB === 'python';
+      const lessonList = isPy ? PYTHON_ALL : ALL;
+      const readSet = isPy ? READ_LESSONS_PY : READ_LESSONS;
+      const sections = isPy ? PYTHON_COURSE.sections : COURSE.sections;
+
+      const total = lessonList.length;
+      const done = [...readSet].filter(id => lessonList.find(l => l.id === id)).length;
+      const pct = total > 0 ? Math.round(done / total * 100) : 0;
+
+      const valEl = document.getElementById('gp-val');
+      const fillEl = document.getElementById('gp-fill');
+      if (valEl) valEl.textContent = done + ' / ' + total + ' (' + pct + '%)';
+      if (fillEl) fillEl.style.width = pct + '%';
+
+      const stEl = document.getElementById('st-p');
+      if (stEl && CUR !== 'home') {
+        const base = stEl.textContent.split('//')[0].trim();
+        stEl.textContent = base + ' // ' + pct + '% ПРОЙДЕНО';
+      }
+
+      sections.forEach(s => {
+        const el = document.getElementById('sgp-' + s.id);
+        if (!el) return;
+        const sTotal = s.lessons.length;
+        const sDone = s.lessons.filter(l => readSet.has(l.id)).length;
+        el.textContent = sDone > 0 ? sDone + '/' + sTotal : '';
+        el.style.color = sDone === sTotal ? 'var(--green)' : 'var(--text2)';
+      });
+    }
 
     /* ─── PYTHON TRACK ─── */
     const PYTHON_COURSE = {
@@ -2135,6 +2215,7 @@
       });
       buildSb();
       if (CUR) updateSb(CUR);
+      updateProgressBar();
     }
 
     /* ─── NAV ─── */
@@ -2271,6 +2352,7 @@
       const prev = idx > 0 ? lessonList[idx - 1] : null;
       const next = idx < lessonList.length - 1 ? lessonList[idx + 1] : null;
 
+      const isRead = getReadSet(id).has(id);
       document.getElementById('ca').innerHTML = `
     <div class="lhdr">
       <div class="lmeta">${esc(lesson.section.title)} // УРОК ${lesson.order} из ${lessonList.length}</div>
@@ -2279,7 +2361,15 @@
     <div class="lc">${html}</div>
     <div class="lnav">
       ${prev ? `<button class="nb pr" onclick="nav('${prev.id}')"><span>←</span><div><span class="nb-lbl">ПРЕДЫДУЩИЙ</span><span class="nb-t">${esc(prev.title)}</span></div></button>` : '<div></div>'}
-      ${next ? `<button class="nb nx" onclick="nav('${next.id}')"><div style="text-align:right"><span class="nb-lbl">СЛЕДУЮЩИЙ</span><span class="nb-t">${esc(next.title)}</span></div><span>→</span></button>` : ''}
+      <button onclick="${isRead ? 'markUnread' : 'markRead'}('${id}')"
+        style="font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;
+        border:1px solid ${isRead ? 'var(--dim)' : 'var(--cyan)'};
+        color:${isRead ? 'var(--text2)' : 'var(--cyan)'};
+        background:${isRead ? 'transparent' : 'rgba(0,229,255,.06)'};
+        padding:6px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;align-self:center">
+        ${isRead ? '↩ Снять отметку' : '✓ Отметить прочитанным'}
+      </button>
+      ${next ? `<button class="nb nx" onclick="nav('${next.id}')"><div style="text-align:right"><span class="nb-lbl">СЛЕДУЮЩИЙ</span><span class="nb-t">${esc(next.title)}</span></div><span>→</span></button>` : '<div></div>'}
     </div>`;
       document.getElementById('st-l').textContent = `УРОК ${lesson.order}/${lessonList.length} — ${lesson.short}`;
     }
@@ -2296,10 +2386,12 @@
         <span class="sga">▶</span>
         <span class="sgn sgn-${s.color}">${secNum}</span>
         <span class="sgname">${cleanTitle}</span>
+        <span class="sg-prog" id="sgp-${s.id}" style="font-family:var(--mono);font-size:9px;color:var(--cyan);margin-left:auto;opacity:.7"></span>
       </div>
       <div class="ll">`;
         s.lessons.forEach(l => {
           h += `<div class="li" id="li-${l.id}" onclick="nav('${l.id}')">
+        <span class="li-prog" style="width:10px;height:10px;border:1px solid var(--dim);display:inline-flex;align-items:center;justify-content:center;font-size:7px;flex-shrink:0;margin-right:4px"></span>
         <span class="li-n">${l.num}</span>
         <span class="li-t">${l.short}</span>
       </div>`;
@@ -2319,6 +2411,22 @@
         if (group) { group.classList.add('open'); group.classList.add('sg-act'); }
         t.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       }
+      document.querySelectorAll('.li').forEach(el => {
+        const lid = el.id.replace('li-', '');
+        const prog = el.querySelector('.li-prog');
+        if (!prog) return;
+        if (getReadSet(lid).has(lid)) {
+          prog.textContent = '✓';
+          prog.style.borderColor = 'var(--green)';
+          prog.style.color = 'var(--green)';
+          prog.style.background = 'rgba(0,255,157,.08)';
+        } else {
+          prog.textContent = '';
+          prog.style.borderColor = 'var(--dim)';
+          prog.style.color = '';
+          prog.style.background = '';
+        }
+      });
     }
 
     function toggleSec(id) { document.getElementById('sg-' + id)?.classList.toggle('open'); }
@@ -2334,13 +2442,15 @@
         const hits = [...ALL, ...PYTHON_ALL].filter(l =>
           l.title.toLowerCase().includes(q) ||
           l.short.toLowerCase().includes(q) ||
-          l.section.title.toLowerCase().includes(q)
+          l.section.title.toLowerCase().includes(q) ||
+          (SEARCH_INDEX[l.id] && SEARCH_INDEX[l.id].includes(q))
         ).slice(0, 8);
         res.innerHTML = hits.length
           ? hits.map(l => {
             const safeTitle = esc(l.title);
             const t = safeTitle.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), m => `<span class="srh">${m}</span>`);
-            return `<div class="sri" onclick="nav('${l.id}')"><div class="sri-t">${t}</div><div class="sri-s">${esc(l.section.title)}</div></div>`;
+            const inContent = !(l.title.toLowerCase().includes(q) || l.short.toLowerCase().includes(q) || l.section.title.toLowerCase().includes(q));
+            return `<div class="sri" onclick="nav('${l.id}')"><div class="sri-t">${t}</div><div class="sri-s">${esc(l.section.title)}${inContent ? ' <span style="opacity:.6">// найдено в тексте урока</span>' : ''}</div></div>`;
           }).join('')
           : '<div class="sr0">// нет результатов</div>';
         res.classList.add('vis');
@@ -2391,13 +2501,8 @@
           }
           continue;
         }
-        const pls = [];
-        while (i < lines.length) {
-          const l = lines[i].trim();
-          if (!l || /^#{1,6}\s/.test(l) || /^(-{3,}|\*{3,})$/.test(l) || l.startsWith('>') || /^[-*+]\s/.test(l) || /^\d+[.)]\s/.test(l) || l.startsWith('|') || l.startsWith('\x01CB')) break;
-          pls.push(l); i++;
-        }
-        if (pls.length) out.push(`<p>${inl(pls.join(' '))}</p>`);
+        out.push(`<p>${inl(line)}</p>`);
+        i++;
       }
       let html = out.join('\n');
       html = html.replace(/\x01CB(\d+)\x01/g, (_, n) => {
@@ -2440,6 +2545,10 @@
         b.classList.toggle('act', b.dataset.tab === CUR_TAB);
       });
       buildSb(); setupSearch();
+      document.querySelectorAll('[id^="cdata-"]').forEach(el => {
+        const id = el.id.replace('cdata-', '');
+        SEARCH_INDEX[id] = el.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
+      });
       document.getElementById('st-p').textContent = `${COURSE.sections.length} МОДУЛЕЙ // ${ALL.length} УРОКОВ`;
       _mbBuildChannels(); _mbSync(); setMusicVolume(60);
       document.addEventListener('click', async (e) => {
@@ -2479,6 +2588,7 @@
       saved = resolveNavId(saved);
       initRp();
       nav(saved);
+      updateProgressBar();
     });
 
 
