@@ -2157,7 +2157,6 @@
     }
 
     body.focus-mode #hdr,
-    body.focus-mode #music-bar,
     body.focus-mode #sb,
     body.focus-mode .sov,
     body.focus-mode #rp,
@@ -2368,7 +2367,49 @@
     .stbar {
       border-top-color: rgba(0,229,255,.15) !important;
       background: rgba(2,6,9,.95) !important;
+      height: 26px !important;
     }
+    .stbar-sep {
+      color: rgba(0,229,255,.18);
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    /* ── Music bar inside status bar ── */
+    .stbar > #music-bar {
+      display: flex !important;
+      align-items: center;
+      gap: 7px;
+      background: transparent !important;
+      border: none !important;
+      height: auto !important;
+      max-height: none !important;
+      padding: 0 !important;
+      margin: 0;
+      flex-shrink: 0;
+      font-size: 9px !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      overflow: visible !important;
+      transition: opacity .3s ease;
+    }
+    .stbar > #music-bar.is-offline {
+      max-height: none !important;
+      opacity: .22 !important;
+      padding: 0 !important;
+      border: none !important;
+      pointer-events: none !important;
+    }
+    .stbar > #music-bar .mb-label  { font-size: 9px; letter-spacing: 1px; }
+    .stbar > #music-bar .mb-dot    { font-size: 8px; }
+    .stbar > #music-bar .mb-status { font-size: 9px; }
+    .stbar > #music-bar .mb-play   { height: 16px; font-size: 9px; padding: 0 7px; }
+    .stbar > #music-bar .mb-vol-wrap { gap: 5px; }
+    .stbar > #music-bar .mb-vol-lbl  { font-size: 9px; }
+    .stbar > #music-bar .mb-vol-val  { font-size: 9px; width: 22px; }
+    .stbar > #music-bar .mb-vol-slider { width: 58px; }
+    .stbar > #music-bar .mb-channels { margin-left: 4px; gap: 3px; }
+    .stbar > #music-bar .mb-ch { height: 16px; font-size: 9px; padding: 0 5px; }
 
     /* 16 ── Focus mode: keep page corners visible */
     body.focus-mode::before { opacity: .25; }
@@ -2409,19 +2450,6 @@
     </div>
     <button class="rp-toggle" id="rp-btn" data-action="toggle-rp">▸ <span class="rp-toggle-lbl">Показать материалы</span></button>
     <button class="mbtn" data-action="toggle-sb">☰</button>
-  </div>
-  <div id="music-bar" class="is-offline">
-    <span class="mb-label">// LOFI.RADIO</span>
-    <span class="mb-dot" id="mb-dot">◉</span>
-    <span class="mb-status" id="mb-status">OFFLINE</span>
-    <button class="mb-play" id="mb-play" data-action="toggle-music" disabled>▶ PLAY</button>
-    <div class="mb-vol-wrap">
-      <span class="mb-vol-lbl">VOL</span>
-      <input type="range" class="mb-vol-slider" id="mb-vol" min="0" max="100" value="60"
-             >
-      <span class="mb-vol-val" id="mb-vol-val">60%</span>
-    </div>
-    <div class="mb-channels" id="mb-channels"></div>
   </div>
   <div class="lay">
     <div id="sb">
@@ -2465,6 +2493,19 @@
     <span class="stitem"><span class="stdot"></span><span class="stitem-ok">SYS:OK</span></span>
     <span class="stitem stitem-hi" id="st-l">ML ROAD</span>
     <span class="stitem" style="margin-left:auto" id="st-p"></span>
+    <span class="stbar-sep">│</span>
+    <div id="music-bar" class="is-offline">
+      <span class="mb-label">// LOFI.RADIO</span>
+      <span class="mb-dot" id="mb-dot">◉</span>
+      <span class="mb-status" id="mb-status">OFFLINE</span>
+      <button class="mb-play" id="mb-play" data-action="toggle-music" disabled>▶ PLAY</button>
+      <div class="mb-vol-wrap">
+        <span class="mb-vol-lbl">VOL</span>
+        <input type="range" class="mb-vol-slider" id="mb-vol" min="0" max="100" value="60">
+        <span class="mb-vol-val" id="mb-vol-val">60%</span>
+      </div>
+      <div class="mb-channels" id="mb-channels"></div>
+    </div>
   </div>
 
   <!-- ═══════ INJECTED CONTENT PLACEHOLDERS ═══════ -->
