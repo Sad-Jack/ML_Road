@@ -24,7 +24,39 @@
       --sw: 272px;
       --hh: 56px;
       --font: 'Segoe UI Variable', 'Segoe UI', 'Trebuchet MS', sans-serif;
-      --mono: 'SFMono-Regular', 'Consolas', 'Menlo', 'Liberation Mono', monospace
+      --mono: 'SFMono-Regular', 'Consolas', 'Menlo', 'Liberation Mono', monospace;
+      --cyan-light: #69E2FC;
+      --teal: #00cfb4;
+      --gold: #ffc857;
+      --text1: #d8f0f8;
+      --text3: #9ec8d8;
+      --text4: #8acde0;
+      --text5: #6aa8be;
+      --code-fg: #7fe8b8;
+      --mb-bg: #060f1e;
+      --mb-border: #0c1e32;
+      --mb-inactive: #2a5070;
+      --mb-dark: #1e4a65;
+      /* ── Opacity variants (theme tokens) ─────────────────────────────── */
+      --cyan-bg-faint:    #00e5ff06;
+      --cyan-bg:          #00e5ff08;
+      --cyan-bg-active:   #00e5ff0a;
+      --cyan-glow-faint:  #00e5ff10;
+      --cyan-glow-soft:   #00e5ff30;
+      --cyan-glow:        #00e5ff55;
+      --cyan-glow-vivid:  #00e5ff60;
+      --purple-bg:        #9b4dff08;
+      --purple-bg-hover:  #9b4dff10;
+      --purple-glow-soft: #9b4dff20;
+      --purple-border:    #9b4dff40;
+      --purple-glow:      #9b4dff55;
+      --green-bg:         #00ff9d08;
+      --green-bg-tint:    #00ff9d0c;
+      --green-border:     #00ff9d30;
+      --green-glow:       #00ff9d60;
+      --teal-bg:          #00cfb408;
+      --teal-border:      #00cfb440;
+      --teal-glow:        #00cfb455;
     }
 
     *,
@@ -44,8 +76,8 @@
       background:
         linear-gradient(rgba(0,229,255,.018) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0,229,255,.018) 1px, transparent 1px),
-        radial-gradient(ellipse at 10% 0%, #00e5ff0f 0%, transparent 45%),
-        radial-gradient(ellipse at 90% 5%, #9b4dff0a 0%, transparent 38%),
+        radial-gradient(ellipse at 10% 0%, var(--cyan-glow-faint) 0%, transparent 45%),
+        radial-gradient(ellipse at 90% 5%, var(--purple-bg) 0%, transparent 38%),
         var(--bg);
       background-size: 44px 44px, 44px 44px, 100% 100%, 100% 100%, 100% 100%;
       color: var(--text);
@@ -115,7 +147,7 @@
       font-family: var(--mono);
       font-size: 11px;
       color: var(--cyan);
-      box-shadow: 0 0 10px #00e5ff30, inset 0 0 8px #00e5ff10;
+      box-shadow: 0 0 10px var(--cyan-glow-soft), inset 0 0 8px var(--cyan-glow-faint);
       letter-spacing: -1px
     }
 
@@ -124,7 +156,7 @@
       font-size: 15px;
       font-weight: 700;
       color: var(--cyan);
-      text-shadow: 0 0 14px #00e5ff55;
+      text-shadow: 0 0 14px var(--cyan-glow);
       letter-spacing: 3px
     }
 
@@ -179,7 +211,7 @@
 
     #si:focus {
       border-color: var(--cyan);
-      box-shadow: 0 0 8px #00e5ff28
+      box-shadow: 0 0 8px var(--cyan-glow-soft)
     }
 
     #sr {
@@ -193,7 +225,7 @@
       max-height: 320px;
       overflow-y: auto;
       display: none;
-      box-shadow: 0 8px 32px #00000090, 0 0 20px #00e5ff08
+      box-shadow: 0 8px 32px #00000090, 0 0 20px var(--cyan-bg)
     }
 
     #sr.vis {
@@ -233,7 +265,7 @@
     .srh {
       color: var(--cyan);
       font-weight: 700;
-      text-shadow: 0 0 6px #00e5ff60
+      text-shadow: 0 0 6px var(--cyan-glow-vivid)
     }
 
     .sr0 {
@@ -298,7 +330,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: #00e5ff04
+      background: var(--cyan-bg-faint)
     }
 
     .sbh2::before {
@@ -328,7 +360,7 @@
     .sb-tabs {
       display: flex;
       border-bottom: 1px solid var(--border);
-      background: #00e5ff04
+      background: var(--cyan-bg-faint)
     }
 
     .sb-tab {
@@ -350,7 +382,7 @@
 
     .sb-tab.act {
       color: var(--cyan);
-      background: #00e5ff0a;
+      background: var(--cyan-bg-active);
       box-shadow: inset 0 -2px 0 var(--cyan)
     }
 
@@ -388,7 +420,7 @@
 
     .hi.act {
       border-left-color: var(--cyan);
-      background: #00e5ff08
+      background: var(--cyan-bg)
     }
 
     .hi-ic {
@@ -449,7 +481,7 @@
     /* section accent colours — unified cyan for module numbers */
     .sgn-c1, .sgn-c2, .sgn-c3, .sgn-c4, .sgn-c5, .sgn-c6,
     .sgn-c7, .sgn-c8, .sgn-c9, .sgn-c10, .sgn-c11 {
-      color: #69E2FC;
+      color: var(--cyan-light);
       background: rgba(105, 226, 252, 0.06);
       border-color: rgba(105, 226, 252, 0.35)
     }
@@ -460,17 +492,17 @@
     .sg.sec-c5 .sgname,
     .sg.sec-c7 .sgname,
     .sg.sec-c9 .sgname,
-    .sg.sec-c11 .sgname { color: #69E2FC }
+    .sg.sec-c11 .sgname { color: var(--cyan-light) }
 
     .sg.sec-c2 .sgname,
     .sg.sec-c4 .sgname,
     .sg.sec-c6 .sgname,
     .sg.sec-c8 .sgname,
-    .sg.sec-c10 .sgname { color: #69E2FC }
+    .sg.sec-c10 .sgname { color: var(--cyan-light) }
 
     /* Active module header: highlight with cyan */
     .sg.sg-act .sgname {
-      color: #69E2FC;
+      color: var(--cyan-light);
       text-shadow: 0 0 8px rgba(105, 226, 252, 0.35)
     }
 
@@ -478,10 +510,10 @@
     .sgh:hover .sgname { color: #D6F7FF }
 
     /* Per-section active lesson — unified cyan for all sections */
-    .sg[class*="sec-c"] .li.act { background: rgba(105,226,252,0.03); border-left-color: #69E2FC }
-    .sg[class*="sec-c"] .li.act .li-n { color: #69E2FC }
+    .sg[class*="sec-c"] .li.act { background: rgba(105,226,252,0.03); border-left-color: var(--cyan-light) }
+    .sg[class*="sec-c"] .li.act .li-n { color: var(--cyan-light) }
     .sg[class*="sec-c"] .li.act .li-t { color: var(--text) }
-    .sg[class*="sec-c"] .li.act::after { background: #69E2FC; box-shadow: 0 0 8px rgba(105,226,252,0.4) }
+    .sg[class*="sec-c"] .li.act::after { background: var(--cyan-light); box-shadow: 0 0 8px rgba(105,226,252,0.4) }
 
     .sgname {
       font-family: var(--mono);
@@ -520,7 +552,7 @@
 
     .li.act {
       background: rgba(105, 226, 252, 0.03);
-      border-left-color: #69E2FC
+      border-left-color: var(--cyan-light)
     }
 
     .li.act::after {
@@ -531,7 +563,7 @@
       transform: translateY(-50%);
       width: 2px;
       height: 14px;
-      background: #69E2FC;
+      background: var(--cyan-light);
       box-shadow: 0 0 8px rgba(105, 226, 252, 0.4);
       border-radius: 0
     }
@@ -545,14 +577,14 @@
     }
 
     .li.act .li-n {
-      color: #69E2FC
+      color: var(--cyan-light)
     }
 
     .li-t {
       font-family: var(--mono);
       font-size: 12px;
       letter-spacing: .2px;
-      color: #6aa8be;
+      color: var(--text5);
       line-height: 1.3;
       flex: 1;
       min-width: 0
@@ -641,7 +673,7 @@
       right: -32px;
       width: 320px;
       height: 320px;
-      background: radial-gradient(circle, #00e5ff0d 0%, transparent 70%);
+      background: radial-gradient(circle, var(--cyan-bg-active) 0%, transparent 70%);
       pointer-events: none
     }
 
@@ -659,7 +691,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, #00e5ff06 0%, transparent 50%);
+      background: linear-gradient(135deg, var(--cyan-bg-faint) 0%, transparent 50%);
       pointer-events: none
     }
 
@@ -669,7 +701,7 @@
       gap: 8px;
       padding: 7px 14px;
       border-bottom: 1px solid var(--border);
-      background: #00e5ff06
+      background: var(--cyan-bg-faint)
     }
 
     .hboot-dot {
@@ -717,7 +749,7 @@
       font-size: clamp(22px, 4.5vw, 46px);
       font-weight: 700;
       color: var(--cyan);
-      text-shadow: 0 0 20px #00e5ff50, 0 0 50px #00e5ff20;
+      text-shadow: 0 0 20px var(--cyan-glow), 0 0 50px var(--cyan-glow-soft);
       letter-spacing: 4px;
       line-height: 1;
       animation: glitch 6s infinite
@@ -780,7 +812,7 @@
     .hmarq {
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      background: #00e5ff04;
+      background: var(--cyan-bg-faint);
       overflow: hidden;
       margin: 0 auto 16px;
       max-width: 760px
@@ -873,18 +905,18 @@
       height: 100%
     }
 
-    .hsc-c1::before { background: #00e5ff; box-shadow: 0 0 8px #00e5ff }
-    .hsc:hover.hsc-c1 { border-color: #00e5ff55; box-shadow: 0 0 16px #00e5ff0a }
-    .hsc-c2::before { background: #00cfb4; box-shadow: 0 0 8px #00cfb4 }
-    .hsc:hover.hsc-c2 { border-color: #00cfb455 }
-    .hsc-c3::before { background: #00ff9d; box-shadow: 0 0 8px #00ff9d }
-    .hsc:hover.hsc-c3 { border-color: #00ff9d55 }
+    .hsc-c1::before { background: var(--cyan); box-shadow: 0 0 8px var(--cyan) }
+    .hsc:hover.hsc-c1 { border-color: var(--cyan-glow); box-shadow: 0 0 16px var(--cyan-bg-active) }
+    .hsc-c2::before { background: var(--teal); box-shadow: 0 0 8px var(--teal) }
+    .hsc:hover.hsc-c2 { border-color: var(--teal-glow) }
+    .hsc-c3::before { background: var(--green); box-shadow: 0 0 8px var(--green) }
+    .hsc:hover.hsc-c3 { border-color: var(--green-glow) }
     .hsc-c4::before { background: var(--orange); box-shadow: 0 0 8px var(--orange) }
     .hsc:hover.hsc-c4 { border-color: #ff9f4355 }
     .hsc-c5::before { background: var(--red); box-shadow: 0 0 8px var(--red) }
     .hsc:hover.hsc-c5 { border-color: #ff465555 }
     .hsc-c6::before { background: var(--purple); box-shadow: 0 0 8px var(--purple) }
-    .hsc:hover.hsc-c6 { border-color: #9b4dff55 }
+    .hsc:hover.hsc-c6 { border-color: var(--purple-glow) }
     .hsc-c7::before { background: #e0a0ff; box-shadow: 0 0 8px #e0a0ff }
     .hsc:hover.hsc-c7 { border-color: #e0a0ff55 }
     .hsc-c8::before { background: #7eb8ff; box-shadow: 0 0 8px #7eb8ff }
@@ -898,9 +930,9 @@
       margin-bottom: 8px
     }
 
-    .hsc-c1 .hscn { color: #00e5ff }
-    .hsc-c2 .hscn { color: #00cfb4 }
-    .hsc-c3 .hscn { color: #00ff9d }
+    .hsc-c1 .hscn { color: var(--cyan) }
+    .hsc-c2 .hscn { color: var(--teal) }
+    .hsc-c3 .hscn { color: var(--green) }
     .hsc-c4 .hscn { color: var(--orange) }
     .hsc-c5 .hscn { color: var(--red) }
     .hsc-c6 .hscn { color: var(--purple) }
@@ -953,7 +985,7 @@
       gap: 8px;
       padding: 7px 16px;
       border-bottom: 1px solid var(--border);
-      background: #00e5ff06
+      background: var(--cyan-bg-faint)
     }
 
     .commblock-hdr-dot {
@@ -1006,10 +1038,10 @@
     }
 
     .cl:hover {
-      background: #00e5ff08;
+      background: var(--cyan-bg);
       border-color: var(--cyan);
       color: var(--cyan);
-      box-shadow: 0 0 10px #00e5ff10
+      box-shadow: 0 0 10px var(--cyan-glow-faint)
     }
 
     .cl:hover::before {
@@ -1024,7 +1056,7 @@
       position: relative;
       padding-left: 16px;
       border-left: 2px solid var(--cyan);
-      box-shadow: -4px 0 12px #00e5ff08
+      box-shadow: -4px 0 12px var(--cyan-bg)
     }
 
     .lhdr::after {
@@ -1061,7 +1093,7 @@
       font-family: var(--mono);
       font-size: clamp(18px, 2.8vw, 26px);
       font-weight: 700;
-      color: #d8f0f8;
+      color: var(--text1);
       line-height: 1.2
     }
 
@@ -1070,7 +1102,7 @@
       font-family: var(--mono);
       font-size: 19px;
       font-weight: 700;
-      color: #d8f0f8;
+      color: var(--text1);
       margin: 32px 0 14px;
       padding-bottom: 8px;
       border-bottom: 1px solid var(--border2)
@@ -1103,7 +1135,7 @@
       font-family: var(--mono);
       font-size: 14px;
       font-weight: 600;
-      color: #8acde0;
+      color: var(--text4);
       margin: 18px 0 8px
     }
 
@@ -1125,13 +1157,13 @@
 
     .lc p {
       font-size: 15px;
-      color: #9ec8d8;
+      color: var(--text3);
       line-height: 1.82;
       margin-bottom: 13px
     }
 
     .lc strong {
-      color: #d8f0f8;
+      color: var(--text1);
       font-weight: 700
     }
 
@@ -1147,7 +1179,7 @@
 
     .lc li {
       font-size: 15px;
-      color: #9ec8d8;
+      color: var(--text3);
       line-height: 1.72;
       margin-bottom: 3px
     }
@@ -1162,15 +1194,15 @@
     }
 
     .lc blockquote {
-      background: #00e5ff06;
+      background: var(--cyan-bg-faint);
       border-left: 2px solid var(--cyan);
       padding: 12px 18px;
       margin: 18px 0;
-      box-shadow: -4px 0 12px #00e5ff08
+      box-shadow: -4px 0 12px var(--cyan-bg)
     }
 
     .lc blockquote p {
-      color: #8acde0;
+      color: var(--text4);
       font-style: normal;
       font-family: var(--mono);
       font-size: 13px;
@@ -1185,8 +1217,8 @@
       font-family: var(--mono);
       font-size: 12px;
       color: var(--green);
-      background: #00ff9d0c;
-      border: 1px solid #00ff9d30;
+      background: var(--green-bg-tint);
+      border: 1px solid var(--green-border);
       padding: 1px 6px
     }
 
@@ -1197,7 +1229,7 @@
       margin: 14px 0;
       overflow: hidden;
       position: relative;
-      box-shadow: -4px 0 14px #00e5ff0a
+      box-shadow: -4px 0 14px var(--cyan-bg-active)
     }
 
     .cb::before {
@@ -1215,7 +1247,7 @@
       font-family: var(--mono);
       font-size: 9px;
       color: var(--cyan);
-      background: #00e5ff08;
+      background: var(--cyan-bg);
       padding: 5px 12px;
       border-bottom: 1px solid var(--border);
       letter-spacing: 2px;
@@ -1243,7 +1275,7 @@
     .cb code {
       font-family: var(--mono);
       font-size: 13px;
-      color: #7fe8b8;
+      color: var(--code-fg);
       line-height: 1.65;
       white-space: pre
     }
@@ -1268,14 +1300,14 @@
     .cb-copy:hover {
       color: var(--cyan);
       border-color: var(--cyan);
-      box-shadow: 0 0 8px #00e5ff30;
-      background: #00e5ff08
+      box-shadow: 0 0 8px var(--cyan-glow-soft);
+      background: var(--cyan-bg)
     }
 
     .cb-copy.done {
       color: var(--green);
-      border-color: #00ff9d60;
-      background: #00ff9d08
+      border-color: var(--green-glow);
+      background: var(--green-bg)
     }
 
     .tw {
@@ -1290,7 +1322,7 @@
     }
 
     .lc th {
-      background: #00e5ff08;
+      background: var(--cyan-bg);
       color: var(--cyan);
       border: 1px solid var(--border2);
       padding: 8px 12px;
@@ -1305,13 +1337,13 @@
     .lc td {
       border: 1px solid var(--border);
       padding: 8px 12px;
-      color: #9ec8d8;
+      color: var(--text3);
       vertical-align: top;
       font-size: 13px
     }
 
     .lc tr:nth-child(even) td {
-      background: #00e5ff04
+      background: var(--cyan-bg-faint)
     }
 
     .lc td code,
@@ -1342,7 +1374,7 @@
     a.nl {
       color: var(--cyan);
       text-decoration: none;
-      border-bottom: 1px solid #00e5ff30;
+      border-bottom: 1px solid var(--cyan-glow-soft);
       transition: all .15s
     }
 
@@ -1381,8 +1413,8 @@
     .nb:hover {
       border-color: var(--cyan);
       color: var(--cyan);
-      background: #00e5ff06;
-      box-shadow: 0 0 12px #00e5ff10
+      background: var(--cyan-bg-faint);
+      box-shadow: 0 0 12px var(--cyan-glow-faint)
     }
 
     .nb.pr {
@@ -1533,7 +1565,7 @@
 
     @keyframes glitch {
       0%, 92%, 100% {
-        text-shadow: 0 0 20px #00e5ff55, 0 0 50px #00e5ff22;
+        text-shadow: 0 0 20px var(--cyan-glow), 0 0 50px var(--cyan-glow-soft);
         transform: none
       }
       93% {
@@ -1545,7 +1577,7 @@
         transform: translateX(-1px) skewX(1deg)
       }
       95% {
-        text-shadow: 0 0 20px #00e5ff55, 0 0 50px #00e5ff22;
+        text-shadow: 0 0 20px var(--cyan-glow), 0 0 50px var(--cyan-glow-soft);
         transform: none
       }
     }
@@ -1599,7 +1631,7 @@
       gap: 8px;
       padding: 10px 14px;
       border-bottom: 1px solid var(--border2);
-      background: #00e5ff06;
+      background: var(--cyan-bg-faint);
       flex-shrink: 0;
       position: relative;
       z-index: 1
@@ -1670,7 +1702,7 @@
     .rptab.act {
       border-color: var(--purple);
       color: var(--purple);
-      background: #9b4dff10
+      background: var(--purple-bg-hover)
     }
 
     .rp-list {
@@ -1689,11 +1721,11 @@
     }
 
     .rpi:hover {
-      background: #00e5ff05
+      background: var(--cyan-bg-faint)
     }
 
     .rpi.act {
-      background: #9b4dff08;
+      background: var(--purple-bg);
       border-left-color: var(--purple)
     }
 
@@ -1713,15 +1745,15 @@
       border: 1px solid
     }
 
-    .rpi-cat-mlcore { color: var(--cyan); border-color: #00e5ff40; background: #00e5ff08 }
-    .rpi-cat-learning { color: #00cfb4; border-color: #00cfb440; background: #00cfb408 }
-    .rpi-cat-prompt { color: var(--purple); border-color: #9b4dff40; background: #9b4dff08 }
+    .rpi-cat-mlcore { color: var(--cyan); border-color: var(--cyan-glow-soft); background: var(--cyan-bg) }
+    .rpi-cat-learning { color: var(--teal); border-color: var(--teal-border); background: var(--teal-bg) }
+    .rpi-cat-prompt { color: var(--purple); border-color: var(--purple-border); background: var(--purple-bg) }
     .rpi-cat-other { color: var(--text2); border-color: var(--border) }
 
     .rpi-t {
       font-family: var(--mono);
       font-size: 11px;
-      color: #8acde0;
+      color: var(--text4);
       line-height: 1.3;
       flex: 1;
       min-width: 0
@@ -1747,7 +1779,7 @@
       position: relative;
       padding-left: 16px;
       border-left: 2px solid var(--purple);
-      box-shadow: -4px 0 12px #9b4dff08
+      box-shadow: -4px 0 12px var(--purple-bg)
     }
 
     .kb-hdr::after {
@@ -1779,9 +1811,9 @@
       letter-spacing: 1px;
       text-transform: uppercase;
       padding: 2px 7px;
-      border: 1px solid #9b4dff60;
+      border: 1px solid var(--purple-glow);
       color: var(--purple);
-      background: #9b4dff10
+      background: var(--purple-bg-hover)
     }
 
     .kb-type-badge {
@@ -1869,13 +1901,13 @@
     .rp-toggle:hover {
       border-color: var(--purple);
       color: var(--purple);
-      box-shadow: 0 0 8px #9b4dff20
+      box-shadow: 0 0 8px var(--purple-glow-soft)
     }
 
     .rp-toggle.act {
       border-color: var(--purple);
       color: var(--purple);
-      background: #9b4dff10
+      background: var(--purple-bg-hover)
     }
 
     @media(max-width:1100px) {
@@ -1909,7 +1941,7 @@
       top: 0;
       white-space: nowrap;
       opacity: 0;
-      color: #ffc857;
+      color: var(--gold);
       font-style: italic;
       transition: opacity .4s ease;
     }
@@ -1922,11 +1954,11 @@
       gap: 14px;
       height: 32px;
       padding: 0 24px;
-      background: #060f1e;
-      border-bottom: 1px solid #0c1e32;
+      background: var(--mb-bg);
+      border-bottom: 1px solid var(--mb-border);
       font-family: var(--mono);
       font-size: 11px;
-      color: #2a5070;
+      color: var(--mb-inactive);
       user-select: none;
       flex-shrink: 0;
       overflow: hidden;
@@ -1935,7 +1967,7 @@
       transition: max-height .4s ease, opacity .3s ease, padding .4s ease, border-width .4s ease;
     }
     .mb-label {
-      color: #1e4a65;
+      color: var(--mb-dark);
       letter-spacing: 1.5px;
       font-weight: 700;
       font-size: 11px;
@@ -1946,15 +1978,15 @@
       line-height: 1;
       transition: color .3s, text-shadow .3s;
     }
-    .mb-dot.live   { color: #00e5ff; text-shadow: 0 0 8px #00e5ff; animation: mb-pulse 1.4s ease-in-out infinite }
-    .mb-dot.paused { color: #ffc857 }
-    .mb-status { font-size: 10px; letter-spacing: .5px; color: #1e3a50 }
-    .mb-status.live   { color: #00e5ff }
-    .mb-status.paused { color: #ffc857 }
+    .mb-dot.live   { color: var(--cyan); text-shadow: 0 0 8px var(--cyan); animation: mb-pulse 1.4s ease-in-out infinite }
+    .mb-dot.paused { color: var(--gold) }
+    .mb-status { font-size: 10px; letter-spacing: .5px; color: #1e3a50; }
+    .mb-status.live   { color: var(--cyan) }
+    .mb-status.paused { color: var(--gold) }
     .mb-play {
       background: transparent;
       border: 1px solid #142d42;
-      color: #1e4a65;
+      color: var(--mb-dark);
       font-family: var(--mono);
       font-size: 11px;
       padding: 0 10px;
@@ -1967,19 +1999,19 @@
       transition: border-color .2s, color .2s, box-shadow .2s;
     }
     .mb-play:hover:not(:disabled) {
-      border-color: #00e5ff50;
-      color: #00e5ff;
-      box-shadow: 0 0 8px #00e5ff18;
+      border-color: var(--cyan-glow);
+      color: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan-glow-faint);
     }
     .mb-play.playing {
-      border-color: #00e5ff60;
-      color: #00e5ff;
-      box-shadow: 0 0 6px #00e5ff30;
+      border-color: var(--cyan-glow-vivid);
+      color: var(--cyan);
+      box-shadow: 0 0 6px var(--cyan-glow-soft);
     }
     .mb-play:disabled { opacity: .22; cursor: not-allowed }
     .mb-vol-wrap { display: flex; align-items: center; gap: 8px }
     .mb-vol-lbl  { color: #1a3245; font-size: 10px; letter-spacing: .5px }
-    .mb-vol-val  { color: #2a5070; width: 30px; text-align: right; font-size: 10px }
+    .mb-vol-val  { color: var(--mb-inactive); width: 30px; text-align: right; font-size: 10px }
     .mb-vol-slider {
       -webkit-appearance: none;
       appearance: none;
@@ -1988,21 +2020,21 @@
       outline: none;
       cursor: pointer;
       border-radius: 0;
-      background: linear-gradient(to right, #2a5070 60%, #0c1e30 60%);
+      background: linear-gradient(to right, var(--mb-inactive) 60%, #0c1e30 60%);
       transition: background .1s;
     }
     .mb-vol-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 9px;
       height: 9px;
-      background: #2a5070;
+      background: var(--mb-inactive);
       cursor: pointer;
       border-radius: 0;
       transition: background .2s, box-shadow .2s;
     }
     .mb-vol-slider.active::-webkit-slider-thumb {
-      background: #00e5ff;
-      box-shadow: 0 0 5px #00e5ff80;
+      background: var(--cyan);
+      box-shadow: 0 0 5px var(--cyan-glow-vivid);
     }
     .mb-channels { display: flex; align-items: center; gap: 4px; margin-left: auto }
     .mb-ch {
@@ -2018,8 +2050,9 @@
       white-space: nowrap;
       transition: border-color .2s, color .2s, background .2s;
     }
-    .mb-ch:hover { border-color: #00e5ff30; color: #00e5ff70 }
-    .mb-ch.act   { border-color: #00e5ff55; color: #00e5ff; background: #00e5ff0a }
+
+    .mb-ch:hover { border-color: var(--cyan-glow-soft); color: #00e5ff70 }
+    .mb-ch.act   { border-color: var(--cyan-glow); color: var(--cyan); background: var(--cyan-bg-active) }
     #music-bar.is-offline {
       max-height: 0;
       opacity: 0;
@@ -2030,27 +2063,67 @@
     }
     @keyframes mb-pulse { 0%,100%{opacity:1} 50%{opacity:.15} }
 
+    .read-btn {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      align-self: center;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      background: rgba(0,229,255,.06);
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .read-btn.is-read {
+      border-color: var(--dim);
+      color: var(--text2);
+      background: transparent;
+    }
+    .li-prog {
+      width: 10px;
+      height: 10px;
+      border: 1px solid var(--dim);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7px;
+      flex-shrink: 0;
+      margin-right: 4px;
+    }
+    .sg-prog {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--cyan);
+      margin-left: auto;
+      opacity: .7;
+    }
+
   </style>
 </head>
 
 <body>
   <div id="hdr">
-    <div class="logo" onclick="nav('home')">
+    <div class="logo" data-action="nav" data-id="home">
       <div class="logo-icon">ML</div>
       <div><span class="logo-text">ML ROAD</span><span class="logo-sub">Offline Learning System</span></div>
     </div>
-    <button class="rp-toggle" id="rp-btn" onclick="toggleRp()">▸ <span class="rp-toggle-lbl">Показать материалы</span></button>
-    <button class="mbtn" onclick="toggleSb()">☰</button>
+    <button class="rp-toggle" id="rp-btn" data-action="toggle-rp">▸ <span class="rp-toggle-lbl">Показать материалы</span></button>
+    <button class="mbtn" data-action="toggle-sb">☰</button>
   </div>
   <div id="music-bar" class="is-offline">
     <span class="mb-label">// LOFI.RADIO</span>
     <span class="mb-dot" id="mb-dot">◉</span>
     <span class="mb-status" id="mb-status">OFFLINE</span>
-    <button class="mb-play" id="mb-play" onclick="toggleMusic()" disabled>▶ PLAY</button>
+    <button class="mb-play" id="mb-play" data-action="toggle-music" disabled>▶ PLAY</button>
     <div class="mb-vol-wrap">
       <span class="mb-vol-lbl">VOL</span>
       <input type="range" class="mb-vol-slider" id="mb-vol" min="0" max="100" value="60"
-             oninput="setMusicVolume(this.value)">
+             >
       <span class="mb-vol-val" id="mb-vol-val">60%</span>
     </div>
     <div class="mb-channels" id="mb-channels"></div>
@@ -2058,8 +2131,8 @@
   <div class="lay">
     <div id="sb">
       <div class="sb-tabs">
-        <button class="sb-tab act" data-tab="mlbase" onclick="switchTab('mlbase')">ML BASE</button>
-        <button class="sb-tab" data-tab="python" onclick="switchTab('python')">PYTHON</button>
+        <button class="sb-tab act" data-tab="mlbase" data-action="switch-tab">ML BASE</button>
+        <button class="sb-tab" data-tab="python" data-action="switch-tab">PYTHON</button>
       </div>
       <div class="sb-srch">
         <div class="srch">
@@ -2079,7 +2152,7 @@
       </div>
       <div class="sbnav" id="sbnav"></div>
     </div>
-    <div class="sov" id="sov" onclick="closeSb()"></div>
+    <div class="sov" id="sov" data-action="close-sb"></div>
     <div id="main">
       <div class="ci" id="ca"></div>
     </div>
@@ -2087,7 +2160,7 @@
       <div class="rp-hdr">
         <div class="rp-hdr-dot"></div>
         <span class="rp-hdr-lbl">Reference Panel</span>
-        <button class="rp-close" onclick="toggleRp()">✕</button>
+        <button class="rp-close" data-action="toggle-rp">✕</button>
       </div>
       <div class="rp-filter" id="rp-filter"></div>
       <div class="rp-list" id="rp-list"></div>
@@ -2111,24 +2184,11 @@
     };
 
     const ALL = COURSE.sections.flatMap(s => s.lessons.map(l => ({ ...l, section: s })));
-    let CUR = null;
-    let SEARCH_INDEX = {};
-
-    let READ_LESSONS = new Set();
-    let READ_LESSONS_PY = new Set();
-    try {
-      const saved = JSON.parse(localStorage.getItem('mlroad-read') || '[]');
-      READ_LESSONS = new Set(saved);
-    } catch(e) {}
-    try {
-      const saved = JSON.parse(localStorage.getItem('mlroad-read-py') || '[]');
-      READ_LESSONS_PY = new Set(saved);
-    } catch(e) {}
 
     function getReadSet(id) {
       return (typeof PYTHON_ALL !== 'undefined' && PYTHON_ALL.find(l => l.id === id))
-        ? READ_LESSONS_PY
-        : READ_LESSONS;
+        ? AppState.readLessonsPy
+        : AppState.readLessons;
     }
 
     function markRead(id) {
@@ -2136,7 +2196,7 @@
       try {
         const isPy = !!PYTHON_ALL.find(l => l.id === id);
         localStorage.setItem(isPy ? 'mlroad-read-py' : 'mlroad-read',
-          JSON.stringify([...(isPy ? READ_LESSONS_PY : READ_LESSONS)]));
+          JSON.stringify([...(isPy ? AppState.readLessonsPy : AppState.readLessons)]));
       } catch(e) {}
       renderLesson(id);
       updateSb(id);
@@ -2148,7 +2208,7 @@
       try {
         const isPy = !!PYTHON_ALL.find(l => l.id === id);
         localStorage.setItem(isPy ? 'mlroad-read-py' : 'mlroad-read',
-          JSON.stringify([...(isPy ? READ_LESSONS_PY : READ_LESSONS)]));
+          JSON.stringify([...(isPy ? AppState.readLessonsPy : AppState.readLessons)]));
       } catch(e) {}
       renderLesson(id);
       updateSb(id);
@@ -2156,9 +2216,9 @@
     }
 
     function updateProgressBar() {
-      const isPy = CUR_TAB === 'python';
+      const isPy = AppState.curTab === 'python';
       const lessonList = isPy ? PYTHON_ALL : ALL;
-      const readSet = isPy ? READ_LESSONS_PY : READ_LESSONS;
+      const readSet = isPy ? AppState.readLessonsPy : AppState.readLessons;
       const sections = isPy ? PYTHON_COURSE.sections : COURSE.sections;
 
       const total = lessonList.length;
@@ -2171,7 +2231,7 @@
       if (fillEl) fillEl.style.width = pct + '%';
 
       const stEl = document.getElementById('st-p');
-      if (stEl && CUR !== 'home') {
+      if (stEl && AppState.cur !== 'home') {
         const base = stEl.textContent.split('//')[0].trim();
         stEl.textContent = base + ' // ' + pct + '% ПРОЙДЕНО';
       }
@@ -2193,11 +2253,25 @@
 
     const PYTHON_ALL = PYTHON_COURSE.sections.flatMap(s => s.lessons.map(l => ({ ...l, section: s })));
 
-    let CUR_TAB = 'mlbase';
-    try {
-      const savedTab = localStorage.getItem('mlroad-tab');
-      if (savedTab === 'python' || savedTab === 'mlbase') CUR_TAB = savedTab;
-    } catch (e) { }
+    const AppState = {
+      cur:          null,
+      curTab:       'mlbase',
+      readLessons:    new Set(),
+      readLessonsPy:  new Set(),
+      searchIndex:  {},
+      rpFilter:     'all',
+      rpOpen:       false,
+      music: {
+        audio:       null,
+        playing:     false,
+        reconnTimer: null,
+        streamIdx:   0,
+        gen:         0,
+      },
+    };
+    try { const s = JSON.parse(localStorage.getItem('mlroad-read') || '[]'); AppState.readLessons = new Set(s); } catch(e) {}
+    try { const s = JSON.parse(localStorage.getItem('mlroad-read-py') || '[]'); AppState.readLessonsPy = new Set(s); } catch(e) {}
+    try { const t = localStorage.getItem('mlroad-tab'); if (t === 'python' || t === 'mlbase') AppState.curTab = t; } catch(e) {}
 
     function findLessonEntry(id) {
       return ALL.find(l => l.id === id) || PYTHON_ALL.find(l => l.id === id) || null;
@@ -2210,26 +2284,26 @@
 
     function switchTab(tab) {
       if (tab !== 'mlbase' && tab !== 'python') return;
-      CUR_TAB = tab;
+      AppState.curTab = tab;
       try { localStorage.setItem('mlroad-tab', tab); } catch (e) { }
       document.querySelectorAll('.sb-tab').forEach(b => {
         b.classList.toggle('act', b.dataset.tab === tab);
       });
       buildSb();
-      if (CUR) updateSb(CUR);
+      if (AppState.cur) updateSb(AppState.cur);
       updateProgressBar();
     }
 
     /* ─── NAV ─── */
     function nav(id) {
       id = resolveNavId(id);
-      CUR = id;
+      AppState.cur = id;
       try { localStorage.setItem('mlroad-cur', id); } catch (e) { }
       document.querySelectorAll('.rpi.act').forEach(el => el.classList.remove('act'));
       // Auto-switch sidebar tab based on lesson source
       const targetTab = PYTHON_ALL.find(l => l.id === id) ? 'python' : 'mlbase';
-      if (targetTab !== CUR_TAB) {
-        CUR_TAB = targetTab;
+      if (targetTab !== AppState.curTab) {
+        AppState.curTab = targetTab;
         try { localStorage.setItem('mlroad-tab', targetTab); } catch (e) { }
         document.querySelectorAll('.sb-tab').forEach(b => {
           b.classList.toggle('act', b.dataset.tab === targetTab);
@@ -2267,7 +2341,7 @@
       const tagsHtml = (item.tags || []).map(t => `<span class="kb-tag">${esc(t)}</span>`).join('');
       document.getElementById('ca').innerHTML = `
     <div>
-      <button class="kb-back" onclick="nav('home')">◂ На главную</button>
+      <button class="kb-back" data-action="nav" data-id="home">◂ На главную</button>
       <div class="kb-hdr">
         <div class="kb-meta">
           <span class="kb-cat-badge">${esc(item.category)}</span>
@@ -2315,7 +2389,7 @@
       <div class="hdesc">
         <p>Офлайн-курс по Machine Learning от базовых понятий до работы с реальными данными. Всё в одном файле — без интернета, без регистрации.</p>
         <p>Открывай уроки по порядку, читай материалы в правой панели и возвращайся в любой момент — <span class="prog-joke">прогресс сохраняется.</span></p>
-        <button class="hstart-btn" onclick="nav('l01')">▶ Начать обучение</button>
+        <button class="hstart-btn" data-action="start-course">▶ Начать обучение</button>
       </div>
       <div class="commblock" style="margin-top:16px; padding-bottom:10px">
         <div class="commblock-hdr">
@@ -2334,25 +2408,28 @@
     }
 
     /* ─── LESSON ─── */
-    function renderLesson(id) {
+    function _getLessonCtx(id) {
       let lesson = ALL.find(l => l.id === id);
-      let lessonList = ALL;
-      let inPython = false;
+      let list = ALL;
       if (!lesson) {
         lesson = PYTHON_ALL.find(l => l.id === id);
-        inPython = !!lesson;
+        list = PYTHON_ALL;
       }
-      if (!lesson) { document.getElementById('ca').innerHTML = '<p style="color:var(--red);font-family:var(--mono);padding:32px">// ERROR: lesson not found</p>'; return; }
-      if (inPython) lessonList = lesson.section.lessons;
+      if (!lesson) return null;
+      const idx = list.findIndex(l => l.id === id);
+      return { lesson, list, prev: list[idx - 1] || null, next: list[idx + 1] || null };
+    }
+
+    function renderLesson(id) {
+      const ctx = _getLessonCtx(id);
+      if (!ctx) { document.getElementById('ca').innerHTML = '<p style="color:var(--red);font-family:var(--mono);padding:32px">// ERROR: lesson not found</p>'; return; }
+      const { lesson, list: lessonList, prev, next } = ctx;
 
       const el = document.getElementById('cdata-' + id);
       if (!el) { document.getElementById('ca').innerHTML = '<p style="color:var(--red);font-family:var(--mono);padding:32px">// ERROR: lesson content not found</p>'; return; }
 
       const rawMd = el.textContent.trim().replace(/^#[^\n]*\n+/, '');
       const html = mdToHtml(rawMd);
-      const idx = lessonList.findIndex(l => l.id === id);
-      const prev = idx > 0 ? lessonList[idx - 1] : null;
-      const next = idx < lessonList.length - 1 ? lessonList[idx + 1] : null;
 
       const isRead = getReadSet(id).has(id);
       document.getElementById('ca').innerHTML = `
@@ -2362,45 +2439,29 @@
     </div>
     <div class="lc">${html}</div>
     <div class="lnav">
-      ${prev ? `<button class="nb pr" onclick="nav('${prev.id}')"><span>←</span><div><span class="nb-lbl">ПРЕДЫДУЩИЙ</span><span class="nb-t">${esc(prev.title)}</span></div></button>` : '<div></div>'}
-      <button onclick="${isRead ? 'markUnread' : 'markRead'}('${id}')"
-        style="font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;
-        border:1px solid ${isRead ? 'var(--dim)' : 'var(--cyan)'};
-        color:${isRead ? 'var(--text2)' : 'var(--cyan)'};
-        background:${isRead ? 'transparent' : 'rgba(0,229,255,.06)'};
-        padding:6px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;align-self:center">
+      ${prev ? `<button class="nb pr" data-action="nav" data-id="${prev.id}"><span>←</span><div><span class="nb-lbl">ПРЕДЫДУЩИЙ</span><span class="nb-t">${esc(prev.title)}</span></div></button>` : '<div></div>'}
+      <button class="read-btn${isRead ? ' is-read' : ''}" data-action="mark-toggle" data-id="${id}" data-read="${isRead}">
         ${isRead ? '↩ Снять отметку' : '✓ Отметить прочитанным'}
       </button>
-      ${next ? `<button class="nb nx" onclick="nav('${next.id}')"><div style="text-align:right"><span class="nb-lbl">СЛЕДУЮЩИЙ</span><span class="nb-t">${esc(next.title)}</span></div><span>→</span></button>` : '<div></div>'}
+      ${next ? `<button class="nb nx" data-action="nav" data-id="${next.id}"><div style="text-align:right"><span class="nb-lbl">СЛЕДУЮЩИЙ</span><span class="nb-t">${esc(next.title)}</span></div><span>→</span></button>` : '<div></div>'}
     </div>`;
       document.getElementById('st-l').textContent = `УРОК ${lesson.order}/${lessonList.length} — ${lesson.short}`;
     }
 
     /* ─── SIDEBAR ─── */
+    function _tplLesson(l) {
+      return `<div class="li" id="li-${l.id}" data-action="nav" data-id="${l.id}"><span class="li-prog"></span><span class="li-n">${l.num}</span><span class="li-t">${l.short}</span></div>`;
+    }
+
+    function _tplSection(s, si) {
+      const cleanTitle = s.title.replace(/^Раздел\s+\d+\.\s*/i, '');
+      const secNum = String(si + 1).padStart(2, '0');
+      return `<div class="sg sec-${s.color}" id="sg-${s.id}"><div class="sgh" data-action="toggle-sec" data-id="${s.id}"><span class="sga">▶</span><span class="sgn sgn-${s.color}">${secNum}</span><span class="sgname">${cleanTitle}</span><span class="sg-prog" id="sgp-${s.id}"></span></div><div class="ll">${s.lessons.map(_tplLesson).join('')}</div></div>`;
+    }
+
     function buildSb() {
-      const sections = CUR_TAB === 'python' ? PYTHON_COURSE.sections : COURSE.sections;
-      let h = ``;
-      sections.forEach((s, si) => {
-        const cleanTitle = s.title.replace(/^Раздел\s+\d+\.\s*/i, '');
-        const secNum = String(si + 1).padStart(2, '0');
-        h += `<div class="sg sec-${s.color}" id="sg-${s.id}">
-      <div class="sgh" onclick="toggleSec('${s.id}')">
-        <span class="sga">▶</span>
-        <span class="sgn sgn-${s.color}">${secNum}</span>
-        <span class="sgname">${cleanTitle}</span>
-        <span class="sg-prog" id="sgp-${s.id}" style="font-family:var(--mono);font-size:9px;color:var(--cyan);margin-left:auto;opacity:.7"></span>
-      </div>
-      <div class="ll">`;
-        s.lessons.forEach(l => {
-          h += `<div class="li" id="li-${l.id}" onclick="nav('${l.id}')">
-        <span class="li-prog" style="width:10px;height:10px;border:1px solid var(--dim);display:inline-flex;align-items:center;justify-content:center;font-size:7px;flex-shrink:0;margin-right:4px"></span>
-        <span class="li-n">${l.num}</span>
-        <span class="li-t">${l.short}</span>
-      </div>`;
-        });
-        h += `</div></div>`;
-      });
-      document.getElementById('sbnav').innerHTML = h;
+      const sections = AppState.curTab === 'python' ? PYTHON_COURSE.sections : COURSE.sections;
+      document.getElementById('sbnav').innerHTML = sections.map((s, si) => _tplSection(s, si)).join('');
     }
 
     function updateSb(id) {
@@ -2436,23 +2497,49 @@
     function closeSb() { document.getElementById('sb').classList.remove('open'); document.getElementById('sov').classList.remove('vis'); }
 
     /* ─── SEARCH ─── */
+    function _buildSearchIndex() {
+      const idx = new Map();
+      [...ALL, ...PYTHON_ALL].forEach(l => {
+        const raw = [
+          l.title, l.short, l.section?.title || '',
+          document.getElementById('cdata-' + l.id)?.textContent || ''
+        ].join(' ');
+        const tokens = raw.toLowerCase().replace(/[^a-zа-яё0-9\s]/gi, ' ').split(/\s+/).filter(t => t.length >= 2);
+        tokens.forEach(tok => {
+          if (!idx.has(tok)) idx.set(tok, new Set());
+          idx.get(tok).add(l.id);
+        });
+      });
+      AppState.searchIndex = idx;
+    }
+
+    function _queryIndex(q) {
+      const terms = q.toLowerCase().replace(/[^a-zа-яё0-9\s]/gi, ' ').split(/\s+/).filter(t => t.length >= 2);
+      if (!terms.length) return [];
+      const allLessons = [...ALL, ...PYTHON_ALL];
+      const idMap = new Map(allLessons.map(l => [l.id, l]));
+      const firstSet = AppState.searchIndex.get(terms[0]) || new Set();
+      let candidates = [...firstSet].map(id => idMap.get(id)).filter(Boolean);
+      if (terms.length > 1) {
+        candidates = candidates.filter(l =>
+          terms.slice(1).every(t => AppState.searchIndex.get(t)?.has(l.id))
+        );
+      }
+      return candidates.slice(0, 8);
+    }
+
     function setupSearch() {
       const inp = document.getElementById('si'), res = document.getElementById('sr');
       inp.addEventListener('input', () => {
         const q = inp.value.trim().toLowerCase();
         if (!q) { res.classList.remove('vis'); return; }
-        const hits = [...ALL, ...PYTHON_ALL].filter(l =>
-          l.title.toLowerCase().includes(q) ||
-          l.short.toLowerCase().includes(q) ||
-          l.section.title.toLowerCase().includes(q) ||
-          (SEARCH_INDEX[l.id] && SEARCH_INDEX[l.id].includes(q))
-        ).slice(0, 8);
+        const hits = _queryIndex(q);
         res.innerHTML = hits.length
           ? hits.map(l => {
             const safeTitle = esc(l.title);
             const t = safeTitle.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), m => `<span class="srh">${m}</span>`);
             const inContent = !(l.title.toLowerCase().includes(q) || l.short.toLowerCase().includes(q) || l.section.title.toLowerCase().includes(q));
-            return `<div class="sri" onclick="nav('${l.id}')"><div class="sri-t">${t}</div><div class="sri-s">${esc(l.section.title)}${inContent ? ' <span style="opacity:.6">// найдено в тексте урока</span>' : ''}</div></div>`;
+            return `<div class="sri" data-action="nav" data-id="${l.id}"><div class="sri-t">${t}</div><div class="sri-s">${esc(l.section.title)}${inContent ? ' <span style="opacity:.6">// найдено в тексте урока</span>' : ''}</div></div>`;
           }).join('')
           : '<div class="sr0">// нет результатов</div>';
         res.classList.add('vis');
@@ -2544,15 +2631,40 @@
     /* ─── INIT ─── */
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.sb-tab').forEach(b => {
-        b.classList.toggle('act', b.dataset.tab === CUR_TAB);
+        b.classList.toggle('act', b.dataset.tab === AppState.curTab);
       });
       buildSb(); setupSearch();
-      document.querySelectorAll('[id^="cdata-"]').forEach(el => {
-        const id = el.id.replace('cdata-', '');
-        SEARCH_INDEX[id] = el.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
-      });
+      _buildSearchIndex();
       document.getElementById('st-p').textContent = `${COURSE.sections.length} МОДУЛЕЙ // ${ALL.length} УРОКОВ`;
       _mbBuildChannels(); _mbSync(); setMusicVolume(60);
+      document.getElementById('mb-vol')?.addEventListener('input', e => setMusicVolume(e.target.value));
+
+      document.addEventListener('click', e => {
+        const el = e.target.closest('[data-action]');
+        if (!el) return;
+        const action = el.dataset.action;
+        const id     = el.dataset.id;
+        const tab    = el.dataset.tab;
+        switch (action) {
+          case 'nav':             nav(id); break;
+          case 'toggle-rp':      toggleRp(); break;
+          case 'toggle-sb':      toggleSb(); break;
+          case 'close-sb':       closeSb(); break;
+          case 'toggle-music':   toggleMusic(); break;
+          case 'switch-tab':     switchTab(tab); break;
+          case 'toggle-sec':     toggleSec(id); break;
+          case 'mark-read':      markRead(id); break;
+          case 'mark-unread':    markUnread(id); break;
+          case 'filter-rp':      filterRp(el.dataset.cat); break;
+          case 'open-rp-item':   openRpItem(id); break;
+          case 'switch-channel': switchChannel(+el.dataset.idx); break;
+          case 'start-course':   nav('l01'); break;
+          case 'mark-toggle':
+            el.dataset.read === 'true' ? markUnread(id) : markRead(id);
+            break;
+        }
+      });
+
       document.addEventListener('click', async (e) => {
         const btn = e.target.closest('.cb-copy');
         if (!btn) return;
@@ -2608,9 +2720,6 @@
       'Prompt Library': 'Prompts'
     };
 
-    let rpFilter = 'all';
-    let rpOpen = false;
-
     function catClass(cat) {
       return CAT_CLASSES[cat] || 'rpi-cat-other';
     }
@@ -2619,18 +2728,18 @@
       const cats = ['all', ...new Set(RIGHT_PANEL_DATA.map(i => i.category))];
       const filter = document.getElementById('rp-filter');
       filter.innerHTML = cats.map(c =>
-        `<button class="rptab${c === rpFilter ? ' act' : ''}" data-cat="${c}" onclick="filterRp('${c}')">${c === 'all' ? 'ALL' : CAT_LABELS[c] || c}</button>`
+        `<button class="rptab${c === AppState.rpFilter ? ' act' : ''}" data-cat="${c}" data-action="filter-rp">${c === 'all' ? 'ALL' : CAT_LABELS[c] || c}</button>`
       ).join('');
       renderRpList();
     }
 
     function renderRpList() {
-      const items = rpFilter === 'all'
+      const items = AppState.rpFilter === 'all'
         ? RIGHT_PANEL_DATA
-        : RIGHT_PANEL_DATA.filter(i => i.category === rpFilter);
+        : RIGHT_PANEL_DATA.filter(i => i.category === AppState.rpFilter);
       const sorted = [...items].sort((a, b) => a.priority - b.priority);
       document.getElementById('rp-list').innerHTML = sorted.map(item =>
-        `<div class="rpi" id="rpi-${item.id}" onclick="openRpItem('${item.id}')">
+        `<div class="rpi" id="rpi-${item.id}" data-action="open-rp-item" data-id="${item.id}">
           <div class="rpi-top">
             <span class="rpi-cat ${catClass(item.category)}">${CAT_LABELS[item.category] || item.category}</span>
             <span class="rpi-t">${item.title}</span>
@@ -2641,7 +2750,7 @@
     }
 
     function filterRp(cat) {
-      rpFilter = cat;
+      AppState.rpFilter = cat;
       document.querySelectorAll('.rptab').forEach(t => t.classList.toggle('act', t.dataset.cat === cat));
       renderRpList();
     }
@@ -2653,7 +2762,7 @@
     function updateRpBtn() {
       const btn = document.getElementById('rp-btn');
       if (!btn) return;
-      if (rpOpen) {
+      if (AppState.rpOpen) {
         btn.innerHTML = '◂ <span class="rp-toggle-lbl">Скрыть материалы</span>';
         btn.classList.add('act');
       } else {
@@ -2663,9 +2772,9 @@
     }
 
     function toggleRp() {
-      rpOpen = !rpOpen;
+      AppState.rpOpen = !AppState.rpOpen;
       const panel = document.getElementById('rp');
-      if (rpOpen) {
+      if (AppState.rpOpen) {
         panel.classList.remove('rp-hidden');
         panel.classList.add('rp-open');
       } else {
@@ -2673,16 +2782,16 @@
         panel.classList.remove('rp-open');
       }
       updateRpBtn();
-      try { localStorage.setItem('mlroad-rp', rpOpen ? '1' : '0'); } catch(e) {}
+      try { localStorage.setItem('mlroad-rp', AppState.rpOpen ? '1' : '0'); } catch(e) {}
     }
 
     function initRp() {
       buildRp();
       let saved = '1';
       try { saved = localStorage.getItem('mlroad-rp') ?? '1'; } catch(e) {}
-      rpOpen = saved !== '0';
+      AppState.rpOpen = saved !== '0';
       const panel = document.getElementById('rp');
-      if (rpOpen) {
+      if (AppState.rpOpen) {
         panel.classList.remove('rp-hidden');
         panel.classList.add('rp-open');
       } else {
@@ -2700,8 +2809,6 @@
       { id: 'drone',     label: 'DRONE·ZN', url: 'https://ice1.somafm.com/dronezone-128-mp3',  title: 'SomaFM Drone Zone — dark ambient' },
       { id: 'groovesal', label: 'GROOVE·SL',url: 'https://ice1.somafm.com/groovesalad-128-mp3',title: 'SomaFM Groove Salad — chill lofi' },
     ];
-    let _mAudio = null, _mPlaying = false, _mReconnTimer = null, _mStreamIdx = 0, _mGen = 0;
-
     function _mbSync() {
       const bar  = document.getElementById('music-bar');
       const dot  = document.getElementById('mb-dot');
@@ -2714,8 +2821,8 @@
         btn.disabled = true;
         dot.className = 'mb-dot';       dot.textContent = '◉';
         sts.className = 'mb-status';    sts.textContent = 'OFFLINE';
-        if (_mPlaying && _mAudio) {
-          _mAudio.pause(); _mPlaying = false;
+        if (AppState.music.playing && AppState.music.audio) {
+          AppState.music.audio.pause(); AppState.music.playing = false;
           btn.classList.remove('playing'); btn.textContent = '▶ PLAY';
           sl && sl.classList.remove('active');
           _mbSliderColor(sl, false);
@@ -2724,7 +2831,7 @@
       }
       bar.classList.remove('is-offline');
       btn.disabled = false;
-      if (_mPlaying) {
+      if (AppState.music.playing) {
         dot.className = 'mb-dot live';  dot.textContent = '◉';
         sts.className = 'mb-status live'; sts.textContent = 'LIVE';
       } else {
@@ -2744,54 +2851,54 @@
       const wrap = document.getElementById('mb-channels');
       if (!wrap) return;
       wrap.innerHTML = MB_STREAMS.map((s, i) =>
-        `<button class="mb-ch${i === _mStreamIdx ? ' act' : ''}" title="${s.title}"
-           onclick="switchChannel(${i})">${s.label}</button>`
+        `<button class="mb-ch${i === AppState.music.streamIdx ? ' act' : ''}" title="${s.title}"
+           data-action="switch-channel" data-idx="${i}">${s.label}</button>`
       ).join('');
     }
 
     function switchChannel(idx) {
-      if (idx === _mStreamIdx && !_mPlaying) return;
-      clearTimeout(_mReconnTimer); // всегда очищаем, не только при playing
-      _mStreamIdx = idx;
+      if (idx === AppState.music.streamIdx && !AppState.music.playing) return;
+      clearTimeout(AppState.music.reconnTimer); // всегда очищаем, не только при playing
+      AppState.music.streamIdx = idx;
       _mbBuildChannels();
-      if (_mPlaying) { _mStartStream(); }
+      if (AppState.music.playing) { _mStartStream(); }
     }
 
     /* Пересоздаёт Audio и запускает поток заново — fix для stalled/ended */
     function _mStartStream() {
-      clearTimeout(_mReconnTimer);
-      const gen = ++_mGen; // поколение: старые _reconnect с другим gen игнорируются
-      if (_mAudio) { _mAudio.pause(); _mAudio.src = ''; _mAudio.load(); _mAudio = null; }
+      clearTimeout(AppState.music.reconnTimer);
+      const gen = ++AppState.music.gen; // поколение: старые _reconnect с другим gen игнорируются
+      if (AppState.music.audio) { AppState.music.audio.pause(); AppState.music.audio.src = ''; AppState.music.audio.load(); AppState.music.audio = null; }
       const sl = document.getElementById('mb-vol');
-      const url = MB_STREAMS[_mStreamIdx].url + '?_=' + Date.now();
-      _mAudio = new Audio(url);
-      _mAudio.volume = (sl ? sl.value : 60) / 100;
+      const url = MB_STREAMS[AppState.music.streamIdx].url + '?_=' + Date.now();
+      AppState.music.audio = new Audio(url);
+      AppState.music.audio.volume = (sl ? sl.value : 60) / 100;
 
       const _reconnect = () => {
-        if (!_mPlaying || !navigator.onLine || gen !== _mGen) return; // устаревший — пропускаем
+        if (!AppState.music.playing || !navigator.onLine || gen !== AppState.music.gen) return; // устаревший — пропускаем
         const sts = document.getElementById('mb-status');
         if (sts) { sts.className = 'mb-status'; sts.textContent = 'RECONNECT...'; }
-        _mReconnTimer = setTimeout(_mStartStream, 1500);
+        AppState.music.reconnTimer = setTimeout(_mStartStream, 1500);
       };
 
-      _mAudio.addEventListener('ended',   _reconnect);
-      _mAudio.addEventListener('stalled', _reconnect);
-      _mAudio.addEventListener('error',   _reconnect);
-      _mAudio.play().catch(() => {});
+      AppState.music.audio.addEventListener('ended',   _reconnect);
+      AppState.music.audio.addEventListener('stalled', _reconnect);
+      AppState.music.audio.addEventListener('error',   _reconnect);
+      AppState.music.audio.play().catch(() => {});
     }
 
     function toggleMusic() {
       if (!navigator.onLine) return;
       const btn = document.getElementById('mb-play');
       const sl  = document.getElementById('mb-vol');
-      if (_mPlaying) {
-        clearTimeout(_mReconnTimer);
-        if (_mAudio) { _mAudio.pause(); _mAudio.src = ''; _mAudio.load(); _mAudio = null; }
-        _mPlaying = false;
+      if (AppState.music.playing) {
+        clearTimeout(AppState.music.reconnTimer);
+        if (AppState.music.audio) { AppState.music.audio.pause(); AppState.music.audio.src = ''; AppState.music.audio.load(); AppState.music.audio = null; }
+        AppState.music.playing = false;
         btn.classList.remove('playing'); btn.textContent = '▶ PLAY';
         sl && sl.classList.remove('active'); _mbSliderColor(sl, false);
       } else {
-        _mPlaying = true;
+        AppState.music.playing = true;
         btn.classList.add('playing'); btn.textContent = '▐▐ PAUSE';
         sl && sl.classList.add('active'); _mbSliderColor(sl, true);
         _mStartStream();
@@ -2800,11 +2907,11 @@
     }
 
     function setMusicVolume(val) {
-      if (_mAudio) _mAudio.volume = val / 100;
+      if (AppState.music.audio) AppState.music.audio.volume = val / 100;
       const valEl = document.getElementById('mb-vol-val');
       const sl    = document.getElementById('mb-vol');
       if (valEl) valEl.textContent = val + '%';
-      _mbSliderColor(sl, _mPlaying);
+      _mbSliderColor(sl, AppState.music.playing);
     }
 
     window.addEventListener('online',  _mbSync);
