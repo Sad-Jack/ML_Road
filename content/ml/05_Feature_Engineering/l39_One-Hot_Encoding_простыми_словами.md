@@ -48,12 +48,6 @@ short: "One-Hot Encoding"
 
 ### 1. Берём категориальный признак
 
-Например:
-
-```text
-device = mobile / desktop / tablet
-```
-
 ---
 
 ### 2. Создаём отдельную колонку для каждой категории
@@ -69,22 +63,6 @@ device_tablet
 ---
 
 ### 3. Заполняем колонки нулями и единицами
-
-Если у объекта `device = mobile`, то:
-
-```text
-device_mobile = 1
-device_desktop = 0
-device_tablet = 0
-```
-
-Если `device = desktop`, то:
-
-```text
-device_mobile = 0
-device_desktop = 1
-device_tablet = 0
-```
 
 ---
 
