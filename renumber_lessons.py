@@ -110,6 +110,24 @@ for md_path in glob.glob(os.path.join(ML_DIR, '**', 'l*.md'), recursive=True):
 
 all_lessons.sort(key=lambda x: x['order'])
 
+# ─── Guard: скрипт работает только при наличии уроков-вставок ─────────────────
+# Этот скрипт предназначен для вставки трёх новых уроков в курс:
+#   order=14.5  → «Временные ряды»  → l15
+#   order=50.5  → «SHAP»            → l52
+#   order=75.5  → «p-value»         → l78
+# Без этих уроков запуск сдвинет нумерацию 83 существующих уроков и сломает курс.
+float_order_lessons = [l for l in all_lessons if l['order'] != int(l['order'])]
+if not float_order_lessons:
+    print('❌ Ошибка: не найдено уроков с дробными order (14.5 / 50.5 / 75.5).')
+    print()
+    print('   Этот скрипт предназначен для вставки новых уроков в курс.')
+    print('   Создайте уроки-вставки с дробными order в frontmatter,')
+    print('   затем запустите скрипт снова.')
+    print()
+    print('   Запуск без уроков-вставок перенумерует 83 существующих урока')
+    print('   и необратимо сломает структуру курса.')
+    sys.exit(1)
+
 # ─── Построить план переименований ────────────────────────────────────────────
 
 plan = []  # список (old_path, new_path, new_content)
@@ -168,8 +186,6 @@ for p in plan:
     if not p['changed']:
         continue
     temp_path = p['old_path'] + TEMP_SUFFIX
-    with open(p['old_path'], encoding='utf-8') as f:
-        pass  # уже прочитали content
     with open(temp_path, 'w', encoding='utf-8') as f:
         f.write(p['content'])
     temp_pairs.append((temp_path, p['new_path'], p['old_path']))
