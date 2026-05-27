@@ -5,7 +5,7 @@ num: "97"
 title: "97. Что учить дальше: Python, SQL, ML-практика"
 short: "Что учить дальше"
 ---
-# 94. Что учить дальше: Python, SQL, ML-практика
+# 97. Что учить дальше: Python, SQL, ML-практика
 
 ## Зачем это нужно
 
@@ -38,44 +38,29 @@ short: "Что учить дальше"
 
 ## Как это работает
 
-```python
-# Дорожная карта следующих 6 месяцев
+Дорожная карта следующих 6 месяцев:
 
-roadmap = {
-    "Месяц 1-2: Закрепление основ": [
-        "Повторить pandas: groupby, merge, pivot_table",
-        "SQL: Basic SELECT, JOINs, GROUP BY (SQLBolt, Mode Analytics)",
-        "Закончить 2-3 Kaggle Learn модуля",
-    ],
-    "Месяц 3-4: Первый проект": [
-        "Найти датасет на Kaggle или UCI ML Repository",
-        "Поставить задачу (классификация или регрессия)",
-        "Полный пайплайн: EDA → Feature Engineering → Модель → Оценка",
-        "Опубликовать ноутбук на Kaggle",
-    ],
-    "Месяц 5-6: Первое соревнование и специализация": [
-        "Вступить в Kaggle Getting Started соревнование (Titanic, House Prices)",
-        "Изучить XGBoost/LightGBM: они побеждают в 80% табличных задач",
-        "Выбрать специализацию и найти курс следующего уровня",
-    ]
-}
+**Месяц 1–2: Закрепление основ**
+- Повторить pandas: groupby, merge, pivot_table
+- SQL: SELECT, JOINs, GROUP BY (SQLBolt, Mode Analytics)
+- Пройти 2–3 модуля Kaggle Learn
 
-for period, tasks in roadmap.items():
-    print(f"\n{period}:")
-    for task in tasks:
-        print(f"  ✓ {task}")
+**Месяц 3–4: Первый проект**
+- Найти датасет на Kaggle или UCI ML Repository
+- Поставить задачу (классификация или регрессия)
+- Полный пайплайн: EDA → Feature Engineering → Модель → Оценка
+- Опубликовать ноутбук на Kaggle
 
-# Ресурсы
-resources = {
-    "Практика": ["kaggle.com/learn", "leetcode.com (SQL)", "mode.com/sql-tutorial"],
-    "Датасеты": ["kaggle.com/datasets", "huggingface.co/datasets", "archive.ics.uci.edu"],
-    "Книги": ["Hands-On ML (Géron)", "Python for Data Analysis (McKinney)"],
-    "YouTube": ["3Blue1Brown (математика)", "StatQuest (ML интуиция)", "Andrej Karpathy (DL)"]
-}
-print("\nКлючевые ресурсы:")
-for category, items in resources.items():
-    print(f"  {category}: {', '.join(items)}")
-```
+**Месяц 5–6: Первое соревнование и специализация**
+- Вступить в Kaggle Getting Started (Titanic, House Prices)
+- Изучить XGBoost/LightGBM: побеждают в 80% табличных задач
+- Выбрать специализацию и найти курс следующего уровня
+
+Ключевые ресурсы:
+- Практика: kaggle.com/learn, leetcode.com (SQL), mode.com/sql-tutorial
+- Датасеты: kaggle.com/datasets, huggingface.co/datasets, archive.ics.uci.edu
+- Книги: Hands-On ML (Géron), Python for Data Analysis (McKinney)
+- YouTube: 3Blue1Brown (математика), StatQuest (ML интуиция), Andrej Karpathy (DL)
 
 ## Простой пример
 
@@ -83,11 +68,11 @@ for category, items in resources.items():
 
 ## Практика
 
-1. Какие три направления нужно развивать параллельно после прохождения базового курса ML?
+1. У вас есть 10 часов в неделю. Вы выбираете между: ещё один курс по теории ML, практика на Kaggle, изучение SQL. Как распределить время и почему именно так?
 2. Почему SQL называют обязательным навыком для ML-специалиста, хотя Python позволяет работать с данными через pandas?
 3. Вы прошли курс ML и хотите найти первую работу через 6 месяцев. Опишите конкретный план на первые 2, вторые 2 и последние 2 месяца.
-4. Почему Kaggle-соревнование — хорошая симуляция реального проекта, и какой этап они при этом пропускают?
-5. Из уроков 66–76 мы изучили ML в production: деплоймент, мониторинг, тестирование. Чем роль ML Engineer отличается от роли Data Scientist и какие темы из этого курса наиболее важны для каждой из ролей?
+4. В уроке «Feature Engineering» рассматривался процесс создания признаков вручную. Почему эта тема остаётся важной для Data Scientist даже при использовании Deep Learning, который извлекает признаки автоматически?
+5. В уроке «Grid Search и Random Search» мы подбирали гиперпараметры моделей. Как навык подбора гиперпараметров, отработанный на классических моделях, переносится на Deep Learning и LLM (temperature, learning rate, batch size)?
 
 ## Краткий итог
 

@@ -5,7 +5,7 @@ num: "31"
 title: "31. Простой ML-пайплайн"
 short: "Простой ML-пайплайн"
 ---
-# 30. Простой ML-пайплайн
+# 31. Простой ML-пайплайн
 
 ## Зачем это нужно
 
@@ -13,85 +13,29 @@ short: "Простой ML-пайплайн"
 
 ## Простая интуиция
 
-Pipeline — это как сборочный конвейер. Заготовка (сырые признаки) едет по ленте: сначала StandardScaler что-то с ней делает, потом OneHotEncoder, потом LogisticRegression обучается. На выходе — готовое предсказание. И главное — точно тот же конвейер автоматически прокатит test через те же преобразования.
+Pipeline — это как сборочный конвейер на заводе. Деталь (сырые данные) едет по ленте: на первой станции её чистят, на второй — преобразуют, на третьей — собирают готовый продукт. Главное свойство конвейера: каждая следующая деталь проходит ровно те же станции в том же порядке. Ни одна не проскочит и не попадёт на финальную сборку необработанной.
 
 ## Что это такое
 
 `Pipeline` в sklearn — последовательность шагов вида `(name, transformer_or_model)`. У всех шагов кроме последнего должны быть методы `.fit()` и `.transform()`. Последний шаг — обычно модель с `.fit()` и `.predict()`.
 
-`ColumnTransformer` — соседний инструмент: разные преобразования для разных колонок (числовые → scaler, категориальные → one-hot).
+`ColumnTransformer` — соседний инструмент: разные преобразования для разных колонок (числовые → scaler, категориальные → их собственный трансформер).
 
 ## Как это работает
-
-```python
-import pandas as pd
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.impute import SimpleImputer
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-
-df = pd.read_csv("clients.csv")
-y = df["bought"]
-X = df.drop(columns=["bought", "client_id"])
-
-num_cols = ["age", "orders_count"]
-cat_cols = ["city"]
-
-# Преобразования для числовых колонок
-num_pipe = Pipeline([
-    ("imputer", SimpleImputer(strategy="median")),
-    ("scaler",  StandardScaler()),
-])
-
-# Преобразования для категориальных колонок
-cat_pipe = Pipeline([
-    ("imputer", SimpleImputer(strategy="most_frequent")),
-    ("ohe",     OneHotEncoder(handle_unknown="ignore")),
-])
-
-preprocess = ColumnTransformer([
-    ("num", num_pipe, num_cols),
-    ("cat", cat_pipe, cat_cols),
-])
-
-pipe = Pipeline([
-    ("prep",  preprocess),
-    ("model", LogisticRegression(max_iter=1000)),
-])
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42, stratify=y
-)
-
-pipe.fit(X_train, y_train)
-print(accuracy_score(y_test, pipe.predict(X_test)))
-```
 
 Главное: `pipe.fit(X_train, ...)` сам обучит scaler/encoder **только на train**, а `pipe.predict(X_test)` применит уже готовые преобразования к test. Утечки не будет.
 
 ## Простой пример
 
-Без pipeline лёгкая утечка:
-
-```python
-# ПЛОХО: scaler выучил статистики по всему датасету, включая test
-scaler = StandardScaler().fit(X)  # ← test тоже сюда попал
-X_train_s = scaler.transform(X_train)
-X_test_s  = scaler.transform(X_test)
-```
-
-С pipeline такая ошибка невозможна — он умеет «учиться только на той части, которую ему дали в fit».
+Типичная ошибка без Pipeline: scaler обучается на всём датасете целиком, включая test — он видит статистики (среднее, std) по данным, которые не должен был видеть. Потом transform применяется к train и test с уже «загрязнёнными» статистиками. Pipeline делает такую ошибку невозможной — он учится только на той части, которую ему дали в fit.
 
 ## Практика
 
-1. Что такое `Pipeline` в sklearn и какую главную проблему он решает по сравнению с ручным вызовом шагов по очереди?
-2. Чем `ColumnTransformer` отличается от `Pipeline`? Когда нужны оба вместе?
+1. Вы обучаете модель с масштабированием числовых признаков и преобразованием категориальных. Коллега применяет оба преобразования вручную в правильном порядке на train и test. Назовите два конкретных сценария, где его подход приведёт к ошибке по сравнению с Pipeline.
+2. В Pipeline три шага: `SimpleImputer → StandardScaler → LogisticRegression`. При вызове `pipe.fit(X_train, y_train)` какой из шагов вызывает `.fit_transform()`, а какой — просто `.fit()`? Почему последний шаг особенный?
 3. У вас числовые колонки `age`, `salary` и категориальная `city`. Опишите словами, какие шаги войдут в пайплайн перед `LogisticRegression`.
-4. Как Pipeline автоматически защищает от утечки данных при каждом fold `cross_val_score`?
-5. Вы обучаете `StandardScaler` на всём X (включая test), а потом делаете split. Что именно нарушается, и как Pipeline это исправляет?
+4. В уроке «Cross-validation» мы говорили, что данные делятся на несколько fold, и на каждом fold модель обучается на одной части и проверяется на другой. Как Pipeline автоматически защищает от утечки данных при каждом fold `cross_val_score`?
+5. В уроке «Train / Validation / Test» мы говорили, что test-данные нельзя использовать при обучении. Коллега говорит: «Я использую Pipeline, но StandardScaler инициализирую и обучаю отдельно до split — так быстрее». Объясните, почему его подход всё равно нарушает это правило, несмотря на Pipeline.
 
 ## Краткий итог
 
@@ -103,7 +47,7 @@ X_test_s  = scaler.transform(X_test)
 
 ## Ключевые термины урока
 
-- **Pipeline** — гарантирует правило «fit только на train»: при cross-validation scaler обучается только на fold-train, не видя fold-val. Без Pipeline — scaler.fit(X_all) перед split — data leakage.
-- **ColumnTransformer** — вместо двух отдельных трансформаций (числовые → scaler, категориальные → OHE) создаёт один шаг; оба шага учатся и применяются синхронно. Без него — ручное разделение колонок = ошибки.
-- **fit_transform** — вызывается только на train: вычисляет статистики и сразу применяет. Применять к test — data leakage. В Pipeline вызывается автоматически только для промежуточных шагов на train.
+- **Pipeline** — гарантирует правило «fit только на train»: при cross-validation scaler обучается только на fold-train, не видя fold-val. Без Pipeline — scaler.fit(X_all) перед split — статистики из test попадают в обучение.
+- **ColumnTransformer** — вместо отдельных трансформаций для разных типов колонок создаёт один шаг; все преобразования учатся и применяются синхронно. Без него — ручное разделение колонок = ошибки.
+- **fit_transform** — вызывается только на train: вычисляет статистики и сразу применяет. Применять к test — значит загрязнить обучение тестовыми данными. В Pipeline вызывается автоматически только для промежуточных шагов на train.
 - **Сохранение pipeline** — один .pkl файл содержит scaler + encoder + модель с параметрами; при inference не нужно отдельно хранить и воссоздавать preprocessing. Pipeline.predict() автоматически прогоняет через все шаги.

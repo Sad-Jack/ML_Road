@@ -5,7 +5,7 @@ num: "50"
 title: "50. Grid Search и Random Search"
 short: "Grid Search и Random Search"
 ---
-# 49. Grid Search и Random Search
+# 50. Grid Search и Random Search
 
 ## Зачем это нужно
 
@@ -26,20 +26,11 @@ Grid Search — это как попробовать каждое блюдо в 
 
 ## Как это работает
 
-```python
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import GridSearchCV
+**Grid Search** перебирает декартово произведение всех заданных значений. Например, 3 значения `n_estimators` × 3 значения `max_depth` = 9 комбинаций. Каждая оценивается через кросс-валидацию. Итог: `best_params_` — лучшая комбинация, `best_score_` — средний score по фолдам.
 
-# Grid Search: перебирает все комбинации (3 × 3 = 9 вариантов)
-param_grid = {"n_estimators": [50, 100, 200], "max_depth": [3, 5, None]}
-grid = GridSearchCV(RandomForestClassifier(), param_grid, cv=5, n_jobs=-1)
-grid.fit(X_train, y_train)
-print("Лучшие параметры:", grid.best_params_)
-print("CV score:", round(grid.best_score_, 3))
+**Random Search** не перебирает все комбинации — случайно сэмплирует заданное количество (например, 20). При большом пространстве параметров это даёт почти такой же результат за долю времени.
 
-# Random Search: быстрее при большом пространстве — не перебирает все комбинации
-# RandomizedSearchCV(..., n_iter=20) — случайно выбирает 20 комбинаций
-```
+Оба метода оценивают каждую комбинацию через кросс-валидацию, а не на одном разбиении.
 
 ## Простой пример
 
@@ -47,11 +38,11 @@ print("CV score:", round(grid.best_score_, 3))
 
 ## Практика
 
-1. Объясните принципиальную разницу между Grid Search и Random Search. В чём преимущество каждого?
+1. Grid Search нашёл `best_score_ = 0.89`, Random Search с n_iter=20 — score=0.875. Стоит ли продолжать Grid Search ради 0.015 разницы? Какие факторы влияют на это решение?
 2. Что хранится в `best_estimator_` после GridSearchCV и почему нужна дополнительная оценка на тестовой выборке?
 3. У вас пространство поиска: 5 значений `n_estimators`, 4 значения `max_depth`, 3 значения `min_samples_leaf`, 5-fold CV. Сколько обучений потребует Grid Search и когда выгоднее Random Search?
-4. Как внутренняя кросс-валидация в GridSearchCV обеспечивает честную оценку каждой комбинации?
-5. Что происходит, если GridSearchCV настраивает гиперпараметры модели без Pipeline — почему трансформации вызывают data leakage?
+4. Из урока «Гиперпараметры модели» мы знаем, что подбор гиперпараметров по test — это data leakage. GridSearchCV вернул best_score_ = 0.88, но оценка best_estimator_ на отдельном test дала 0.81. Это нормальный разрыв или сигнал проблемы? Что могло пойти не так?
+5. Из урока «Data Leakage» мы знаем, что утечка возникает, когда информация из test попадает в train. Почему трансформации признаков (например, масштабирование), применённые до GridSearchCV без Pipeline, создают именно такую утечку?
 
 ## Краткий итог
 
