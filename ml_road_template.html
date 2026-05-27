@@ -2373,6 +2373,31 @@
     /* 16 ── Focus mode: keep page corners visible */
     body.focus-mode::before { opacity: .25; }
 
+    /* 17 ── Paper plane decoration */
+    .plane-wrap {
+      position: absolute;
+      right: -10px;
+      bottom: 50px;
+      width: 290px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .42;
+      transform: rotate(-22deg);
+    }
+    .plane-wrap svg {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 0 5px rgba(0,229,255,.75))
+              drop-shadow(0 0 20px rgba(0,229,255,.35));
+      animation: plane-drift 9s ease-in-out infinite;
+    }
+    @keyframes plane-drift {
+      0%,100% { transform: translate(0,0); }
+      35%     { transform: translate(7px,-14px); }
+      70%     { transform: translate(-4px,-7px); }
+    }
+    @media (max-width: 720px) { .plane-wrap { display: none; } }
+
   </style>
 </head>
 
@@ -2671,6 +2696,24 @@
           <a class="cl" href="https://t.me/ML_Road_Chat" target="_blank">Telegram-чат</a>
           <a class="cl" href="https://stepik.org/course/281722" target="_blank">Stepik-курс</a>
         </div>
+      </div>
+      <div class="plane-wrap" aria-hidden="true">
+        <svg viewBox="-112 0 248 90" fill="none" stroke="#00e5ff" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+          <!-- Trailing squares (fade out from tail) -->
+          <rect x="-100" y="42" width="2.5" height="2.5" stroke-width="1" opacity=".07"/>
+          <rect x="-84"  y="42" width="3"   height="3"   stroke-width="1" opacity=".14"/>
+          <rect x="-66"  y="42" width="3.5" height="3.5" stroke-width="1" opacity=".29"/>
+          <rect x="-47"  y="42" width="4"   height="4"   stroke-width="1" opacity=".46"/>
+          <rect x="-27"  y="42" width="4.5" height="4.5" stroke-width="1" opacity=".64"/>
+          <rect x="-9"   y="42" width="5"   height="5"   stroke-width="1" opacity=".80"/>
+          <!-- Plane outer silhouette: nose → top-tail → bottom-tail -->
+          <polygon points="132,45 5,5 5,85" stroke-width="1.5"/>
+          <!-- Center crease (fold ridge) -->
+          <line x1="5"  y1="45" x2="132" y2="45" stroke-width="1"   opacity=".70"/>
+          <!-- Wing fold lines -->
+          <line x1="5"  y1="5"  x2="66"  y2="45" stroke-width="1"   opacity=".65"/>
+          <line x1="5"  y1="85" x2="66"  y2="45" stroke-width="1"   opacity=".65"/>
+        </svg>
       </div>
     </div>`;
       document.getElementById('st-l').textContent = 'ML ROAD';
