@@ -2,5 +2,6 @@
   "id": "py3",
   "num": "03",
   "title": "Matplotlib и Seaborn",
-  "color": "c3"
+  "color": "c3",
+  "locked": true
 }

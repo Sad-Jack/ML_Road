@@ -2,5 +2,6 @@
   "id": "py8",
   "num": "08",
   "title": "Hugging Face Transformers",
-  "color": "c8"
+  "color": "c8",
+  "locked": true
 }

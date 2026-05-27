@@ -2,5 +2,6 @@
   "id": "s10",
   "num": "10",
   "title": "Ранжирование",
-  "color": "c10"
+  "color": "c10",
+  "locked": false
 }
