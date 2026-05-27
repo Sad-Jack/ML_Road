@@ -3425,7 +3425,9 @@ Feynman Technique: [ваша тема]`
     } catch(e) {}
 
     function getReadSet(id) {
-      return PYTHON_ALL.find(l => l.id === id) ? READ_LESSONS_PY : READ_LESSONS;
+      return (typeof PYTHON_ALL !== 'undefined' && PYTHON_ALL.find(l => l.id === id))
+        ? READ_LESSONS_PY
+        : READ_LESSONS;
     }
 
     function markRead(id) {
