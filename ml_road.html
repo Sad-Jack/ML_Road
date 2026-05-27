@@ -704,37 +704,75 @@
       background: var(--cyan-bg-faint)
     }
 
-    .hboot-dot {
-      width: 8px;
-      height: 8px;
-      border: 1px solid var(--cyan);
-      background: var(--cyan);
-      opacity: .6
-    }
+    .hboot-dot  { width:12px;height:12px;border-radius:50%;background:#ff5f57;box-shadow:0 0 6px #ff5f5760 }
+    .hboot-dot2 { width:12px;height:12px;border-radius:50%;background:#febc2e;box-shadow:0 0 6px #febc2e60 }
+    .hboot-dot3 { width:12px;height:12px;border-radius:50%;background:#28c840;box-shadow:0 0 6px #28c84060 }
 
-    .hboot-dot2 {
-      width: 8px;
-      height: 8px;
-      border: 1px solid var(--red);
-      background: var(--red);
-      opacity: .5
-    }
-
-    .hboot-dot3 {
-      width: 8px;
-      height: 8px;
-      border: 1px solid var(--dim);
-      opacity: .4
-    }
+    .hboot-bar { gap: 6px; }
 
     .hboot-title {
       font-family: var(--mono);
       font-size: 10px;
-      letter-spacing: 2px;
-      color: var(--text2);
-      text-transform: uppercase;
-      margin-left: 4px
+      letter-spacing: 1px;
+      color: var(--dim);
+      margin-left: 8px
     }
+
+    /* ── Terminal console layout ── */
+    .hterm {
+      padding: 14px 22px 18px;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+    .ht-line { display: flex; align-items: baseline; white-space: nowrap; min-height: 1.75em; }
+    .ht-gap  { height: .65em; }
+    .ht-big  { margin: 6px 0 2px; }
+
+    /* Prompt */
+    .ht-u    { color: #4ec9b0; }
+    .ht-at   { color: var(--dim); }
+    .ht-h    { color: var(--cyan); }
+    .ht-p    { color: var(--text2); margin-right: .6ch; }
+
+    /* Typed command */
+    .ht-cmd  {
+      overflow: hidden; white-space: nowrap;
+      display: inline-block; width: 0; vertical-align: bottom;
+      color: var(--text);
+      animation: ht-type .35s steps(5,end) .25s forwards;
+    }
+    @keyframes ht-type { to { width: 5ch; } }
+
+    /* Output text styles */
+    .ht-sub  { font-size:11px; color:var(--text2); letter-spacing:1.5px; text-transform:uppercase; }
+    .ht-tag  { font-size:10px; color:var(--red);   letter-spacing:2.5px; opacity:.75; }
+
+    /* Kill the hascii glitch animation inside terminal */
+    .hterm .hascii { animation: none !important; margin: 0; }
+
+    /* Blinking cursor */
+    .ht-cursor {
+      color: var(--cyan);
+      opacity: 0;
+      animation: ht-blink 1s step-end infinite;
+      animation-delay: 1.4s;
+    }
+    @keyframes ht-blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+
+    /* Staggered line appearance */
+    @keyframes ht-in { from{opacity:0} to{opacity:1} }
+    .ht-a0  { animation: ht-in .04s ease 0.68s both; }
+    .ht-a1  { animation: ht-in .04s ease 0.72s both; }
+    .ht-a2  { animation: ht-in .04s ease 0.80s both; }
+    .ht-a3  { animation: ht-in .04s ease 0.87s both; }
+    .ht-a4  { animation: ht-in .04s ease 0.93s both; }
+    .ht-a5  { animation: ht-in .04s ease 0.98s both; }
+    .ht-a6  { animation: ht-in .04s ease 1.04s both; }
+    .ht-a7  { animation: ht-in .04s ease 1.10s both; }
+    .ht-a8  { animation: ht-in .04s ease 1.16s both; }
+    .ht-a9  { animation: ht-in .04s ease 1.21s both; }
+    .ht-a10 { animation: ht-in .04s ease 1.26s both; }
 
     .hboot-body {
       padding: 20px 24px 22px;
@@ -4180,19 +4218,24 @@ Feynman Technique: [ваша тема]`
           <div class="hboot-dot"></div>
           <div class="hboot-dot2"></div>
           <div class="hboot-dot3"></div>
-          <span class="hboot-title">ML-ROAD-LOCAL // BOOT SEQUENCE COMPLETE</span>
+          <span class="hboot-title">ml-road@local — bash — 80×24</span>
         </div>
-        <div class="hboot-body">
-          <div>
-            <div class="hascii">ML ROAD</div>
-            <div class="hascii-sub">Machine Learning Offline System</div>
-            <div class="hascii-tag">LEARN • PRACTICE • BUILD • THINK</div>
+        <div class="hterm">
+          <div class="ht-line">
+            <span class="ht-ps1"><span class="ht-u">ml-road</span><span class="ht-at">@</span><span class="ht-h">local</span><span class="ht-p">:~$</span></span><span class="ht-cmd"> info</span>
           </div>
-          <div class="hsys">
-            <div class="hsys-row"><span class="hsys-k">MODEL&nbsp;&nbsp;:</span><span class="hsys-v">ML-ROAD-LOCAL</span></div>
-            <div class="hsys-row"><span class="hsys-k">MODE&nbsp;&nbsp;&nbsp;:</span><span class="hsys-v">OFFLINE</span></div>
-            <div class="hsys-row"><span class="hsys-k">STATUS&nbsp;:</span><span class="hsys-v ok">ONLINE</span></div>
-            <div class="hsys-row"><span class="hsys-k">УРОКОВ :</span><span class="hsys-v">${ALL.length}</span></div>
+          <div class="ht-gap ht-a0"></div>
+          <div class="ht-big ht-a1"><div class="hascii">ML ROAD</div></div>
+          <div class="ht-line ht-a2"><span class="ht-sub">Machine Learning Offline System</span></div>
+          <div class="ht-line ht-a3"><span class="ht-tag">LEARN • PRACTICE • BUILD • THINK</span></div>
+          <div class="ht-gap ht-a4"></div>
+          <div class="ht-line ht-a5"><span class="hsys-k">MODEL&nbsp;&nbsp;:</span>&nbsp;<span class="hsys-v">ML-ROAD-LOCAL</span></div>
+          <div class="ht-line ht-a6"><span class="hsys-k">MODE&nbsp;&nbsp;&nbsp;:</span>&nbsp;<span class="hsys-v">OFFLINE</span></div>
+          <div class="ht-line ht-a7"><span class="hsys-k">STATUS&nbsp;:</span>&nbsp;<span class="hsys-v ok">ONLINE</span></div>
+          <div class="ht-line ht-a8"><span class="hsys-k">УРОКОВ&nbsp;:</span>&nbsp;<span class="hsys-v">${ALL.length}</span></div>
+          <div class="ht-gap ht-a9"></div>
+          <div class="ht-line ht-a10">
+            <span class="ht-ps1"><span class="ht-u">ml-road</span><span class="ht-at">@</span><span class="ht-h">local</span><span class="ht-p">:~$</span></span><span class="ht-cursor"> █</span>
           </div>
         </div>
       </div>
