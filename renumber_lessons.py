@@ -180,23 +180,57 @@ print('\n🔄 Применяем изменения...')
 
 TEMP_SUFFIX = '.__migrating__'
 
-# Фаза 1: переименовать в временные имена, записать новый контент
+# ── Фаза 1: записать новые версии в temp-файлы ────────────────────────────────
+# Откат при ошибке: удалить только уже созданные temp-файлы (оригиналы не тронуты)
 temp_pairs = []
-for p in plan:
-    if not p['changed']:
-        continue
-    temp_path = p['old_path'] + TEMP_SUFFIX
-    with open(temp_path, 'w', encoding='utf-8') as f:
-        f.write(p['content'])
-    temp_pairs.append((temp_path, p['new_path'], p['old_path']))
+try:
+    for p in plan:
+        if not p['changed']:
+            continue
+        temp_path = p['old_path'] + TEMP_SUFFIX
+        with open(temp_path, 'w', encoding='utf-8') as f:
+            f.write(p['content'])
+        temp_pairs.append((temp_path, p['new_path'], p['old_path']))
+except Exception as e:
+    print(f'\n❌ Ошибка в фазе 1 (создание temp-файлов): {e}')
+    print('🔄 Откат: удаляем созданные temp-файлы...')
+    for (temp_path, _, _) in temp_pairs:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+            print(f'   удалён: {os.path.basename(temp_path)}')
+    print('✅ Откат завершён — оригинальные файлы не изменены.')
+    sys.exit(1)
 
-# Фаза 2: удалить старые файлы, переименовать temp → финал
-for (temp_path, new_path, old_path) in temp_pairs:
-    os.remove(old_path)
-
-for (temp_path, new_path, old_path) in temp_pairs:
-    os.rename(temp_path, new_path)
-    print(f"  ✓ {os.path.basename(old_path)} → {os.path.basename(new_path)}")
+# ── Фаза 2: атомарная замена (удалить оригинал → переименовать temp → финал) ──
+# Откат при ошибке: восстановить оригиналы из temp-файлов
+removed = []  # (temp_path, new_path, old_path) — уже обработанные пары
+try:
+    # Сначала удалить все оригиналы
+    for (temp_path, new_path, old_path) in temp_pairs:
+        os.remove(old_path)
+        removed.append((temp_path, new_path, old_path))
+    # Потом переименовать temp → финальные имена
+    for (temp_path, new_path, old_path) in temp_pairs:
+        os.rename(temp_path, new_path)
+        print(f"  ✓ {os.path.basename(old_path)} → {os.path.basename(new_path)}")
+except Exception as e:
+    print(f'\n❌ Ошибка в фазе 2: {e}')
+    print('🔄 Откат: восстанавливаем файлы...')
+    for (temp_path, new_path, old_path) in removed:
+        # temp ещё не переименован → вернуть напрямую
+        if os.path.exists(temp_path):
+            os.rename(temp_path, old_path)
+            print(f'   восстановлен: {os.path.basename(old_path)}')
+        # rename уже случился → вернуть из new_path
+        elif os.path.exists(new_path):
+            os.rename(new_path, old_path)
+            print(f'   возвращён: {os.path.basename(new_path)} → {os.path.basename(old_path)}')
+    # Удалить все оставшиеся temp-файлы
+    for (temp_path, _, _) in temp_pairs:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+    print('✅ Откат завершён.')
+    sys.exit(1)
 
 print(f'\n✅ Готово: переименовано {len(temp_pairs)} файлов')
 print('Запустите: python3 build.py --full')
