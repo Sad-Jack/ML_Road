@@ -5,7 +5,7 @@ num: "31"
 title: "31. XGBoost, LightGBM и CatBoost"
 short: "XGBoost, LightGBM и CatBoost"
 ---
-# 30. XGBoost, LightGBM и CatBoost
+# 31. XGBoost, LightGBM и CatBoost
 
 ## Зачем это нужно
 

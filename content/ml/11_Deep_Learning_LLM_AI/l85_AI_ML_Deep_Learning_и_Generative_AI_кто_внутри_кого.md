@@ -5,7 +5,7 @@ num: "85"
 title: "85. AI, ML, Deep Learning и Generative AI: кто внутри кого"
 short: "AI, ML, DL и GenAI"
 ---
-# 84. AI, ML, Deep Learning и Generative AI: кто внутри кого
+# 85. AI, ML, Deep Learning и Generative AI: кто внутри кого
 
 ## Зачем это нужно
 

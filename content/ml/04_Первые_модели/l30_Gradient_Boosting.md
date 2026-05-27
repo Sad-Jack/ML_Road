@@ -5,7 +5,7 @@ num: "30"
 title: "30. Gradient Boosting"
 short: "Gradient Boosting"
 ---
-# 29. Gradient Boosting
+# 30. Gradient Boosting
 
 ## Зачем это нужно
 

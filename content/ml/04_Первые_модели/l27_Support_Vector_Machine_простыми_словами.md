@@ -5,7 +5,7 @@ num: "27"
 title: "27. Support Vector Machine простыми словами"
 short: "SVM"
 ---
-# 26. Support Vector Machine простыми словами
+# 27. Support Vector Machine простыми словами
 
 ## Зачем это нужно
 

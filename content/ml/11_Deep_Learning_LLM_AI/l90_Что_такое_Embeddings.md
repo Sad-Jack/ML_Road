@@ -5,7 +5,7 @@ num: "90"
 title: "90. Что такое Embeddings"
 short: "Что такое Embeddings"
 ---
-# 89. Что такое Embeddings
+# 90. Что такое Embeddings
 
 ## Зачем это нужно
 

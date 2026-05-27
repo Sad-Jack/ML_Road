@@ -5,7 +5,7 @@ num: "94"
 title: "94. Fine-tuning моделей"
 short: "Fine-tuning"
 ---
-# 93. Fine-tuning моделей
+# 94. Fine-tuning моделей
 
 ## Зачем это нужно
 

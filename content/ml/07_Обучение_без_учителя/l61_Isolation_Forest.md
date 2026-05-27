@@ -5,7 +5,7 @@ num: "61"
 title: "61. Isolation Forest"
 short: "Isolation Forest"
 ---
-# 60. Isolation Forest
+# 61. Isolation Forest
 
 ## Зачем это нужно
 

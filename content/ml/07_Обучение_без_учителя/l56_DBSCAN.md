@@ -5,7 +5,7 @@ num: "56"
 title: "56. DBSCAN"
 short: "DBSCAN"
 ---
-# 55. DBSCAN
+# 56. DBSCAN
 
 ## Зачем это нужно
 

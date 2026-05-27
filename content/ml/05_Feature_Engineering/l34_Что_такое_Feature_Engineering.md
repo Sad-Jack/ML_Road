@@ -5,7 +5,7 @@ num: "34"
 title: "34. Что такое Feature Engineering"
 short: "Что такое Feature Engineering"
 ---
-# 33. Что такое Feature Engineering
+# 34. Что такое Feature Engineering
 
 ## Зачем это нужно
 

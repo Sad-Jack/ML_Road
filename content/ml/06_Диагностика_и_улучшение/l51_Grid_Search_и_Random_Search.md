@@ -5,7 +5,7 @@ num: "51"
 title: "51. Grid Search и Random Search"
 short: "Grid Search и Random Search"
 ---
-# 50. Grid Search и Random Search
+# 51. Grid Search и Random Search
 
 ## Зачем это нужно
 

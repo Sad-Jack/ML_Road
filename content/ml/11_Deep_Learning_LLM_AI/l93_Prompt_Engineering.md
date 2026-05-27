@@ -5,7 +5,7 @@ num: "93"
 title: "93. Prompt Engineering"
 short: "Prompt Engineering"
 ---
-# 92. Prompt Engineering
+# 93. Prompt Engineering
 
 ## Зачем это нужно
 

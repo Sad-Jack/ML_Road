@@ -5,7 +5,7 @@ num: "55"
 title: "55. K-Means"
 short: "K-Means"
 ---
-# 54. K-Means
+# 55. K-Means
 
 ## Зачем это нужно
 

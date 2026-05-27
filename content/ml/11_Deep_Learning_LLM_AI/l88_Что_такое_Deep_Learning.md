@@ -5,7 +5,7 @@ num: "88"
 title: "88. Что такое Deep Learning"
 short: "Что такое Deep Learning"
 ---
-# 87. Что такое Deep Learning
+# 88. Что такое Deep Learning
 
 ## Зачем это нужно
 
