@@ -5,7 +5,7 @@ num: "41"
 title: "41. Label Encoding простыми словами"
 short: "Label Encoding"
 ---
-# 40. Label Encoding простыми словами
+# 41. Label Encoding простыми словами
 
 ## Зачем это нужно
 

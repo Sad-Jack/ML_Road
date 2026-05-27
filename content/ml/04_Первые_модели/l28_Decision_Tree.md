@@ -5,7 +5,7 @@ num: "28"
 title: "28. Decision Tree"
 short: "Decision Tree"
 ---
-# 27. Decision Tree
+# 28. Decision Tree
 
 ## Зачем это нужно
 

@@ -5,7 +5,7 @@ num: "89"
 title: "89. Архитектуры нейросетей: CNN, RNN и Transformer"
 short: "Архитектуры нейросетей"
 ---
-# 88. Архитектуры нейросетей: CNN, RNN и Transformer
+# 89. Архитектуры нейросетей: CNN, RNN и Transformer
 
 ## Зачем это нужно
 

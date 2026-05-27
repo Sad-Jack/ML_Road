@@ -5,7 +5,7 @@ num: "72"
 title: "72. Training vs Inference"
 short: "Training vs Inference"
 ---
-# 71. Training vs Inference
+# 72. Training vs Inference
 
 ## Зачем это нужно
 

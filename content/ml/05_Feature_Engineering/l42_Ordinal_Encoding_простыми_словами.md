@@ -5,7 +5,7 @@ num: "42"
 title: "42. Ordinal Encoding простыми словами"
 short: "Ordinal Encoding"
 ---
-# 41. Ordinal Encoding простыми словами
+# 42. Ordinal Encoding простыми словами
 
 ## Зачем это нужно
 

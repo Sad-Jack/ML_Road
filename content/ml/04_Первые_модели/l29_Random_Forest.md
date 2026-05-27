@@ -5,7 +5,7 @@ num: "29"
 title: "29. Random Forest"
 short: "Random Forest"
 ---
-# 28. Random Forest
+# 29. Random Forest
 
 ## Зачем это нужно
 

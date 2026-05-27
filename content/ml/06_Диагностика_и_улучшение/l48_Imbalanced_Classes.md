@@ -5,7 +5,7 @@ num: "48"
 title: "48. Imbalanced Classes"
 short: "Imbalanced Classes"
 ---
-# 47. Imbalanced Classes
+# 48. Imbalanced Classes
 
 ## Зачем это нужно
 

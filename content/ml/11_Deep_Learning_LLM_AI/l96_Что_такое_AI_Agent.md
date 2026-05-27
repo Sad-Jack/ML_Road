@@ -5,7 +5,7 @@ num: "96"
 title: "96. Что такое AI Agent"
 short: "Что такое AI Agent"
 ---
-# 95. Что такое AI Agent
+# 96. Что такое AI Agent
 
 ## Зачем это нужно
 

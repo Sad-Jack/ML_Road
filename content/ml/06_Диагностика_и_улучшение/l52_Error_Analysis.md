@@ -5,7 +5,7 @@ num: "52"
 title: "52. Error Analysis"
 short: "Error Analysis"
 ---
-# 51. Error Analysis
+# 52. Error Analysis
 
 ## Зачем это нужно
 

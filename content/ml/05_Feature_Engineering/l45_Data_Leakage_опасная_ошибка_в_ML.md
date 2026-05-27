@@ -5,7 +5,7 @@ num: "45"
 title: "45. Data Leakage: опасная ошибка в ML"
 short: "Data Leakage"
 ---
-# 44. Data Leakage: опасная ошибка в ML
+# 45. Data Leakage: опасная ошибка в ML
 
 ## Зачем это нужно
 

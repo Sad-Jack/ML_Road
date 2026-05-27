@@ -5,7 +5,7 @@ num: "59"
 title: "59. t-SNE и UMAP"
 short: "t-SNE и UMAP"
 ---
-# 58. t-SNE и UMAP
+# 59. t-SNE и UMAP
 
 ## Зачем это нужно
 

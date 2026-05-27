@@ -5,7 +5,7 @@ num: "64"
 title: "64. Explicit vs Implicit Feedback"
 short: "Explicit vs Implicit"
 ---
-# 63. Explicit vs Implicit Feedback
+# 64. Explicit vs Implicit Feedback
 
 ## Зачем это нужно
 

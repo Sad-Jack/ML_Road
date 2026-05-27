@@ -5,7 +5,7 @@ num: "40"
 title: "40. One-Hot Encoding простыми словами"
 short: "One-Hot Encoding"
 ---
-# 39. One-Hot Encoding простыми словами
+# 40. One-Hot Encoding простыми словами
 
 ## Зачем это нужно
 
