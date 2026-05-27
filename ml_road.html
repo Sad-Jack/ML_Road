@@ -2222,20 +2222,8 @@
       z-index: 9998;
     }
 
-    /* 4 ── Sidebar: terminal window ● ● ● dots */
-    .sb-tabs { position: relative; }
-    .sb-tabs::before {
-      content: '● ● ●';
-      font-family: var(--mono);
-      font-size: 5px;
-      color: rgba(0,229,255,.3);
-      letter-spacing: 4px;
-      position: absolute;
-      top: 6px;
-      right: 12px;
-      pointer-events: none;
-      line-height: 1;
-    }
+    /* 4 ── Sidebar dots: removed */
+    .sb-tabs::before { content: none; }
 
     /* 5 ── Module header: uppercase + tighter terminal feel */
     .sgname {
@@ -2444,14 +2432,65 @@
     }
     @media (max-width: 720px) { .plane-wrap { display: none; } }
 
+    /* 18 ── Header search (centered) */
+    .hdr-srch {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(360px, calc(100% - 420px));
+      z-index: 1;
+    }
+    .hdr-srch .srch { position: relative; }
+    .hdr-srch #si {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      font-size: 11px;
+    }
+
+    /* 19 ── Hero flex: push community block to bottom */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100vh - 138px); /* 56hdr + 26stbar + 56ci-padding */
+    }
+    .commblock { margin-top: auto !important; }
+
+    /* 20 ── Focus button: more visible */
+    .focus-btn {
+      color: var(--text2) !important;
+      border-color: rgba(0,229,255,.35) !important;
+      opacity: 1 !important;
+    }
+    .focus-btn:hover {
+      color: var(--cyan) !important;
+      border-color: var(--cyan) !important;
+    }
+
+    /* 21 ── Lesson header: breathing room at top */
+    .lhdr { padding-top: 14px; }
+
   </style>
 </head>
 
 <body>
   <div id="hdr">
     <div class="logo" data-action="nav" data-id="home">
-      <div class="logo-icon">ML</div>
+      <div class="logo-icon">
+        <svg viewBox="0 0 40 34" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="21" height="18" aria-hidden="true">
+          <polygon points="38,17 2,2 13,17 2,32" stroke-width="2"/>
+          <line x1="13" y1="17" x2="38" y2="17" stroke-width="1.4" opacity=".65"/>
+          <line x1="38" y1="17" x2="8"  y2="7"  stroke-width="1.2" opacity=".50"/>
+          <line x1="38" y1="17" x2="8"  y2="27" stroke-width="1.2" opacity=".50"/>
+        </svg>
+      </div>
       <div><span class="logo-text">ML ROAD</span><span class="logo-sub">Offline Learning System</span></div>
+    </div>
+    <div class="hdr-srch">
+      <div class="srch">
+        <span class="srch-pre">search://</span>
+        <input id="si" type="text" placeholder="поиск по урокам..." autocomplete="off" spellcheck="false">
+        <div id="sr"></div>
+      </div>
     </div>
     <button class="rp-toggle" id="rp-btn" data-action="toggle-rp">▸ <span class="rp-toggle-lbl">Показать материалы</span></button>
     <button class="mbtn" data-action="toggle-sb">☰</button>
@@ -2461,13 +2500,6 @@
       <div class="sb-tabs">
         <button class="sb-tab act" data-tab="mlbase" data-action="switch-tab">ML BASE</button>
         <button class="sb-tab" data-tab="python" data-action="switch-tab">PYTHON</button>
-      </div>
-      <div class="sb-srch">
-        <div class="srch">
-          <span class="srch-pre">search://</span>
-          <input id="si" type="text" placeholder="поиск по урокам..." autocomplete="off" spellcheck="false">
-          <div id="sr"></div>
-        </div>
       </div>
       <div id="gp-block" style="padding:10px 14px;border-bottom:1px solid var(--border)">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
@@ -4078,7 +4110,7 @@ Feynman Technique: [ваша тема]`
         <p>Открывай уроки по порядку, читай материалы в правой панели и возвращайся в любой момент — <span class="prog-joke">прогресс сохраняется.</span></p>
         <button class="hstart-btn" data-action="start-course">▶ Начать обучение</button>
       </div>
-      <div class="commblock" style="margin-top:16px; padding-bottom:10px">
+      <div class="commblock" style="padding-bottom:10px">
         <div class="commblock-hdr">
           <div class="commblock-hdr-dot"></div>
           <span class="commblock-hdr-lbl">Community &amp; Resources</span>
