@@ -2,5 +2,6 @@
   "id": "py1",
   "num": "01",
   "title": "NumPy",
-  "color": "c1"
+  "color": "c1",
+  "locked": true
 }

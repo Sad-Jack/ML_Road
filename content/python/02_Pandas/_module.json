@@ -2,5 +2,6 @@
   "id": "py2",
   "num": "02",
   "title": "Pandas",
-  "color": "c2"
+  "color": "c2",
+  "locked": false
 }

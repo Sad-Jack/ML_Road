@@ -2,5 +2,6 @@
   "id": "s1",
   "num": "01",
   "title": "База ML и данные",
-  "color": "c1"
+  "color": "c1",
+  "locked": false
 }

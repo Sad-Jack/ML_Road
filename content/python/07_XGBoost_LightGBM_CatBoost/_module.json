@@ -2,5 +2,6 @@
   "id": "py7",
   "num": "07",
   "title": "XGBoost, LightGBM, CatBoost",
-  "color": "c7"
+  "color": "c7",
+  "locked": true
 }
