@@ -50,8 +50,14 @@ def parse_frontmatter(text: str) -> tuple[dict, str]:
             continue
         key, _, val = line.partition(':')
         key = key.strip()
-        val = val.strip().strip('"').strip("'")
-        # Конвертируем типы
+        raw_val = val.strip()
+        # Определить: значение в кавычках → оставить строкой, не конвертировать в число
+        is_quoted = (
+            (raw_val.startswith('"') and raw_val.endswith('"')) or
+            (raw_val.startswith("'") and raw_val.endswith("'"))
+        )
+        val = raw_val.strip('"').strip("'")
+        # Конвертируем типы только для неквотированных значений
         if val == 'true':
             val = True
         elif val == 'false':
@@ -61,9 +67,9 @@ def parse_frontmatter(text: str) -> tuple[dict, str]:
             val = []
             if raw_items:
                 val = [item.strip().strip('"').strip("'") for item in raw_items.split(',') if item.strip()]
-        elif re.match(r'^\d+\.\d+$', val):
+        elif not is_quoted and re.match(r'^\d+\.\d+$', val):
             val = float(val)
-        elif re.match(r'^\d+$', val):
+        elif not is_quoted and re.match(r'^\d+$', val):
             val = int(val)
         meta[key] = val
 
@@ -404,6 +410,11 @@ def main():
         print(f'   Режим: {"проверка" if check_only else "запись"}')
         print()
 
+        if not os.path.exists(HTML_FILE):
+            print(f'❌ Файл не найден: {HTML_FILE}')
+            print('   Запустите сначала: python3 build.py --full')
+            sys.exit(1)
+
         with open(HTML_FILE, 'r', encoding='utf-8') as f:
             html = f.read()
 
@@ -443,6 +454,10 @@ def main():
     # ── Полная пересборка ────────────────────────────────────────────────────
     if check_only:
         print('🔍 Режим проверки: сравниваем content/ с ml_road.html')
+        for path, label in [(TEMPLATE_FILE, 'шаблон'), (HTML_FILE, 'ml_road.html')]:
+            if not os.path.exists(path):
+                print(f'❌ Файл не найден: {path} ({label})')
+                sys.exit(1)
         with open(TEMPLATE_FILE, 'r', encoding='utf-8') as f:
             template_html = f.read()
         with open(HTML_FILE, 'r', encoding='utf-8') as f:
@@ -457,6 +472,10 @@ def main():
 
     print(f'🔨 Полная пересборка: {os.path.basename(TEMPLATE_FILE)} → {os.path.basename(HTML_FILE)}')
     print()
+
+    if not os.path.exists(TEMPLATE_FILE):
+        print(f'❌ Шаблон не найден: {TEMPLATE_FILE}')
+        sys.exit(1)
 
     with open(TEMPLATE_FILE, 'r', encoding='utf-8') as f:
         template_html = f.read()
